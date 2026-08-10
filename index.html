@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+de<!DOCTYPE html>
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
@@ -2314,7 +2314,14 @@ closeComplement();
 /* Initialisation */
 
 getData();
+const dataFix = getData();
 
+dataFix.admin = {
+    identifier: "ADMIN",
+    password: "MOSTAKBAL2026"
+};
+
+saveData(dataFix);
 </script>
 
 </body>
