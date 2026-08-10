@@ -1,0 +1,1881 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>MOSTAKBAL — Portail administratif</title>
+
+<style>
+:root{
+ --blue:#075b9e;
+ --blue2:#087bc4;
+ --light:#eef7ff;
+ --bg:#f4f7fb;
+ --text:#18324a;
+ --muted:#718395;
+ --white:#fff;
+ --border:#dfe8ef;
+ --green:#15824a;
+ --red:#b3261e;
+ --orange:#b76b00;
+ --shadow:0 18px 50px rgba(25,60,90,.12);
+}
+
+*{box-sizing:border-box}
+
+body{
+ margin:0;
+ background:var(--bg);
+ color:var(--text);
+ font-family:Inter,system-ui,-apple-system,"Segoe UI",Arial,sans-serif;
+}
+
+button,input,select,textarea{
+ font:inherit;
+}
+
+button{cursor:pointer}
+
+.topbar{
+ position:sticky;
+ top:0;
+ z-index:1000;
+ background:rgba(255,255,255,.92);
+ backdrop-filter:blur(18px);
+ border-bottom:1px solid var(--border);
+}
+
+.topbar-inner{
+ width:min(1180px,calc(100% - 32px));
+ min-height:72px;
+ margin:auto;
+ display:flex;
+ align-items:center;
+ justify-content:space-between;
+}
+
+.logo{
+ display:flex;
+ align-items:center;
+ gap:10px;
+ color:var(--blue);
+ font-size:25px;
+ font-weight:900;
+}
+
+.logo-mark{
+ width:40px;
+ height:40px;
+ display:grid;
+ place-items:center;
+ border-radius:13px;
+ background:var(--blue);
+ color:white;
+}
+
+.profile{
+ width:44px;
+ height:44px;
+ border:0;
+ border-radius:50%;
+ background:var(--light);
+ font-size:20px;
+}
+
+.container{
+ width:min(1180px,calc(100% - 32px));
+ margin:auto;
+ padding:35px 0 80px;
+}
+
+.page{display:none}
+.page.active{display:block}
+
+.hero{
+ position:relative;
+ overflow:hidden;
+ min-height:330px;
+ padding:55px;
+ border-radius:30px;
+ color:white;
+ background:
+ radial-gradient(circle at 90% 10%,rgba(255,255,255,.2),transparent 28%),
+ linear-gradient(135deg,var(--blue),var(--blue2));
+ box-shadow:var(--shadow);
+}
+
+.hero h1{
+ position:relative;
+ z-index:2;
+ margin:15px 0 12px;
+ font-size:clamp(35px,6vw,55px);
+ line-height:1.05;
+}
+
+.hero p{
+ position:relative;
+ z-index:2;
+ max-width:700px;
+ margin:0;
+ font-size:18px;
+ line-height:1.7;
+ opacity:.94;
+}
+
+.badge{
+ position:relative;
+ z-index:2;
+ display:inline-block;
+ padding:8px 13px;
+ border-radius:30px;
+ background:rgba(255,255,255,.15);
+ font-size:13px;
+ font-weight:800;
+}
+
+.heading{
+ margin:40px 0 20px;
+}
+
+.heading h2{
+ margin:0 0 7px;
+ font-size:29px;
+}
+
+.heading p{
+ margin:0;
+ color:var(--muted);
+}
+
+.services{
+ display:grid;
+ grid-template-columns:repeat(2,1fr);
+ gap:24px;
+}
+
+.service{
+ min-height:280px;
+ position:relative;
+ padding:34px;
+ border:1px solid var(--border);
+ border-radius:25px;
+ background:white;
+ box-shadow:var(--shadow);
+ transition:.2s;
+}
+
+.service:hover{
+ transform:translateY(-5px);
+ border-color:#b7d7ec;
+}
+
+.service-icon{
+ width:65px;
+ height:65px;
+ display:grid;
+ place-items:center;
+ border-radius:19px;
+ background:var(--light);
+ font-size:30px;
+ margin-bottom:24px;
+}
+
+.service h3{
+ margin:0 0 10px;
+ font-size:27px;
+}
+
+.service p{
+ margin:0;
+ max-width:500px;
+ color:var(--muted);
+ line-height:1.65;
+}
+
+.service-link{
+ position:absolute;
+ bottom:30px;
+ color:var(--blue);
+ font-weight:900;
+}
+
+.card{
+ padding:25px;
+ border:1px solid var(--border);
+ border-radius:20px;
+ background:white;
+}
+
+.grid{
+ display:grid;
+ grid-template-columns:repeat(3,1fr);
+ gap:18px;
+}
+
+.btn{
+ border:0;
+ border-radius:12px;
+ padding:13px 18px;
+ background:var(--blue);
+ color:white;
+ font-weight:800;
+}
+
+.btn:hover{background:#064a80}
+
+.btn-light{
+ border:0;
+ border-radius:12px;
+ padding:13px 18px;
+ background:var(--light);
+ color:var(--blue);
+ font-weight:800;
+}
+
+.back{
+ border:0;
+ background:none;
+ color:var(--blue);
+ font-weight:800;
+ padding:0;
+ margin-bottom:20px;
+}
+
+@media(max-width:800px){
+ .services,.grid{grid-template-columns:1fr}
+ .hero{padding:35px 27px}
+}
+</style>
+</head>
+
+<body>
+
+<header class="topbar">
+ <div class="topbar-inner">
+  <div class="logo">
+   <div class="logo-mark">M</div>
+   MOSTAKBAL
+  </div>
+
+  <button class="profile" onclick="openAdminLogin()">👤</button>
+ </div>
+</header>
+
+<main class="container">
+
+<section id="home" class="page active">
+
+ <div class="hero">
+  <span class="badge">PORTAIL ADMINISTRATIF NUMÉRIQUE</span>
+  <h1>Bienvenue sur MOSTAKBAL</h1>
+  <p>
+   Un portail moderne pour déposer vos demandes,
+   transmettre vos pièces et suivre leur traitement.
+  </p>
+ </div>
+
+ <div class="heading">
+  <h2>Choisissez votre service</h2>
+  <p>Accédez directement au service dont vous avez besoin.</p>
+ </div>
+
+ <div class="services">
+
+  <div class="service" onclick="showPage('visa')">
+   <div class="service-icon">🛂</div>
+   <h3>Service visa</h3>
+   <p>
+    Créez votre compte et déposez une demande
+    de visa en ligne.
+   </p>
+   <div class="service-link">Accéder →</div>
+  </div>
+
+  <div class="service" onclick="showPage('internal')">
+   <div class="service-icon">🏛️</div>
+   <h3>Service interne</h3>
+   <p>
+    Accédez aux espaces étranger, citoyen
+    et administratif.
+   </p>
+   <div class="service-link">Accéder →</div>
+  </div>
+
+ </div>
+</section>
+<section id="visa" class="page">
+
+ <button class="back" onclick="showPage('home')">
+  ← Retour à l'accueil
+ </button>
+
+ <div class="card">
+  <h2>Service visa</h2>
+  <p>Choisissez la démarche souhaitée.</p>
+
+  <div class="grid">
+
+   <div class="card">
+    <h3>🎓 Visa stage</h3>
+    <p>Demande destinée à un stage.</p>
+    <button class="btn"
+     onclick="openVisa('Visa stage')">
+     Faire une demande
+    </button>
+   </div>
+
+   <div class="card">
+    <h3>💼 Visa travail</h3>
+    <p>Demande destinée à une activité professionnelle.</p>
+    <button class="btn"
+     onclick="openVisa('Visa travail')">
+     Faire une demande
+    </button>
+   </div>
+
+   <div class="card">
+    <h3>👨‍👩‍👦 Visa mineur accompagné</h3>
+    <p>Demande pour un mineur accompagné.</p>
+    <button class="btn"
+     onclick="openVisa('Visa mineur accompagné')">
+     Faire une demande
+    </button>
+   </div>
+
+  </div>
+ </div>
+</section>
+
+
+<section id="internal" class="page">
+
+ <button class="back" onclick="showPage('home')">
+  ← Retour à l'accueil
+ </button>
+
+ <div class="card">
+  <h2>Service interne</h2>
+  <p>Choisissez votre espace.</p>
+
+  <div class="grid">
+
+   <div class="card">
+    <h3>🌍 Espace étranger</h3>
+    <p>
+     Démarches liées aux visas, cartes de statut
+     et titres d'identité.
+    </p>
+    <button class="btn"
+     onclick="openForeignLogin()">
+     Accéder
+    </button>
+   </div>
+
+   <div class="card">
+    <h3>🇫🇷 Espace citoyen</h3>
+    <p>
+     CNI, passeport et carte sportive.
+    </p>
+    <button class="btn"
+     onclick="showPage('citizen')">
+     Accéder
+    </button>
+   </div>
+
+   <div class="card">
+    <h3>🏛️ Espace administratif</h3>
+    <p>
+     Service instructeur des demandes déposées.
+    </p>
+    <button class="btn"
+     onclick="openAdminLogin()">
+     Se connecter
+    </button>
+   </div>
+
+  </div>
+ </div>
+</section>
+<section id="citizen" class="page">
+
+ <button class="back" onclick="showPage('internal')">
+  ← Service interne
+ </button>
+
+ <div class="card">
+  <h2>Espace citoyen</h2>
+  <p>Choisissez votre démarche.</p>
+
+  <div class="grid">
+
+   <div class="card">
+    <h3>🪪 Carte Nationale d'Identité</h3>
+    <p>Première demande ou renouvellement.</p>
+
+    <button class="btn"
+     onclick="openCitizen('CNI','Première demande')">
+     Première demande
+    </button>
+
+    <button class="btn-light"
+     onclick="openCitizen('CNI','Renouvellement')">
+     Renouvellement
+    </button>
+   </div>
+
+   <div class="card">
+    <h3>🛂 Passeport</h3>
+    <p>Première demande ou renouvellement.</p>
+
+    <button class="btn"
+     onclick="openCitizen('Passeport','Première demande')">
+     Première demande
+    </button>
+
+    <button class="btn-light"
+     onclick="openCitizen('Passeport','Renouvellement')">
+     Renouvellement
+    </button>
+   </div>
+
+   <div class="card">
+    <h3>🏃 Carte sportive</h3>
+    <p>Demande de carte sportive.</p>
+
+    <button class="btn"
+     onclick="openCitizen('Carte sportive','Demande')">
+     Faire une demande
+    </button>
+   </div>
+
+  </div>
+ </div>
+</section>
+
+
+<section id="foreign" class="page">
+
+ <button class="back" onclick="showPage('internal')">
+  ← Service interne
+ </button>
+
+ <div class="card">
+  <h2>Espace étranger</h2>
+  <p>Vos démarches de séjour et d'identité.</p>
+
+  <div class="grid">
+
+   <div class="card">
+    <h3>🛂 Visas</h3>
+    <p>
+     Visa stage, visa travail et visa mineur accompagné.
+    </p>
+    <button class="btn" onclick="showPage('visa')">
+     Accéder
+    </button>
+   </div>
+
+   <div class="card">
+    <h3>🎓 Carte de statut — motif stagiaire</h3>
+    <p>Demande liée au statut stagiaire.</p>
+    <button class="btn"
+     onclick="openForeignRequest('Carte de statut — motif stagiaire')">
+     Faire une demande
+    </button>
+   </div>
+
+   <div class="card">
+    <h3>💼 Carte de statut — motif travail</h3>
+    <p>Demande liée au statut travail.</p>
+    <button class="btn"
+     onclick="openForeignRequest('Carte de statut — motif travail')">
+     Faire une demande
+    </button>
+   </div>
+
+   <div class="card">
+    <h3>👤 Titre d'identité pour mineur étranger</h3>
+    <p>
+     Demande destinée au mineur étranger.
+    </p>
+    <button class="btn"
+     onclick="openForeignRequest('Titre d’identité pour mineur étranger')">
+     Faire une demande
+    </button>
+   </div>
+
+  </div>
+
+  <div id="foreignNotifications"></div>
+ </div>
+</section>
+<div id="modal" class="modal">
+
+ <div class="modal-box">
+
+  <button class="modal-close"
+   onclick="closeModal()">×</button>
+
+  <h2 id="modalTitle">Demande</h2>
+
+  <form id="requestForm">
+
+   <input type="hidden" id="requestType">
+   <input type="hidden" id="requestSubtype">
+
+   <label>Nom</label>
+   <input id="lastName" required>
+
+   <label>Prénom</label>
+   <input id="firstName" required>
+
+   <label>Date de naissance</label>
+   <input id="birthDate" type="date" required>
+
+   <label>E-mail</label>
+   <input id="email" type="email" required>
+
+   <label>Téléphone</label>
+   <input id="phone">
+
+   <label>NIN / numéro étranger</label>
+   <input id="identityNumber">
+
+   <div id="documentsArea"></div>
+
+   <button class="btn" type="submit">
+    Déposer la demande
+   </button>
+
+  </form>
+ </div>
+</div>
+
+
+<div id="loginModal" class="modal">
+
+ <div class="modal-box">
+
+  <button class="modal-close"
+   onclick="closeLogin()">×</button>
+
+  <h2>Connexion administrative</h2>
+
+  <label>Identifiant</label>
+  <input id="loginIdentifier">
+
+  <label>Mot de passe</label>
+  <input id="loginPassword" type="password">
+
+  <p id="loginError" class="error"></p>
+
+  <button class="btn" onclick="loginAdmin()">
+   Se connecter
+  </button>
+
+ </div>
+</div>
+
+
+<style>
+.modal{
+ position:fixed;
+ inset:0;
+ z-index:3000;
+ display:none;
+ align-items:center;
+ justify-content:center;
+ padding:20px;
+ background:rgba(10,30,50,.58);
+ backdrop-filter:blur(5px);
+}
+
+.modal.active{
+ display:flex;
+}
+
+.modal-box{
+ width:min(560px,100%);
+ max-height:90vh;
+ overflow:auto;
+ padding:30px;
+ border-radius:24px;
+ background:white;
+ box-shadow:0 30px 80px rgba(0,0,0,.25);
+}
+
+.modal-close{
+ float:right;
+ width:36px;
+ height:36px;
+ border:0;
+ border-radius:50%;
+ background:#edf3f7;
+ font-size:22px;
+}
+
+label{
+ display:block;
+ margin:15px 0 7px;
+ font-weight:800;
+ font-size:14px;
+}
+
+input,select,textarea{
+ width:100%;
+ padding:13px;
+ border:1px solid #ccd9e3;
+ border-radius:11px;
+ outline:none;
+}
+
+input:focus,select:focus,textarea:focus{
+ border-color:var(--blue);
+}
+
+.document-field{
+ margin:18px 0;
+ padding:17px;
+ border:1px solid var(--border);
+ border-radius:15px;
+ background:#f9fbfd;
+}
+
+.document-field strong{
+ display:block;
+ margin-bottom:9px;
+}
+
+.error{
+ color:var(--red);
+ font-weight:700;
+}
+</style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+<script>
+
+const STORAGE_KEY = "MOSTAKBAL_DATA_V4";
+
+function initialData(){
+ return {
+  admin:{
+   identifier:"ADMIN",
+   password:"MOSTAKBAL2026"
+  },
+  accounts:[],
+  requests:[],
+  notifications:[]
+ };
+}
+
+function data(){
+ const raw=localStorage.getItem(STORAGE_KEY);
+
+ if(!raw){
+  const d=initialData();
+  save(d);
+  return d;
+ }
+
+ try{
+  return JSON.parse(raw);
+ }catch(e){
+  const d=initialData();
+  save(d);
+  return d;
+ }
+}
+
+function save(d){
+ localStorage.setItem(
+  STORAGE_KEY,
+  JSON.stringify(d)
+ );
+}
+
+
+const DOCUMENTS = {
+
+ "CNI|Première demande":[
+  "Certificat de nationalité",
+  "Photo d’identité",
+  "Extrait de naissance délivré par les autorités internes"
+ ],
+
+ "CNI|Renouvellement":[
+  "Ancienne CNI",
+  "Photo d’identité",
+  "Acte de naissance délivré par les autorités internes"
+ ],
+
+ "Passeport|Première demande":[
+  "Photo d’identité",
+  "Certificat de nationalité",
+  "NIN"
+ ],
+
+ "Passeport|Renouvellement":[
+  "Ancien passeport",
+  "Nouvelle photo d’identité",
+  "CNI"
+ ],
+
+ "Carte sportive|Demande":[
+  "Photo d’identité",
+  "Pièce d’identité"
+ ],
+
+ "Visa stage|Demande":[
+  "Passeport en cours de validité",
+  "Photo d’identité",
+  "Convention de stage",
+  "Attestation de l’organisme d’accueil",
+  "Justificatif de ressources",
+  "Assurance",
+  "Justificatif d’hébergement"
+ ],
+
+ "Visa travail|Demande":[
+  "Passeport en cours de validité",
+  "Photo d’identité",
+  "Contrat de travail ou promesse d’embauche",
+  "Justificatif de qualification professionnelle",
+  "Justificatif d’hébergement",
+  "Justificatif de ressources",
+  "Assurance"
+ ],
+
+ "Visa mineur accompagné|Demande":[
+  "Passeport du mineur",
+  "Photo d’identité",
+  "Acte de naissance",
+  "Autorisation parentale",
+  "Pièce d’identité du représentant légal",
+  "Justificatif du lien avec le représentant légal",
+  "Document attestant la régularité du séjour des parents",
+  "Justificatif d’hébergement",
+  "Assurance"
+ ],
+
+ "Carte de statut — motif stagiaire|Demande":[
+  "Passeport",
+  "Photo d’identité",
+  "Convention de stage",
+  "Justificatif d’hébergement",
+  "Justificatif de ressources",
+  "Assurance"
+ ],
+
+ "Carte de statut — motif travail|Demande":[
+  "Passeport",
+  "Photo d’identité",
+  "Contrat de travail ou promesse d’embauche",
+  "Justificatif d’hébergement",
+  "Justificatif de ressources",
+  "Assurance"
+ ],
+
+ "Titre d’identité pour mineur étranger|Demande":[
+  "Pièce d’identité d’origine",
+  "Acte de naissance délivré par les autorités étrangères",
+  "Visa",
+  "Justificatif du lien avec le représentant légal"
+ ]
+};
+
+
+function documentFields(type,subtype){
+
+ const list =
+  DOCUMENTS[type+"|"+subtype] || [];
+
+ const area =
+  document.getElementById("documentsArea");
+
+ area.innerHTML =
+  "<h3>Pièces à déposer</h3>";
+
+ list.forEach((doc,i)=>{
+
+  area.innerHTML += `
+   <div class="document-field">
+    <strong>${escapeHTML(doc)}</strong>
+    <input
+     type="file"
+     id="doc_${i}"
+     data-document="${escapeHTML(doc)}"
+     required
+    >
+   </div>
+  `;
+
+ });
+
+}
+function openCitizen(type,subtype){
+
+ document.getElementById("modalTitle").textContent =
+  type+" — "+subtype;
+
+ document.getElementById("requestType").value=type;
+ document.getElementById("requestSubtype").value=subtype;
+
+ document.getElementById("requestForm").reset();
+
+ document.getElementById("requestType").value=type;
+ document.getElementById("requestSubtype").value=subtype;
+
+ documentFields(type,subtype);
+
+ openModal();
+}
+
+
+function openVisa(type){
+
+ openCitizen(type,"Demande");
+
+}
+
+
+function openForeignRequest(type){
+
+ openCitizen(type,"Demande");
+
+}
+
+
+function openModal(){
+ document.getElementById("modal")
+  .classList.add("active");
+}
+
+
+function closeModal(){
+ document.getElementById("modal")
+  .classList.remove("active");
+}
+
+
+function openForeignLogin(){
+
+ showPage("foreign");
+
+ renderForeignNotifications();
+
+}
+
+
+document
+ .getElementById("requestForm")
+ .addEventListener("submit",async function(e){
+
+ e.preventDefault();
+
+ const type =
+  document.getElementById("requestType").value;
+
+ const subtype =
+  document.getElementById("requestSubtype").value;
+
+ const d=data();
+
+ const email =
+  document.getElementById("email").value.trim();
+
+
+ /*
+   Création automatique du compte citoyen/étranger
+   à la première demande.
+ */
+
+ let account =
+  d.accounts.find(a=>a.email===email);
+
+ if(!account){
+
+  account={
+   id:"USR-"+Date.now(),
+   email:email,
+   createdAt:new Date().toISOString()
+  };
+
+  d.accounts.push(account);
+ }
+
+
+ const dossier =
+  "DOS-"+Date.now().toString().slice(-8);
+
+ const reference =
+  "REF-"+Math.random()
+   .toString(36)
+   .substring(2,9)
+   .toUpperCase();
+
+
+ const documents=[];
+
+ const inputs =
+  document.querySelectorAll(
+   "#documentsArea input[type=file]"
+  );
+
+
+ for(const input of inputs){
+
+  const file=input.files[0];
+
+  if(!file)continue;
+
+  const content =
+   await fileToDataURL(file);
+
+  documents.push({
+   name:input.dataset.document,
+   filename:file.name,
+   type:file.type,
+   content:content
+  });
+
+ }
+
+
+ const request={
+
+  id:"REQ-"+Date.now(),
+
+  dossier:dossier,
+
+  reference:reference,
+
+  type:type,
+
+  subtype:subtype,
+
+  nom:
+   document.getElementById("lastName").value,
+
+  prenom:
+   document.getElementById("firstName").value,
+
+  naissance:
+   document.getElementById("birthDate").value,
+
+  email:email,
+
+  telephone:
+   document.getElementById("phone").value,
+
+  identite:
+   document.getElementById("identityNumber").value,
+
+  documents:documents,
+
+  status:"Reçue par l'administration",
+
+  instruction:"Non commencée",
+
+  decision:null,
+
+  date:new Date().toLocaleString("fr-FR"),
+
+  history:[
+   {
+    action:"Demande déposée",
+    date:new Date().toLocaleString("fr-FR")
+   }
+  ]
+
+ };
+
+
+ d.requests.push(request);
+
+
+ d.notifications.push({
+
+  id:"NOT-"+Date.now(),
+
+  requestId:request.id,
+
+  email:email,
+
+  title:"Demande reçue par l'administration",
+
+  message:
+   "Votre demande de "+type+
+   " a bien été reçue par l'administration.",
+
+  date:new Date().toLocaleString("fr-FR"),
+
+  read:false
+
+ });
+
+
+ save(d);
+
+ closeModal();
+
+ generateDepositPDF(request);
+
+ alert(
+  "Demande déposée avec succès.\n\n"+
+  "Numéro de dossier : "+dossier+
+  "\nRéférence : "+reference
+ );
+
+});
+
+
+function fileToDataURL(file){
+
+ return new Promise((resolve,reject)=>{
+
+  const reader=new FileReader();
+
+  reader.onload=()=>{
+   resolve(reader.result);
+  };
+
+  reader.onerror=reject;
+
+  reader.readAsDataURL(file);
+
+ });
+
+}
+
+
+function escapeHTML(value){
+
+ return String(value)
+  .replaceAll("&","&amp;")
+  .replaceAll("<","&lt;")
+  .replaceAll(">","&gt;")
+  .replaceAll('"',"&quot;")
+  .replaceAll("'","&#039;");
+}
+function generateDepositPDF(request){
+
+ const jsPDF =
+  window.jspdf && window.jspdf.jsPDF;
+
+ if(!jsPDF){
+  alert("Le générateur PDF n'est pas disponible.");
+  return;
+ }
+
+ const pdf=new jsPDF();
+
+ pdf.setFillColor(7,91,158);
+ pdf.rect(0,0,210,32,"F");
+
+ pdf.setTextColor(255,255,255);
+ pdf.setFontSize(22);
+ pdf.setFont(undefined,"bold");
+
+ pdf.text(
+  "MOSTAKBAL",
+  20,
+  21
+ );
+
+ pdf.setTextColor(24,50,74);
+
+ pdf.setFontSize(20);
+ pdf.text(
+  "CONFIRMATION DE DEPOT",
+  20,
+  52
+ );
+
+ pdf.setFontSize(11);
+
+ let y=72;
+
+ const lines=[
+
+  ["Numéro de dossier",request.dossier],
+
+  ["Référence",request.reference],
+
+  ["Nom",request.nom],
+
+  ["Prénom",request.prenom],
+
+  ["Démarche",
+   request.type+" — "+request.subtype],
+
+  ["Date de dépôt",request.date],
+
+  ["Statut",
+   "Demande reçue par l'administration"]
+
+ ];
+
+ lines.forEach(item=>{
+
+  pdf.setFont(undefined,"bold");
+  pdf.text(item[0]+" :",20,y);
+
+  pdf.setFont(undefined,"normal");
+  pdf.text(String(item[1]),75,y);
+
+  y+=15;
+
+ });
+
+
+ pdf.setDrawColor(220,230,238);
+ pdf.line(20,y+5,190,y+5);
+
+ y+=20;
+
+ pdf.setFontSize(10);
+
+ pdf.text(
+  "Cette confirmation atteste du dépôt de la demande.",
+  20,
+  y
+ );
+
+ pdf.text(
+  "Elle doit être conservée par le demandeur.",
+  20,
+  y+8
+ );
+
+
+ /*
+   Zone QR simplifiée pour le prototype.
+   Le numéro de dossier reste la référence principale.
+ */
+
+ pdf.setFontSize(8);
+
+ pdf.text(
+  "Référence : "+request.reference,
+  20,
+  270
+ );
+
+ pdf.save(
+  "MOSTAKBAL-"+request.dossier+".pdf"
+ );
+
+}
+
+
+/*
+  Le PDF contient bien :
+  - numéro de dossier
+  - référence
+  - identité
+  - démarche
+  - date
+  - statut
+*/
+<section id="admin" class="page">
+
+ <button class="back"
+  onclick="showPage('internal')">
+  ← Service interne
+ </button>
+
+ <div class="card">
+
+  <h2>🏛️ Service instructeur</h2>
+
+  <p>
+   Gestion et instruction des dossiers reçus.
+  </p>
+
+  <div id="adminRequests"></div>
+
+ </div>
+
+</section>
+
+
+<div id="instructionModal" class="modal">
+
+ <div class="modal-box">
+
+  <button class="modal-close"
+   onclick="closeInstruction()">
+   ×
+  </button>
+
+  <div id="instructionContent"></div>
+
+ </div>
+
+</div>
+
+
+<style>
+.request-admin{
+ margin:15px 0;
+ padding:20px;
+ border:1px solid var(--border);
+ border-radius:18px;
+ background:#fff;
+}
+
+.status{
+ display:inline-block;
+ padding:6px 10px;
+ border-radius:20px;
+ background:#eef5fa;
+ font-size:12px;
+ font-weight:800;
+}
+
+.document-admin{
+ margin:10px 0;
+ padding:12px;
+ border-radius:12px;
+ background:#f5f8fb;
+ display:flex;
+ align-items:center;
+ justify-content:space-between;
+ gap:10px;
+}
+</style>
+
+
+<script>
+
+function renderAdmin(){
+
+ const d=data();
+
+ const box=
+  document.getElementById("adminRequests");
+
+ if(!d.requests.length){
+
+  box.innerHTML=`
+   <div class="card">
+    <h3>📥 Aucune demande reçue</h3>
+    <p>
+     Les dossiers déposés apparaîtront ici.
+    </p>
+   </div>
+  `;
+
+  return;
+ }
+
+
+ box.innerHTML="";
+
+
+ d.requests.forEach((r,index)=>{
+
+  box.innerHTML+=`
+
+   <div class="request-admin">
+
+    <h3>
+     ${escapeHTML(r.type)}
+    </h3>
+
+    <p>
+     <strong>${escapeHTML(r.prenom)}
+     ${escapeHTML(r.nom)}</strong>
+    </p>
+
+    <p>
+     Dossier :
+     <strong>${escapeHTML(r.dossier)}</strong>
+    </p>
+
+    <p>
+     Référence :
+     <strong>${escapeHTML(r.reference)}</strong>
+    </p>
+
+    <span class="status">
+     ${escapeHTML(r.status)}
+    </span>
+
+    <br><br>
+
+    <button class="btn"
+     onclick="openInstruction(${index})">
+     Ouvrir le dossier
+    </button>
+
+   </div>
+
+  `;
+
+ });
+
+}
+
+
+function openInstruction(index){
+
+ const d=data();
+
+ const r=d.requests[index];
+
+ if(!r)return;
+
+
+ const box=
+  document.getElementById("instructionContent");
+
+
+ box.innerHTML=`
+
+  <h2>📁 Dossier ${escapeHTML(r.dossier)}</h2>
+
+  <p>
+   <strong>Référence :</strong>
+   ${escapeHTML(r.reference)}
+  </p>
+
+  <p>
+   <strong>Demande :</strong>
+   ${escapeHTML(r.type)}
+   — ${escapeHTML(r.subtype)}
+  </p>
+
+  <p>
+   <strong>Demandeur :</strong>
+   ${escapeHTML(r.prenom)}
+   ${escapeHTML(r.nom)}
+  </p>
+
+  <p>
+   <strong>E-mail :</strong>
+   ${escapeHTML(r.email)}
+  </p>
+
+  <hr>
+
+  <h3>📄 Pièces déposées</h3>
+
+  <div id="documentsAdmin"></div>
+
+  <hr>
+
+  <h3>🔎 Instruction</h3>
+
+  <label>Évaluation / barème</label>
+
+  <textarea
+   id="barreme"
+   rows="5"
+   placeholder="Renseignez votre instruction..."
+  >${escapeHTML(r.instruction||"")}</textarea>
+
+  <br><br>
+
+  <button class="btn"
+   onclick="saveInstruction(${index})">
+   Enregistrer l'instruction
+  </button>
+
+  <button class="btn-light"
+   onclick="makeDecision(${index},'Acceptée')">
+   ✅ Accepter
+  </button>
+
+  <button class="btn-light"
+   onclick="makeDecision(${index},'Pièce complémentaire demandée')">
+   🟠 Pièce complémentaire
+  </button>
+
+  <button class="btn-light"
+   onclick="makeDecision(${index},'Refusée')">
+   ❌ Refuser
+  </button>
+
+ `;
+
+
+ const documents =
+  document.getElementById("documentsAdmin");
+
+
+ if(!r.documents.length){
+
+  documents.innerHTML=
+   "<p>Aucune pièce déposée.</p>";
+
+ }else{
+
+  r.documents.forEach(doc=>{
+
+   documents.innerHTML+=`
+
+    <div class="document-admin">
+
+     <span>
+      📄 ${escapeHTML(doc.name)}
+     </span>
+
+     <button class="btn-light"
+      onclick="viewDocument('${r.id}','${encodeURIComponent(doc.name)}')">
+      Consulter
+     </button>
+
+    </div>
+
+   `;
+
+  });
+
+ }
+
+
+ document
+  .getElementById("instructionModal")
+  .classList.add("active");
+
+}
+
+
+function closeInstruction(){
+
+ document
+  .getElementById("instructionModal")
+  .classList.remove("active");
+
+}
+function saveInstruction(index){
+
+ const d=data();
+
+ const r=d.requests[index];
+
+ r.instruction=
+  document.getElementById("barreme").value;
+
+ r.status=
+  "Instruction en cours";
+
+ r.history.push({
+
+  action:"Instruction mise à jour",
+
+  date:new Date()
+   .toLocaleString("fr-FR")
+
+ });
+
+ save(d);
+
+ renderAdmin();
+
+ alert("Instruction enregistrée.");
+
+}
+
+
+function makeDecision(index,decision){
+
+ const d=data();
+
+ const r=d.requests[index];
+
+ r.decision=decision;
+
+ r.status=decision;
+
+ r.history.push({
+
+  action:"Décision : "+decision,
+
+  date:new Date()
+   .toLocaleString("fr-FR")
+
+ });
+
+
+ let title="";
+ let message="";
+
+
+ if(decision==="Acceptée"){
+
+  title="Demande acceptée";
+
+  message=
+   "Votre demande de "+
+   r.type+
+   " a été acceptée. "+
+   "Le document final sera transmis par e-mail.";
+
+ }
+
+ else if(
+  decision==="Pièce complémentaire demandée"
+ ){
+
+  title="Pièce complémentaire demandée";
+
+  message=
+   "Une pièce complémentaire est nécessaire "+
+   "pour poursuivre l'instruction de votre demande.";
+
+ }
+
+ else{
+
+  title="Demande refusée";
+
+  message=
+   "Votre demande de "+
+   r.type+
+   " a fait l'objet d'une décision de refus.";
+
+ }
+
+
+ d.notifications.push({
+
+  id:"NOT-"+Date.now(),
+
+  requestId:r.id,
+
+  email:r.email,
+
+  title:title,
+
+  message:message,
+
+  date:new Date()
+   .toLocaleString("fr-FR"),
+
+  read:false
+
+ });
+
+
+ /*
+   Pour une demande acceptée, on crée aussi
+   un document dans la file d'envoi e-mail.
+ */
+
+ if(decision==="Acceptée"){
+
+  r.emailDocument={
+   status:"À envoyer",
+   createdAt:new Date()
+    .toLocaleString("fr-FR")
+  };
+
+ }
+
+
+ save(d);
+
+ closeInstruction();
+
+ renderAdmin();
+
+ alert(
+  "Décision enregistrée : "+decision
+ );
+
+}
+
+
+function renderForeignNotifications(){
+
+ const d=data();
+
+ const box=
+  document.getElementById(
+   "foreignNotifications"
+  );
+
+ if(!d.notifications.length){
+
+  box.innerHTML=`
+   <div class="card">
+    <h3>🔔 Notifications</h3>
+    <p>Aucune notification.</p>
+   </div>
+  `;
+
+  return;
+ }
+
+
+ box.innerHTML=`
+
+  <div class="card" style="margin-top:25px">
+
+   <h3>🔔 Notifications</h3>
+
+   ${d.notifications.map(n=>`
+
+    <div class="request-admin">
+
+     <strong>
+      ${escapeHTML(n.title)}
+     </strong>
+
+     <p>
+      ${escapeHTML(n.message)}
+     </p>
+
+     <small>
+      ${escapeHTML(n.date)}
+     </small>
+
+    </div>
+
+   `).join("")}
+
+  </div>
+ `;
+
+}
+
+
+function viewDocument(requestId,encodedName){
+
+ const name=
+  decodeURIComponent(encodedName);
+
+ const d=data();
+
+ const r=
+  d.requests.find(
+   x=>x.id===requestId
+  );
+
+ if(!r)return;
+
+ const doc=
+  r.documents.find(
+   x=>x.name===name
+  );
+
+ if(!doc)return;
+
+
+ /*
+   Les fichiers sont affichés dans un nouvel onglet.
+ */
+
+ const win=
+  window.open("","_blank");
+
+ if(!win){
+
+  alert(
+   "Autorisez les fenêtres pop-up pour consulter le document."
+  );
+
+  return;
+ }
+
+
+ if(doc.type.startsWith("image/")){
+
+  win.document.write(`
+   <title>${escapeHTML(doc.name)}</title>
+   <body style="margin:0;background:#222;display:grid;place-items:center">
+    <img
+     src="${doc.content}"
+     style="max-width:95%;max-height:95vh"
+    >
+   </body>
+  `);
+
+ }else{
+
+  win.document.write(`
+   <title>${escapeHTML(doc.name)}</title>
+   <iframe
+    src="${doc.content}"
+    style="width:100%;height:100vh;border:0"
+   ></iframe>
+  `);
+
+ }
+
+}
+function openAdminLogin(){
+
+ document
+  .getElementById("loginModal")
+  .classList.add("active");
+
+}
+
+
+function closeLogin(){
+
+ document
+  .getElementById("loginModal")
+  .classList.remove("active");
+
+}
+
+
+function loginAdmin(){
+
+ const d=data();
+
+ const identifier=
+  document
+   .getElementById("loginIdentifier")
+   .value
+   .trim();
+
+ const password=
+  document
+   .getElementById("loginPassword")
+   .value;
+
+
+ const error=
+  document.getElementById("loginError");
+
+
+ if(
+  identifier===d.admin.identifier &&
+  password===d.admin.password
+ ){
+
+  error.textContent="";
+
+  closeLogin();
+
+  showPage("admin");
+
+  renderAdmin();
+
+ }else{
+
+  error.textContent=
+   "Identifiant ou mot de passe incorrect.";
+
+ }
+
+}
+
+
+/*
+=========================================================
+  MODIFICATION DES IDENTIFIANTS ADMINISTRATEUR
+=========================================================
+*/
+
+function changeAdminCredentials(){
+
+ const d=data();
+
+ const identifier=
+  prompt(
+   "Nouvel identifiant administrateur :",
+   d.admin.identifier
+  );
+
+ if(!identifier)return;
+
+
+ const password=
+  prompt(
+   "Nouveau mot de passe administrateur :"
+  );
+
+ if(!password)return;
+
+
+ d.admin.identifier=
+  identifier.trim();
+
+ d.admin.password=
+  password;
+
+ save(d);
+
+ alert(
+  "Les identifiants administrateur ont été modifiés."
+ );
+
+}
+
+
+/*
+=========================================================
+  INITIALISATION
+=========================================================
+*/
+
+function showPage(id){
+
+ document
+  .querySelectorAll(".page")
+  .forEach(page=>{
+   page.classList.remove("active");
+  });
+
+
+ const page=
+  document.getElementById(id);
+
+ if(page){
+
+  page.classList.add("active");
+
+  window.scrollTo({
+   top:0,
+   behavior:"smooth"
+  });
+
+ }
+
+}
+
+
+/*
+  Préparation du stockage.
+*/
+
+data();
+
+
+/*
+  Touche Échap :
+  fermeture des fenêtres.
+*/
+
+document.addEventListener(
+ "keydown",
+ function(e){
+
+  if(e.key==="Escape"){
+
+   closeModal();
+   closeLogin();
+   closeInstruction();
+
+  }
+
+ });
+
+
+/*
+=========================================================
+  FIN DU FICHIER
+=========================================================
+*/
+
+</script>
+
+</body>
+</html>
