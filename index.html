@@ -1,0 +1,3384 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>MOSTAKBAL — Portail administratif</title>
+
+<style>
+:root{
+  --blue:#0759d8;
+  --blue2:#174ea6;
+  --navy:#10253d;
+  --green:#087b58;
+  --purple:#6842c4;
+  --bg:#f4f7fb;
+  --white:#fff;
+  --text:#172235;
+  --muted:#6b7788;
+  --border:#dfe6ef;
+  --red:#b42318;
+  --shadow:0 20px 60px rgba(16,37,61,.10);
+}
+
+*{box-sizing:border-box}
+
+html{scroll-behavior:smooth}
+
+body{
+  margin:0;
+  background:
+    radial-gradient(circle at 90% 0,#e5efff 0,transparent 32%),
+    radial-gradient(circle at 0 100%,#e7f8f2 0,transparent 28%),
+    var(--bg);
+  color:var(--text);
+  font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+}
+
+button,input,select,textarea{font:inherit}
+
+button{cursor:pointer}
+
+button:focus,input:focus,select:focus,textarea:focus{
+  outline:none;
+  box-shadow:0 0 0 4px rgba(7,89,216,.10);
+}
+
+.topbar{
+  height:76px;
+  position:sticky;
+  top:0;
+  z-index:50;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 5%;
+  background:rgba(255,255,255,.90);
+  backdrop-filter:blur(18px);
+  border-bottom:1px solid var(--border);
+}
+
+.brand{
+  border:0;
+  background:transparent;
+  display:flex;
+  align-items:center;
+  gap:11px;
+  color:var(--text);
+  padding:0;
+}
+
+.logo{
+  width:44px;
+  height:44px;
+  display:grid;
+  place-items:center;
+  color:#fff;
+  font-weight:950;
+  font-size:21px;
+  border-radius:14px;
+  background:linear-gradient(135deg,#0759d8,#5b8ff0);
+  box-shadow:0 10px 25px rgba(7,89,216,.22);
+}
+
+.brand strong{
+  display:block;
+  font-size:15px;
+}
+
+.brand small{
+  display:block;
+  margin-top:2px;
+  color:var(--muted);
+  font-size:8px;
+  letter-spacing:.13em;
+  text-transform:uppercase;
+}
+
+.container{
+  width:min(1160px,calc(100% - 30px));
+  margin:auto;
+}
+
+.home{
+  padding:55px 0 90px;
+}
+
+.hero{
+  min-height:420px;
+  display:grid;
+  grid-template-columns:1.08fr .92fr;
+  gap:55px;
+  align-items:center;
+}
+
+.badge{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  padding:9px 13px;
+  border-radius:30px;
+  background:#edf4ff;
+  color:var(--blue);
+  font-size:9px;
+  font-weight:900;
+  letter-spacing:.12em;
+}
+
+.badge-dot{
+  width:7px;
+  height:7px;
+  border-radius:50%;
+  background:#16a36c;
+}
+
+.hero h1{
+  margin:20px 0 18px;
+  font-size:clamp(45px,6vw,73px);
+  line-height:.96;
+  letter-spacing:-4px;
+}
+
+.hero h1 span{color:var(--blue)}
+
+.hero p{
+  max-width:570px;
+  color:var(--muted);
+  line-height:1.75;
+  font-size:15px;
+}
+
+.hero-visual{
+  height:340px;
+  display:grid;
+  place-items:center;
+  position:relative;
+}
+
+.mock-card{
+  width:300px;
+  padding:28px;
+  border:1px solid var(--border);
+  border-radius:27px;
+  background:#fff;
+  box-shadow:0 30px 75px rgba(16,37,61,.14);
+  transform:rotate(-3deg);
+}
+
+.mock-icon{
+  width:64px;
+  height:64px;
+  display:grid;
+  place-items:center;
+  border-radius:19px;
+  background:#edf4ff;
+  font-size:30px;
+}
+
+.mock-card h2{margin:18px 0 7px}
+
+.mock-card p{
+  color:var(--muted);
+  font-size:11px;
+  line-height:1.6;
+}
+
+.mock-ok{
+  margin-top:17px;
+  padding:12px;
+  border-radius:12px;
+  background:#eaf8f2;
+  color:var(--green);
+  font-size:10px;
+  font-weight:900;
+}
+
+.float-card{
+  position:absolute;
+  right:0;
+  bottom:10px;
+  width:185px;
+  padding:17px;
+  border:1px solid var(--border);
+  border-radius:18px;
+  background:#fff;
+  box-shadow:0 20px 50px rgba(16,37,61,.12);
+  font-size:10px;
+}
+
+.section-title{
+  margin:15px 0 20px;
+}
+
+.section-title small,
+.heading span{
+  color:var(--blue);
+  font-size:9px;
+  font-weight:950;
+  letter-spacing:.14em;
+}
+
+.section-title h2{
+  margin:8px 0;
+}
+
+.section-title p,
+.heading p{
+  color:var(--muted);
+  font-size:13px;
+}
+
+.services{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:18px;
+}
+
+.service{
+  min-height:310px;
+  position:relative;
+  overflow:hidden;
+  border:0;
+  border-radius:28px;
+  padding:28px;
+  color:#fff;
+  text-align:left;
+  transition:.2s;
+}
+
+.service:hover{
+  transform:translateY(-5px);
+  box-shadow:0 28px 65px rgba(16,37,61,.18);
+}
+
+.service.internal{
+  background:linear-gradient(135deg,#10253d,#0759d8);
+}
+
+.service.visa{
+  background:linear-gradient(135deg,#07503d,#087b58);
+}
+
+.service-icon{
+  width:62px;
+  height:62px;
+  display:grid;
+  place-items:center;
+  border-radius:19px;
+  background:rgba(255,255,255,.13);
+  font-size:28px;
+}
+
+.service-arrow{
+  position:absolute;
+  top:25px;
+  right:25px;
+  width:43px;
+  height:43px;
+  display:grid;
+  place-items:center;
+  border-radius:50%;
+  background:rgba(255,255,255,.13);
+}
+
+.service-body{
+  position:absolute;
+  left:28px;
+  right:28px;
+  bottom:27px;
+}
+
+.service-body small{
+  color:rgba(255,255,255,.65);
+  font-size:8px;
+  letter-spacing:.13em;
+}
+
+.service-body h2{
+  margin:7px 0;
+  font-size:29px;
+}
+
+.service-body p{
+  margin:0;
+  color:rgba(255,255,255,.75);
+  font-size:11px;
+  line-height:1.6;
+}
+
+.page{
+  display:none;
+  padding:38px 0 80px;
+}
+
+.page.active{display:block}
+
+.back{
+  border:0;
+  background:transparent;
+  color:var(--muted);
+  font-size:12px;
+  font-weight:850;
+  padding:5px 0;
+  margin-bottom:25px;
+}
+
+.heading h1{
+  margin:7px 0;
+  font-size:clamp(35px,5vw,53px);
+  letter-spacing:-2.5px;
+}
+
+.cards{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:16px;
+  margin-top:28px;
+}
+
+.card{
+  border:1px solid var(--border);
+  background:#fff;
+  border-radius:19px;
+  padding:21px;
+  text-align:left;
+  transition:.2s;
+}
+
+.card:hover{
+  transform:translateY(-4px);
+  box-shadow:var(--shadow);
+}
+
+.card-icon{
+  width:48px;
+  height:48px;
+  display:grid;
+  place-items:center;
+  border-radius:14px;
+  background:#edf4ff;
+  font-size:22px;
+}
+
+.card strong{
+  display:block;
+  margin-top:13px;
+  font-size:14px;
+}
+
+.card span{
+  display:block;
+  margin-top:5px;
+  color:var(--muted);
+  font-size:10px;
+  line-height:1.5;
+}
+
+@media(max-width:800px){
+  .hero{
+    grid-template-columns:1fr;
+  }
+
+  .hero-visual{display:none}
+
+  .services,
+  .cards{
+    grid-template-columns:1fr;
+  }
+}
+</style>
+</head>
+
+<body>
+
+<header class="topbar">
+  <button class="brand" onclick="showPage('home')">
+    <div class="logo">M</div>
+    <div>
+      <strong>MOSTAKBAL</strong>
+      <small>Portail administratif numérique</small>
+    </div>
+  </button>
+</header>
+
+<main id="home" class="container home">
+
+<section class="hero">
+
+<div>
+  <div class="badge">
+    <span class="badge-dot"></span>
+    PORTAIL ADMINISTRATIF NUMÉRIQUE
+  </div>
+
+  <h1>
+    Bienvenue sur<br>
+    <span>MOSTAKBAL</span>
+  </h1>
+
+  <p>
+    Un portail administratif moderne permettant d'accéder aux services,
+    déposer des démarches, suivre les dossiers et gérer leur traitement
+    dans une interface inspirée de l'esprit des grands services publics
+    numériques.
+  </p>
+</div>
+
+<div class="hero-visual">
+  <div class="mock-card">
+    <div class="mock-icon">🏛️</div>
+    <h2>Un portail unique</h2>
+    <p>
+      Vos démarches administratives réunies dans une expérience simple,
+      claire et moderne.
+    </p>
+    <div class="mock-ok">✓ Services disponibles</div>
+  </div>
+
+  <div class="float-card">
+    <strong>📄 ESPACE NUMÉRIQUE</strong>
+    <br><br>
+    Confirmation de dépôt,
+    suivi des dossiers et notifications.
+  </div>
+</div>
+
+</section>
+
+<div class="section-title">
+  <small>ACCÈS AUX SERVICES</small>
+  <h2>Que souhaitez-vous faire ?</h2>
+  <p>Choisissez l'un des deux services principaux.</p>
+</div>
+
+<div class="services">
+
+<button class="service internal"
+        onclick="showPage('internal')">
+
+  <div class="service-icon">🏛️</div>
+  <div class="service-arrow">→</div>
+
+  <div class="service-body">
+    <small>ACCÈS AUX ESPACES</small>
+    <h2>Service interne</h2>
+    <p>
+      Espace étranger, espace citoyen et espace administratif.
+    </p>
+  </div>
+
+</button>
+
+<button class="service visa"
+        onclick="showPage('visa-account')">
+
+  <div class="service-icon">🛂</div>
+  <div class="service-arrow">→</div>
+
+  <div class="service-body">
+    <small>COMPTE OBLIGATOIRE</small>
+    <h2>Service visa</h2>
+    <p>
+      Créer ou utiliser votre compte Visa.
+    </p>
+  </div>
+
+</button>
+
+</div>
+
+</main>
+<section id="internal" class="page container">
+
+<button class="back" onclick="showPage('home')">← Retour</button>
+
+<div class="heading">
+  <span>SERVICE INTERNE</span>
+  <h1>Choisissez votre espace</h1>
+  <p>Trois espaces distincts pour accéder aux services correspondants.</p>
+</div>
+
+<div class="cards">
+
+<button class="service internal"
+        onclick="showPage('foreign-login')">
+
+  <div class="service-icon">🌍</div>
+  <div class="service-arrow">→</div>
+
+  <div class="service-body">
+    <small>SERVICE INTERNE</small>
+    <h2>Espace étranger</h2>
+    <p>
+      Compte étranger et démarches liées au statut.
+    </p>
+  </div>
+
+</button>
+
+<button class="service internal"
+        onclick="showPage('citizen')">
+
+  <div class="service-icon">👤</div>
+  <div class="service-arrow">→</div>
+
+  <div class="service-body">
+    <small>SERVICE INTERNE</small>
+    <h2>Espace citoyen</h2>
+    <p>
+      Démarches et documents administratifs.
+    </p>
+  </div>
+
+</button>
+
+<button class="service internal"
+        onclick="showPage('admin-login')">
+
+  <div class="service-icon">🏛️</div>
+  <div class="service-arrow">→</div>
+
+  <div class="service-body">
+    <small>SERVICE INTERNE</small>
+    <h2>Espace administratif</h2>
+    <p>
+      Traitement des demandes, notifications et administration.
+    </p>
+  </div>
+
+</button>
+
+</div>
+
+</section>
+
+
+<section id="foreign-login" class="page container">
+
+<button class="back" onclick="showPage('internal')">← Retour</button>
+
+<div class="heading">
+  <span>ESPACE ÉTRANGER</span>
+  <h1>Connexion</h1>
+  <p>Connectez-vous à votre compte.</p>
+</div>
+
+<div class="form-box">
+
+<h2>🌍 Se connecter</h2>
+
+<label>Identifiant</label>
+<input id="foreignIdentifier"
+       autocomplete="username"
+       placeholder="Votre identifiant">
+
+<label>Mot de passe</label>
+<input id="foreignPassword"
+       type="password"
+       autocomplete="current-password"
+       placeholder="Votre mot de passe">
+
+<button class="primary"
+        onclick="foreignLogin()">
+  Se connecter
+</button>
+
+<button class="secondary"
+        onclick="showPage('foreign-create')">
+  Créer un compte
+</button>
+
+<p id="foreignMessage" class="message"></p>
+
+</div>
+
+</section>
+
+
+<section id="foreign-create" class="page container">
+
+<button class="back" onclick="showPage('foreign-login')">
+  ← Retour
+</button>
+
+<div class="heading">
+  <span>ESPACE ÉTRANGER</span>
+  <h1>Créer un compte</h1>
+</div>
+
+<div class="form-box">
+
+<label>Nom</label>
+<input id="foreignLastName">
+
+<label>Prénom</label>
+<input id="foreignFirstName">
+
+<label>E-mail</label>
+<input id="foreignEmail" type="email">
+
+<label>Mot de passe</label>
+<input id="foreignNewPassword" type="password">
+
+<button class="primary"
+        onclick="createForeignAccount()">
+  Créer mon compte
+</button>
+
+<p id="foreignCreateMessage" class="message"></p>
+
+</div>
+
+</section>
+
+
+<section id="citizen" class="page container">
+
+<button class="back" onclick="showPage('internal')">
+  ← Retour
+</button>
+
+<div class="heading">
+  <span>ESPACE CITOYEN</span>
+  <h1>Mes démarches</h1>
+  <p>Choisissez directement la démarche souhaitée.</p>
+</div>
+
+<div class="cards">
+
+<button class="card" onclick="showPage('birth')">
+  <div class="card-icon">📄</div>
+  <strong>Extrait de naissance</strong>
+  <span>Demander un extrait de naissance.</span>
+</button>
+
+<button class="card" onclick="showPage('cni-choice')">
+  <div class="card-icon">🪪</div>
+  <strong>Carte nationale d'identité</strong>
+  <span>Première demande ou renouvellement.</span>
+</button>
+
+<button class="card" onclick="showPage('passport-choice')">
+  <div class="card-icon">🛂</div>
+  <strong>Passeport</strong>
+  <span>Première demande ou renouvellement.</span>
+</button>
+
+<button class="card" onclick="showPage('work')">
+  <div class="card-icon">💼</div>
+  <strong>Autorisation de travail</strong>
+  <span>Effectuer une demande d'autorisation.</span>
+</button>
+
+<button class="card" onclick="showPage('health')">
+  <div class="card-icon">🏥</div>
+  <strong>Passe santé M</strong>
+  <span>Demander le document correspondant.</span>
+</button>
+
+<button class="card" onclick="showPage('my-requests')">
+  <div class="card-icon">📁</div>
+  <strong>Mes demandes</strong>
+  <span>Consulter les demandes et leur statut.</span>
+</button>
+
+</div>
+
+</section>
+<section id="birth" class="page container">
+
+<button class="back" onclick="showPage('citizen')">← Retour</button>
+
+<div class="heading">
+  <span>EXTRAIT DE NAISSANCE</span>
+  <h1>Nouvelle demande</h1>
+</div>
+
+<div class="form-box">
+
+<label>Nom</label>
+<input id="birthLastName">
+
+<label>Prénom</label>
+<input id="birthFirstName">
+
+<label>Date de naissance</label>
+<input id="birthDate" type="date">
+
+<label>Lieu de naissance</label>
+<input id="birthPlace">
+
+<label>Numéro d'identification nationale (NIN)</label>
+<input id="birthNIN">
+
+<label>E-mail</label>
+<input id="birthEmail" type="email">
+
+<button class="primary"
+        onclick="submitBirth()">
+  Déposer la demande
+</button>
+
+</div>
+
+</section>
+
+
+<section id="cni-choice" class="page container">
+
+<button class="back" onclick="showPage('citizen')">← Retour</button>
+
+<div class="heading">
+  <span>CARTE NATIONALE D'IDENTITÉ</span>
+  <h1>Type de demande</h1>
+  <p>Choisissez le type de démarche.</p>
+</div>
+
+<div class="choice-grid">
+
+<button class="choice"
+        onclick="showPage('cni-first')">
+  <b>🪪 Première demande</b>
+  <span>
+    Certificat de nationalité, photo d'identité
+    et extrait de naissance délivré par les autorités internes.
+  </span>
+</button>
+
+<button class="choice"
+        onclick="showPage('cni-renew')">
+  <b>♻️ Renouvellement</b>
+  <span>
+    Ancienne CNI, photo d'identité
+    et acte de naissance délivré par les autorités internes.
+  </span>
+</button>
+
+</div>
+
+</section>
+
+
+<section id="cni-first" class="page container">
+
+<button class="back" onclick="showPage('cni-choice')">← Retour</button>
+
+<div class="heading">
+  <span>CNI — PREMIÈRE DEMANDE</span>
+  <h1>Formulaire</h1>
+</div>
+
+<div class="form-box">
+
+<label>Nom</label>
+<input id="cniFirstLast">
+
+<label>Prénom</label>
+<input id="cniFirstFirst">
+
+<label>NIN</label>
+<input id="cniFirstNIN">
+
+<label>E-mail</label>
+<input id="cniFirstEmail" type="email">
+
+<div class="documents">
+  <b>Documents demandés</b>
+  <p>✓ Certificat de nationalité</p>
+  <p>✓ Photo d'identité</p>
+  <p>✓ Extrait de naissance délivré par les autorités internes</p>
+</div>
+
+<button class="primary"
+        onclick="submitCNI('Première demande')">
+  Déposer la demande
+</button>
+
+</div>
+
+</section>
+
+
+<section id="cni-renew" class="page container">
+
+<button class="back" onclick="showPage('cni-choice')">← Retour</button>
+
+<div class="heading">
+  <span>CNI — RENOUVELLEMENT</span>
+  <h1>Formulaire</h1>
+</div>
+
+<div class="form-box">
+
+<label>Nom</label>
+<input id="cniRenewLast">
+
+<label>Prénom</label>
+<input id="cniRenewFirst">
+
+<label>NIN</label>
+<input id="cniRenewNIN">
+
+<label>E-mail</label>
+<input id="cniRenewEmail" type="email">
+
+<div class="documents">
+  <b>Documents demandés</b>
+  <p>✓ Ancienne CNI</p>
+  <p>✓ Photo d'identité</p>
+  <p>✓ Acte de naissance délivré par les autorités internes</p>
+</div>
+
+<button class="primary"
+        onclick="submitCNI('Renouvellement')">
+  Déposer la demande
+</button>
+
+</div>
+
+</section>
+
+
+<section id="passport-choice" class="page container">
+
+<button class="back" onclick="showPage('citizen')">← Retour</button>
+
+<div class="heading">
+  <span>PASSEPORT</span>
+  <h1>Type de demande</h1>
+</div>
+
+<div class="choice-grid">
+
+<button class="choice"
+        onclick="showPage('passport-first')">
+  <b>🛂 Première demande</b>
+  <span>
+    Photo d'identité, certificat de nationalité et NIN.
+  </span>
+</button>
+
+<button class="choice"
+        onclick="showPage('passport-renew')">
+  <b>♻️ Renouvellement</b>
+  <span>
+    Ancien passeport, nouvelle photo et CNI.
+  </span>
+</button>
+
+</div>
+
+</section>
+<section id="passport-first" class="page container">
+
+<button class="back" onclick="showPage('passport-choice')">
+  ← Retour
+</button>
+
+<div class="heading">
+  <span>PASSEPORT — PREMIÈRE DEMANDE</span>
+  <h1>Formulaire</h1>
+</div>
+
+<div class="form-box">
+
+<label>Nom</label>
+<input id="passportFirstLast">
+
+<label>Prénom</label>
+<input id="passportFirstFirst">
+
+<label>NIN</label>
+<input id="passportFirstNIN">
+
+<label>E-mail</label>
+<input id="passportFirstEmail" type="email">
+
+<div class="documents">
+  <b>Documents demandés</b>
+  <p>✓ Photo d'identité</p>
+  <p>✓ Certificat de nationalité</p>
+  <p>✓ NIN</p>
+</div>
+
+<button class="primary"
+        onclick="submitPassport('Première demande')">
+  Déposer la demande
+</button>
+
+</div>
+
+</section>
+
+
+<section id="passport-renew" class="page container">
+
+<button class="back" onclick="showPage('passport-choice')">
+  ← Retour
+</button>
+
+<div class="heading">
+  <span>PASSEPORT — RENOUVELLEMENT</span>
+  <h1>Formulaire</h1>
+</div>
+
+<div class="form-box">
+
+<label>Nom</label>
+<input id="passportRenewLast">
+
+<label>Prénom</label>
+<input id="passportRenewFirst">
+
+<label>NIN</label>
+<input id="passportRenewNIN">
+
+<label>E-mail</label>
+<input id="passportRenewEmail" type="email">
+
+<div class="documents">
+  <b>Documents demandés</b>
+  <p>✓ Ancien passeport</p>
+  <p>✓ Nouvelle photo</p>
+  <p>✓ CNI</p>
+</div>
+
+<button class="primary"
+        onclick="submitPassport('Renouvellement')">
+  Déposer la demande
+</button>
+
+</div>
+
+</section>
+
+
+<section id="work" class="page container">
+
+<button class="back" onclick="showPage('citizen')">
+  ← Retour
+</button>
+
+<div class="heading">
+  <span>AUTORISATION DE TRAVAIL</span>
+  <h1>Nouvelle demande</h1>
+</div>
+
+<div class="form-box">
+
+<label>Nom</label>
+<input id="workLast">
+
+<label>Prénom</label>
+<input id="workFirst">
+
+<label>E-mail</label>
+<input id="workEmail" type="email">
+
+<label>Motif</label>
+<textarea id="workReason"></textarea>
+
+<button class="primary"
+        onclick="submitWork()">
+  Déposer la demande
+</button>
+
+</div>
+
+</section>
+
+
+<section id="health" class="page container">
+
+<button class="back" onclick="showPage('citizen')">
+  ← Retour
+</button>
+
+<div class="heading">
+  <span>PASSE SANTÉ M</span>
+  <h1>Nouvelle demande</h1>
+</div>
+
+<div class="form-box">
+
+<label>Nom</label>
+<input id="healthLast">
+
+<label>Prénom</label>
+<input id="healthFirst">
+
+<label>Numéro de sécurité sociale</label>
+<input id="healthSecurity">
+
+<label>E-mail</label>
+<input id="healthEmail" type="email">
+
+<button class="primary"
+        onclick="submitHealth()">
+  Déposer la demande
+</button>
+
+</div>
+
+</section>
+
+
+<section id="my-requests" class="page container">
+
+<button class="back" onclick="showPage('citizen')">
+  ← Retour
+</button>
+
+<div class="heading">
+  <span>MES DEMANDES</span>
+  <h1>Suivi de mes dossiers</h1>
+</div>
+
+<div id="myRequestsList" class="request-list"></div>
+
+</section>
+
+
+<section id="confirmation" class="page container">
+
+<div class="confirmation">
+
+<div class="confirmation-logo">M</div>
+
+<h1>Confirmation de dépôt</h1>
+
+<div class="success">
+  ✓ Votre demande a bien été déposée.
+</div>
+
+<div id="confirmationContent"></div>
+
+<button class="primary"
+        onclick="window.print()">
+  Enregistrer / imprimer
+</button>
+
+</div>
+
+</section>
+<section id="visa-account" class="page container">
+
+<button class="back" onclick="showPage('home')">
+  ← Retour
+</button>
+
+<div class="heading">
+  <span>SERVICE VISA</span>
+  <h1>Votre compte</h1>
+  <p>
+    Un compte est obligatoire pour effectuer une demande de visa.
+  </p>
+</div>
+
+<div class="choice-grid">
+
+<button class="choice"
+        onclick="showPage('visa-login')">
+
+  <b>🔐 Se connecter</b>
+
+  <span>
+    Connexion avec votre adresse e-mail
+    et votre mot de passe.
+  </span>
+
+</button>
+
+<button class="choice"
+        onclick="showPage('visa-create')">
+
+  <b>✉️ Créer un compte</b>
+
+  <span>
+    Votre adresse e-mail servira d'identifiant.
+  </span>
+
+</button>
+
+</div>
+
+</section>
+
+
+<section id="visa-create" class="page container">
+
+<button class="back" onclick="showPage('visa-account')">
+  ← Retour
+</button>
+
+<div class="heading">
+  <span>SERVICE VISA</span>
+  <h1>Créer un compte</h1>
+</div>
+
+<div class="form-box">
+
+<label>E-mail</label>
+<input id="visaCreateEmail"
+       type="email"
+       autocomplete="email">
+
+<label>Mot de passe</label>
+<input id="visaCreatePassword"
+       type="password"
+       autocomplete="new-password">
+
+<button class="primary"
+        onclick="createVisaAccount()">
+  Créer mon compte
+</button>
+
+<p id="visaCreateMessage" class="message"></p>
+
+</div>
+
+</section>
+
+
+<section id="visa-login" class="page container">
+
+<button class="back" onclick="showPage('visa-account')">
+  ← Retour
+</button>
+
+<div class="heading">
+  <span>SERVICE VISA</span>
+  <h1>Connexion</h1>
+</div>
+
+<div class="form-box">
+
+<label>E-mail</label>
+<input id="visaLoginEmail"
+       type="email"
+       autocomplete="username">
+
+<label>Mot de passe</label>
+<input id="visaLoginPassword"
+       type="password"
+       autocomplete="current-password">
+
+<button class="primary"
+        onclick="loginVisa()">
+  Se connecter
+</button>
+
+<p id="visaLoginMessage" class="message"></p>
+
+</div>
+
+</section>
+
+
+<section id="visa-new" class="page container">
+
+<button class="back" onclick="showPage('visa-account')">
+  ← Retour
+</button>
+
+<div class="heading">
+  <span>SERVICE VISA</span>
+  <h1>Nouvelle demande</h1>
+  <p>Trois types de visa sont disponibles.</p>
+</div>
+
+<div class="visa-list">
+
+<button class="visa-choice"
+        onclick="openVisaForm('Visa stage')">
+
+  <b>🎓 Visa stage</b>
+
+  <span>
+    Visa valable 3 mois.
+    Demande de carte de statut stagiaire ensuite.
+    Carte de statut : 1 an.
+  </span>
+
+</button>
+
+<button class="visa-choice"
+        onclick="openVisaForm('Visa travail')">
+
+  <b>💼 Visa travail</b>
+
+  <span>
+    Visa valable 3 mois.
+    Demande de carte de statut travailleur ensuite.
+    Carte de statut : 5 ans.
+  </span>
+
+</button>
+
+<button class="visa-choice"
+        onclick="openVisaForm('Visa mineur accompagné')">
+
+  <b>👨‍👩‍👧 Visa mineur accompagné</b>
+
+  <span>
+    Visa valable 3 mois.
+    La durée de TIME dépend du statut
+    du parent ou représentant légal.
+  </span>
+
+</button>
+
+</div>
+
+</section>
+
+
+<section id="visa-form" class="page container">
+
+<button class="back" onclick="showPage('visa-new')">
+  ← Retour
+</button>
+
+<div class="heading">
+  <span id="visaFormLabel">VISA</span>
+  <h1>Formulaire de demande</h1>
+</div>
+
+<div class="form-box">
+
+<label>Nom</label>
+<input id="visaLast">
+
+<label>Prénom</label>
+<input id="visaFirst">
+
+<label>E-mail du compte</label>
+<input id="visaAccountEmail" readonly>
+
+<div id="minorVisaFields"></div>
+
+<button class="primary"
+        onclick="submitVisa()">
+  Déposer la demande
+</button>
+
+</div>
+
+</section>
+
+
+<section id="admin-login" class="page container">
+
+<button class="back" onclick="showPage('internal')">
+  ← Retour
+</button>
+
+<div class="heading">
+  <span>ESPACE ADMINISTRATIF</span>
+  <h1>Connexion</h1>
+  <p>Accès réservé à l'administrateur.</p>
+</div>
+
+<div class="form-box">
+
+<h2>🏛️ Administrateur</h2>
+
+<label>Identifiant</label>
+<input id="adminIdentifier"
+       autocomplete="username">
+
+<label>Mot de passe</label>
+<input id="adminPassword"
+       type="password"
+       autocomplete="current-password">
+
+<button class="primary"
+        onclick="adminLogin()">
+  Se connecter
+</button>
+
+<p id="adminLoginMessage" class="message"></p>
+
+</div>
+
+</section>
+<section id="admin" class="page container">
+
+<div class="admin-header">
+
+<div>
+  <span>ESPACE ADMINISTRATIF</span>
+  <h1>Tableau de bord</h1>
+  <p>
+    Gestion des demandes, notifications et décisions administratives.
+  </p>
+</div>
+
+<button class="logout"
+        onclick="adminLogout()">
+  Déconnexion
+</button>
+
+</div>
+
+<div class="stats">
+
+<div class="stat">
+  <small>TOTAL</small>
+  <strong id="statTotal">0</strong>
+</div>
+
+<div class="stat">
+  <small>NOUVELLES</small>
+  <strong id="statNew">0</strong>
+</div>
+
+<div class="stat">
+  <small>ACCEPTÉES</small>
+  <strong id="statAccepted">0</strong>
+</div>
+
+<div class="stat">
+  <small>REFUSÉES</small>
+  <strong id="statRejected">0</strong>
+</div>
+
+</div>
+
+<div class="admin-menu">
+
+<button class="admin-menu-button"
+        onclick="showPage('admin-requests')">
+
+  <b>📂 Toutes les demandes</b>
+
+  <span>
+    Consulter et traiter les dossiers.
+  </span>
+
+</button>
+
+
+<button class="admin-menu-button"
+        onclick="showPage('admin-notifications')">
+
+  <b>🔔 Notifications</b>
+
+  <span>
+    Toutes les nouvelles demandes et changements.
+  </span>
+
+</button>
+
+
+<button class="admin-menu-button"
+        onclick="showPage('admin-own')">
+
+  <b>👤 Mes démarches administratives</b>
+
+  <span>
+    L'administrateur peut également effectuer
+    ses propres démarches citoyennes.
+  </span>
+
+</button>
+
+
+<button class="admin-menu-button"
+        onclick="showPage('admin-settings')">
+
+  <b>⚙️ Compte administrateur</b>
+
+  <span>
+    Changer l'identifiant et le mot de passe.
+  </span>
+
+</button>
+
+</div>
+
+</section>
+
+
+<section id="admin-requests" class="page container">
+
+<button class="back" onclick="showPage('admin')">
+  ← Retour
+</button>
+
+<div class="heading">
+  <span>ADMINISTRATION</span>
+  <h1>Toutes les demandes</h1>
+  <p>Chaque démarche déposée apparaît ici.</p>
+</div>
+
+<div id="adminRequestsList"
+     class="request-list">
+</div>
+
+</section>
+
+
+<section id="admin-notifications" class="page container">
+
+<button class="back" onclick="showPage('admin')">
+  ← Retour
+</button>
+
+<div class="heading">
+  <span>ADMINISTRATION</span>
+  <h1>Notifications</h1>
+  <p>
+    Les notifications concernent toutes les démarches,
+    et pas uniquement les visas.
+  </p>
+</div>
+
+<div id="adminNotificationsList"
+     class="request-list">
+</div>
+
+</section>
+
+
+<section id="admin-own" class="page container">
+
+<button class="back" onclick="showPage('admin')">
+  ← Retour
+</button>
+
+<div class="heading">
+  <span>MES DÉMARCHES ADMINISTRATIVES</span>
+  <h1>Mes propres démarches</h1>
+  <p>
+    L'administrateur peut utiliser le portail
+    comme citoyen pour ses propres demandes.
+  </p>
+</div>
+
+<div class="cards">
+
+<button class="card"
+        onclick="openAdminOwn('Extrait de naissance')">
+  <div class="card-icon">📄</div>
+  <strong>Extrait de naissance</strong>
+  <span>Faire ma propre demande.</span>
+</button>
+
+<button class="card"
+        onclick="openAdminOwn('CNI')">
+  <div class="card-icon">🪪</div>
+  <strong>CNI</strong>
+  <span>Première demande ou renouvellement.</span>
+</button>
+
+<button class="card"
+        onclick="openAdminOwn('Passeport')">
+  <div class="card-icon">🛂</div>
+  <strong>Passeport</strong>
+  <span>Première demande ou renouvellement.</span>
+</button>
+
+<button class="card"
+        onclick="openAdminOwn('Autorisation de travail')">
+  <div class="card-icon">💼</div>
+  <strong>Autorisation de travail</strong>
+  <span>Effectuer ma demande.</span>
+</button>
+
+</div>
+
+</section>
+
+
+<section id="admin-own-form" class="page container">
+
+<button class="back" onclick="showPage('admin-own')">
+  ← Retour
+</button>
+
+<div class="heading">
+  <span>MES DÉMARCHES ADMINISTRATIVES</span>
+  <h1 id="adminOwnTitle">Démarche</h1>
+</div>
+
+<div class="form-box">
+
+<label>Nom</label>
+<input id="adminOwnLast">
+
+<label>Prénom</label>
+<input id="adminOwnFirst">
+
+<label>NIN</label>
+<input id="adminOwnNIN">
+
+<label>E-mail</label>
+<input id="adminOwnEmail" type="email">
+
+<button class="primary"
+        onclick="submitAdminOwn()">
+  Déposer ma demande
+</button>
+
+</div>
+
+</section>
+<section id="admin-settings" class="page container">
+
+<button class="back" onclick="showPage('admin')">
+  ← Retour
+</button>
+
+<div class="heading">
+  <span>COMPTE ADMINISTRATEUR</span>
+  <h1>Paramètres</h1>
+  <p>
+    Modifier l'identifiant et le mot de passe administrateur.
+  </p>
+</div>
+
+<div class="form-box">
+
+<label>Nouvel identifiant</label>
+<input id="newAdminIdentifier">
+
+<label>Nouveau mot de passe</label>
+<input id="newAdminPassword"
+       type="password">
+
+<button class="primary"
+        onclick="saveAdminCredentials()">
+  Enregistrer les modifications
+</button>
+
+<p id="adminSettingsMessage"
+   class="message">
+</p>
+
+</div>
+
+</section>
+
+
+<div id="toast"
+     class="toast">
+</div>
+
+
+<style>
+
+.form-box{
+  width:min(700px,100%);
+  margin-top:28px;
+  padding:29px;
+  background:#fff;
+  border:1px solid var(--border);
+  border-radius:24px;
+  box-shadow:var(--shadow);
+}
+
+.form-box h2{
+  margin-top:0;
+}
+
+.form-box label{
+  display:block;
+  margin:14px 0 6px;
+  font-size:11px;
+  font-weight:850;
+}
+
+.form-box input,
+.form-box select,
+.form-box textarea{
+  width:100%;
+  padding:13px 14px;
+  border:1px solid var(--border);
+  border-radius:11px;
+  background:#fafbfd;
+}
+
+.form-box textarea{
+  min-height:100px;
+  resize:vertical;
+}
+
+.primary,
+.secondary{
+  width:100%;
+  padding:13px;
+  border-radius:11px;
+  font-weight:900;
+}
+
+.primary{
+  margin-top:18px;
+  border:0;
+  color:#fff;
+  background:var(--blue);
+}
+
+.secondary{
+  margin-top:10px;
+  border:1px solid var(--border);
+  background:#fff;
+  color:var(--text);
+}
+
+.message{
+  min-height:18px;
+  margin-top:12px;
+  color:var(--red);
+  font-size:11px;
+}
+
+.choice-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:15px;
+  margin-top:28px;
+}
+
+.choice{
+  padding:22px;
+  border:1px solid var(--border);
+  border-radius:18px;
+  background:#fff;
+  text-align:left;
+  transition:.2s;
+}
+
+.choice:hover{
+  transform:translateY(-3px);
+  box-shadow:var(--shadow);
+}
+
+.choice b{
+  display:block;
+  font-size:14px;
+}
+
+.choice span{
+  display:block;
+  margin-top:8px;
+  color:var(--muted);
+  font-size:10px;
+  line-height:1.6;
+}
+
+.documents{
+  margin-top:18px;
+  padding:15px;
+  border-radius:13px;
+  background:#f5f8fc;
+  font-size:10px;
+}
+
+.documents p{
+  margin:8px 0 0;
+  color:var(--muted);
+}
+
+.confirmation{
+  width:min(680px,100%);
+  margin:30px auto;
+  padding:32px;
+  border:1px solid var(--border);
+  border-radius:25px;
+  background:#fff;
+  box-shadow:var(--shadow);
+}
+
+.confirmation-logo{
+  width:55px;
+  height:55px;
+  display:grid;
+  place-items:center;
+  border-radius:16px;
+  background:var(--blue);
+  color:#fff;
+  font-size:24px;
+  font-weight:950;
+}
+
+.confirmation h1{
+  font-size:34px;
+  letter-spacing:-1.5px;
+}
+
+.success{
+  padding:14px;
+  border-radius:12px;
+  background:#eaf8f2;
+  color:var(--green);
+  font-size:11px;
+  font-weight:900;
+}
+
+.confirmation-data{
+  margin-top:18px;
+}
+
+.confirmation-row{
+  padding:14px 0;
+  border-bottom:1px solid var(--border);
+}
+
+.confirmation-row small{
+  display:block;
+  color:var(--muted);
+  font-size:8px;
+  font-weight:900;
+  letter-spacing:.1em;
+}
+
+.confirmation-row strong{
+  display:block;
+  margin-top:5px;
+  font-size:13px;
+}
+
+.visa-list{
+  display:grid;
+  gap:12px;
+  margin-top:25px;
+}
+
+.visa-choice{
+  width:100%;
+  padding:20px;
+  border:1px solid var(--border);
+  border-radius:17px;
+  background:#fff;
+  text-align:left;
+  transition:.2s;
+}
+
+.visa-choice:hover{
+  transform:translateY(-3px);
+  box-shadow:var(--shadow);
+}
+
+.visa-choice b{
+  display:block;
+  font-size:14px;
+}
+
+.visa-choice span{
+  display:block;
+  margin-top:7px;
+  color:var(--muted);
+  font-size:10px;
+  line-height:1.6;
+}
+
+.admin-header{
+  display:flex;
+  justify-content:space-between;
+  gap:20px;
+  align-items:flex-start;
+}
+
+.logout{
+  border:1px solid var(--border);
+  border-radius:11px;
+  padding:11px 15px;
+  background:#fff;
+  font-weight:850;
+}
+
+.stats{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:13px;
+  margin-top:25px;
+}
+
+.stat{
+  padding:20px;
+  border:1px solid var(--border);
+  border-radius:17px;
+  background:#fff;
+}
+
+.stat small{
+  color:var(--muted);
+  font-size:8px;
+  font-weight:900;
+}
+
+.stat strong{
+  display:block;
+  margin-top:7px;
+  font-size:28px;
+}
+
+.admin-menu{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:13px;
+  margin-top:25px;
+}
+
+.admin-menu-button{
+  padding:20px;
+  border:1px solid var(--border);
+  border-radius:17px;
+  background:#fff;
+  text-align:left;
+  transition:.2s;
+}
+
+.admin-menu-button:hover{
+  transform:translateY(-3px);
+  box-shadow:var(--shadow);
+}
+
+.admin-menu-button b{
+  display:block;
+}
+
+.admin-menu-button span{
+  display:block;
+  margin-top:6px;
+  color:var(--muted);
+  font-size:10px;
+}
+
+.request-list{
+  display:grid;
+  gap:11px;
+  margin-top:25px;
+}
+
+.request{
+  padding:18px;
+  border:1px solid var(--border);
+  border-radius:17px;
+  background:#fff;
+}
+
+.request-main{
+  display:flex;
+  justify-content:space-between;
+  gap:20px;
+  align-items:flex-start;
+}
+
+.request small{
+  display:block;
+  color:var(--muted);
+  font-size:9px;
+  line-height:1.6;
+}
+
+.request strong{
+  display:block;
+  margin:5px 0;
+  font-size:13px;
+}
+
+.status{
+  padding:7px 10px;
+  border-radius:20px;
+  background:#edf4ff;
+  color:var(--blue);
+  font-size:9px;
+  font-weight:900;
+  white-space:nowrap;
+}
+
+.status.accepted{
+  background:#eaf8f2;
+  color:var(--green);
+}
+
+.status.rejected{
+  background:#fff0f0;
+  color:var(--red);
+}
+
+.request-actions{
+  display:flex;
+  gap:8px;
+  margin-top:13px;
+}
+
+.accept,
+.reject{
+  border:0;
+  border-radius:9px;
+  padding:9px 13px;
+  font-size:10px;
+  font-weight:900;
+}
+
+.accept{
+  background:#eaf8f2;
+  color:var(--green);
+}
+
+.reject{
+  background:#fff0f0;
+  color:var(--red);
+}
+
+.toast{
+  position:fixed;
+  right:18px;
+  bottom:18px;
+  width:min(380px,calc(100% - 36px));
+  padding:16px;
+  border-radius:15px;
+  background:#10253d;
+  color:#fff;
+  box-shadow:0 20px 55px rgba(0,0,0,.25);
+  display:none;
+  z-index:100;
+  font-size:11px;
+}
+
+.toast.show{
+  display:block;
+}
+
+@media(max-width:800px){
+  .choice-grid,
+  .admin-menu{
+    grid-template-columns:1fr;
+  }
+
+  .stats{
+    grid-template-columns:repeat(2,1fr);
+  }
+
+  .admin-header{
+    flex-direction:column;
+  }
+
+  .request-main{
+    flex-direction:column;
+  }
+}
+
+@media(max-width:500px){
+  .stats{
+    grid-template-columns:1fr;
+  }
+}
+
+@media print{
+  .topbar,
+  .back,
+  .primary,
+  .secondary{
+    display:none!important;
+  }
+
+  body{
+    background:#fff;
+  }
+
+  .confirmation{
+    box-shadow:none;
+    border:0;
+  }
+}
+
+</style>
+<script>
+
+const REQUESTS_KEY = "mostakbal_requests";
+const NOTIFICATIONS_KEY = "mostakbal_notifications";
+
+const ADMIN_ID_KEY = "mostakbal_admin_identifier";
+const ADMIN_PASSWORD_KEY = "mostakbal_admin_password";
+
+let currentVisaType = "";
+let currentVisaEmail = "";
+let currentAdminOwnType = "";
+
+
+/* =========================
+   OUTILS
+========================= */
+
+function showPage(id){
+
+  document.querySelectorAll(".page")
+    .forEach(page => page.classList.remove("active"));
+
+  const home = document.getElementById("home");
+
+  if(id === "home"){
+    home.style.display = "block";
+  }else{
+    home.style.display = "none";
+
+    const page = document.getElementById(id);
+
+    if(page){
+      page.classList.add("active");
+    }
+  }
+
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
+
+  renderEverything();
+}
+
+
+function value(id){
+
+  const element = document.getElementById(id);
+
+  return element
+    ? element.value.trim()
+    : "";
+}
+
+
+function escapeHTML(text){
+
+  return String(text ?? "")
+    .replace(/[&<>"']/g, character => ({
+      "&":"&amp;",
+      "<":"&lt;",
+      ">":"&gt;",
+      '"':"&quot;",
+      "'":"&#039;"
+    }[character]));
+}
+
+
+function getRequests(){
+
+  try{
+    return JSON.parse(
+      localStorage.getItem(REQUESTS_KEY) || "[]"
+    );
+  }catch{
+    return [];
+  }
+}
+
+
+function saveRequests(requests){
+
+  localStorage.setItem(
+    REQUESTS_KEY,
+    JSON.stringify(requests)
+  );
+}
+
+
+function getNotifications(){
+
+  try{
+    return JSON.parse(
+      localStorage.getItem(NOTIFICATIONS_KEY) || "[]"
+    );
+  }catch{
+    return [];
+  }
+}
+
+
+function saveNotifications(notifications){
+
+  localStorage.setItem(
+    NOTIFICATIONS_KEY,
+    JSON.stringify(notifications)
+  );
+}
+
+
+function generateReference(prefix="MOST"){
+
+  const random =
+    Math.floor(100000 + Math.random()*900000);
+
+  return `${prefix}-${Date.now().toString().slice(-6)}-${random}`;
+}
+
+
+function displayToast(message){
+
+  const toast =
+    document.getElementById("toast");
+
+  toast.textContent = "🔔 " + message;
+
+  toast.classList.add("show");
+
+  setTimeout(() => {
+    toast.classList.remove("show");
+  },3500);
+}
+
+
+/* =========================
+   NOTIFICATIONS
+========================= */
+
+function createNotification(message,requestId){
+
+  const notifications =
+    getNotifications();
+
+  notifications.push({
+    id:generateReference("NOT"),
+    message,
+    requestId,
+    date:new Date().toLocaleString("fr-FR")
+  });
+
+  saveNotifications(notifications);
+
+  displayToast(message);
+}
+
+
+/* =========================
+   DEMANDES
+========================= */
+
+function createRequest(data){
+
+  const request = {
+
+    id:generateReference("MOST"),
+
+    type:data.type,
+
+    details:data.details || {},
+
+    status:"Nouvelle",
+
+    date:new Date().toLocaleString("fr-FR"),
+
+    owner:data.owner || "citizen",
+
+    account:data.account || "",
+
+    notifications:true
+  };
+
+  const requests =
+    getRequests();
+
+  requests.push(request);
+
+  saveRequests(requests);
+
+  createNotification(
+    "Nouvelle demande : " + request.type,
+    request.id
+  );
+
+  showConfirmation(request);
+}
+
+
+function showConfirmation(request){
+
+  let html = "";
+
+  html += `
+    <div class="confirmation-data">
+  `;
+
+  html += `
+    <div class="confirmation-row">
+      <small>RÉFÉRENCE</small>
+      <strong>${escapeHTML(request.id)}</strong>
+    </div>
+  `;
+
+  html += `
+    <div class="confirmation-row">
+      <small>DÉMARCHE</small>
+      <strong>${escapeHTML(request.type)}</strong>
+    </div>
+  `;
+
+  html += `
+    <div class="confirmation-row">
+      <small>DATE DE DÉPÔT</small>
+      <strong>${escapeHTML(request.date)}</strong>
+    </div>
+  `;
+
+  html += `
+    <div class="confirmation-row">
+      <small>STATUT</small>
+      <strong>${escapeHTML(request.status)}</strong>
+    </div>
+  `;
+
+  Object.entries(request.details)
+    .forEach(([key,val]) => {
+
+      html += `
+        <div class="confirmation-row">
+          <small>${escapeHTML(key)}</small>
+          <strong>${escapeHTML(val)}</strong>
+        </div>
+      `;
+
+    });
+
+  html += `</div>`;
+
+  document.getElementById(
+    "confirmationContent"
+  ).innerHTML = html;
+
+  showPage("confirmation");
+}
+
+
+/* =========================
+   EXTRAIT DE NAISSANCE
+========================= */
+
+function submitBirth(){
+
+  createRequest({
+
+    type:"Extrait de naissance",
+
+    details:{
+      "Nom":value("birthLastName"),
+      "Prénom":value("birthFirstName"),
+      "Date de naissance":value("birthDate"),
+      "Lieu de naissance":value("birthPlace"),
+      "NIN":value("birthNIN"),
+      "E-mail":value("birthEmail")
+    },
+
+    owner:"citizen"
+  });
+
+}
+
+
+/* =========================
+   CNI
+========================= */
+
+function submitCNI(type){
+
+  let first =
+    type === "Première demande";
+
+  createRequest({
+
+    type:`CNI — ${type}`,
+
+    details:{
+
+      "Nom":
+        value(first
+          ? "cniFirstLast"
+          : "cniRenewLast"),
+
+      "Prénom":
+        value(first
+          ? "cniFirstFirst"
+          : "cniRenewFirst"),
+
+      "NIN":
+        value(first
+          ? "cniFirstNIN"
+          : "cniRenewNIN"),
+
+      "E-mail":
+        value(first
+          ? "cniFirstEmail"
+          : "cniRenewEmail"),
+
+      "Documents":
+        first
+        ? "Certificat de nationalité · Photo d’identité · Extrait de naissance interne"
+        : "Ancienne CNI · Photo d’identité · Acte de naissance interne"
+    },
+
+    owner:"citizen"
+  });
+
+}
+
+
+/* =========================
+   PASSEPORT
+========================= */
+
+function submitPassport(type){
+
+  let first =
+    type === "Première demande";
+
+  createRequest({
+
+    type:`Passeport — ${type}`,
+
+    details:{
+
+      "Nom":
+        value(first
+          ? "passportFirstLast"
+          : "passportRenewLast"),
+
+      "Prénom":
+        value(first
+          ? "passportFirstFirst"
+          : "passportRenewFirst"),
+
+      "NIN":
+        value(first
+          ? "passportFirstNIN"
+          : "passportRenewNIN"),
+
+      "E-mail":
+        value(first
+          ? "passportFirstEmail"
+          : "passportRenewEmail"),
+
+      "Documents":
+        first
+        ? "Photo d’identité · Certificat de nationalité · NIN"
+        : "Ancien passeport · Nouvelle photo · CNI"
+    },
+
+    owner:"citizen"
+  });
+
+}
+
+
+/* =========================
+   AUTORISATION TRAVAIL
+========================= */
+
+function submitWork(){
+
+  createRequest({
+
+    type:"Autorisation de travail",
+
+    details:{
+      "Nom":value("workLast"),
+      "Prénom":value("workFirst"),
+      "E-mail":value("workEmail"),
+      "Motif":value("workReason")
+    },
+
+    owner:"citizen"
+  });
+
+}
+
+
+/* =========================
+   PASSE SANTÉ M
+========================= */
+
+function submitHealth(){
+
+  createRequest({
+
+    type:"Passe santé M",
+
+    details:{
+      "Nom":value("healthLast"),
+      "Prénom":value("healthFirst"),
+      "Numéro de sécurité sociale":
+        value("healthSecurity"),
+      "E-mail":value("healthEmail")
+    },
+
+    owner:"citizen"
+  });
+
+}
+
+
+/* =========================
+   COMPTE ÉTRANGER
+========================= */
+
+function createForeignAccount(){
+
+  const email =
+    value("foreignEmail");
+
+  const password =
+    value("foreignNewPassword");
+
+  if(!email || !password){
+
+    document.getElementById(
+      "foreignCreateMessage"
+    ).textContent =
+      "L'e-mail et le mot de passe sont obligatoires.";
+
+    return;
+  }
+
+  const account = {
+
+    lastName:
+      value("foreignLastName"),
+
+    firstName:
+      value("foreignFirstName"),
+
+    email,
+
+    password
+  };
+
+  localStorage.setItem(
+    "mostakbal_foreign_account",
+    JSON.stringify(account)
+  );
+
+  document.getElementById(
+    "foreignCreateMessage"
+  ).textContent =
+    "Compte créé. Connexion automatique...";
+
+  setTimeout(() => {
+
+    sessionStorage.setItem(
+      "foreign_logged",
+      "1"
+    );
+
+    showPage("citizen");
+
+  },500);
+}
+
+
+function foreignLogin(){
+
+  const account =
+    JSON.parse(
+      localStorage.getItem(
+        "mostakbal_foreign_account"
+      ) || "null"
+    );
+
+  if(
+    account &&
+    value("foreignIdentifier") === account.email &&
+    value("foreignPassword") === account.password
+  ){
+
+    sessionStorage.setItem(
+      "foreign_logged",
+      "1"
+    );
+
+    showPage("citizen");
+
+  }else{
+
+    document.getElementById(
+      "foreignMessage"
+    ).textContent =
+      "Identifiant ou mot de passe incorrect.";
+  }
+
+}
+/* =========================
+   COMPTE VISA
+========================= */
+
+function createVisaAccount(){
+
+  const email =
+    value("visaCreateEmail");
+
+  const password =
+    value("visaCreatePassword");
+
+  if(!email || !password){
+
+    document.getElementById(
+      "visaCreateMessage"
+    ).textContent =
+      "L'e-mail et le mot de passe sont obligatoires.";
+
+    return;
+  }
+
+  localStorage.setItem(
+
+    "mostakbal_visa_account",
+
+    JSON.stringify({
+
+      email,
+
+      password
+    })
+  );
+
+  document.getElementById(
+    "visaCreateMessage"
+  ).textContent =
+    "Compte créé. Vous pouvez maintenant vous connecter.";
+
+  setTimeout(() => {
+
+    showPage("visa-login");
+
+  },500);
+}
+
+
+function loginVisa(){
+
+  const account =
+    JSON.parse(
+      localStorage.getItem(
+        "mostakbal_visa_account"
+      ) || "null"
+    );
+
+  if(
+    account &&
+    value("visaLoginEmail") === account.email &&
+    value("visaLoginPassword") === account.password
+  ){
+
+    currentVisaEmail =
+      account.email;
+
+    sessionStorage.setItem(
+      "visa_logged",
+      "1"
+    );
+
+    showPage("visa-new");
+
+  }else{
+
+    document.getElementById(
+      "visaLoginMessage"
+    ).textContent =
+      "E-mail ou mot de passe incorrect.";
+
+  }
+}
+
+
+/* =========================
+   FORMULAIRE VISA
+========================= */
+
+function openVisaForm(type){
+
+  currentVisaType = type;
+
+  document.getElementById(
+    "visaFormLabel"
+  ).textContent = type.toUpperCase();
+
+  document.getElementById(
+    "visaAccountEmail"
+  ).value = currentVisaEmail;
+
+  const fields =
+    document.getElementById(
+      "minorVisaFields"
+    );
+
+  fields.innerHTML = "";
+
+  if(type === "Visa mineur accompagné"){
+
+    fields.innerHTML = `
+
+      <label>
+        Nom du parent / représentant légal
+      </label>
+
+      <input id="legalRepresentativeName">
+
+      <label>
+        Statut du parent / représentant légal
+      </label>
+
+      <select id="legalRepresentativeStatus">
+
+        <option value="1 an">
+          Statut d'une durée d'un an → TIME 1 an
+        </option>
+
+        <option value="5 ans">
+          Statut d'une durée de cinq ans → TIME 5 ans
+        </option>
+
+      </select>
+
+    `;
+
+  }
+
+  showPage("visa-form");
+}
+
+
+function submitVisa(){
+
+  const details = {
+
+    "Nom":
+      value("visaLast"),
+
+    "Prénom":
+      value("visaFirst"),
+
+    "E-mail":
+      value("visaAccountEmail"),
+
+    "Validité du visa":
+      "3 mois"
+  };
+
+
+  if(currentVisaType === "Visa stage"){
+
+    details[
+      "Après le visa"
+    ] =
+      "Demande de carte de statut stagiaire";
+
+    details[
+      "Durée de la carte"
+    ] =
+      "1 an";
+  }
+
+
+  if(currentVisaType === "Visa travail"){
+
+    details[
+      "Après le visa"
+    ] =
+      "Demande de carte de statut travailleur";
+
+    details[
+      "Durée de la carte"
+    ] =
+      "5 ans";
+  }
+
+
+  if(
+    currentVisaType ===
+    "Visa mineur accompagné"
+  ){
+
+    const parentStatus =
+      value(
+        "legalRepresentativeStatus"
+      );
+
+    details[
+      "Parent / représentant légal"
+    ] =
+      value(
+        "legalRepresentativeName"
+      );
+
+    details[
+      "Statut du parent / représentant légal"
+    ] =
+      parentStatus;
+
+    details["TIME"] =
+      parentStatus === "5 ans"
+      ? "5 ans"
+      : "1 an";
+  }
+
+
+  createRequest({
+
+    type:currentVisaType,
+
+    details,
+
+    owner:"visa",
+
+    account:currentVisaEmail
+  });
+
+}
+
+
+/* =========================
+   ADMINISTRATEUR
+========================= */
+
+function getAdminIdentifier(){
+
+  return localStorage.getItem(
+    ADMIN_ID_KEY
+  ) || "ADMIN-DEMO";
+}
+
+
+function getAdminPassword(){
+
+  return localStorage.getItem(
+    ADMIN_PASSWORD_KEY
+  ) || "MOSTAKBAL";
+}
+
+
+function adminLogin(){
+
+  const identifier =
+    value("adminIdentifier");
+
+  const password =
+    value("adminPassword");
+
+  if(
+    identifier === getAdminIdentifier() &&
+    password === getAdminPassword()
+  ){
+
+    sessionStorage.setItem(
+      "mostakbal_admin_logged",
+      "1"
+    );
+
+    showPage("admin");
+
+  }else{
+
+    document.getElementById(
+      "adminLoginMessage"
+    ).textContent =
+      "Identifiant ou mot de passe incorrect.";
+
+  }
+
+}
+
+
+function adminLogout(){
+
+  sessionStorage.removeItem(
+    "mostakbal_admin_logged"
+  );
+
+  showPage("admin-login");
+
+}
+
+
+/* =========================
+   DÉCISION ADMINISTRATIVE
+========================= */
+
+function updateRequestStatus(
+  requestId,
+  newStatus
+){
+
+  const requests =
+    getRequests();
+
+  const request =
+    requests.find(
+      item => item.id === requestId
+    );
+
+  if(!request)return;
+
+  request.status =
+    newStatus;
+
+  request.updatedAt =
+    new Date().toLocaleString("fr-FR");
+
+  saveRequests(requests);
+
+
+  if(newStatus === "Acceptée"){
+
+    createNotification(
+
+      `Demande acceptée : ${request.type} — ${request.id}`,
+
+      request.id
+    );
+
+  }else{
+
+    createNotification(
+
+      `Demande refusée : ${request.type} — ${request.id}`,
+
+      request.id
+    );
+
+  }
+
+  renderEverything();
+}
+
+
+/* =========================
+   ADMIN — MES DÉMARCHES
+========================= */
+
+function openAdminOwn(type){
+
+  currentAdminOwnType =
+    type;
+
+  document.getElementById(
+    "adminOwnTitle"
+  ).textContent =
+    type;
+
+  showPage("admin-own-form");
+}
+
+
+function submitAdminOwn(){
+
+  createRequest({
+
+    type:
+      "ADMIN — " +
+      currentAdminOwnType,
+
+    details:{
+
+      "Nom":
+        value("adminOwnLast"),
+
+      "Prénom":
+        value("adminOwnFirst"),
+
+      "NIN":
+        value("adminOwnNIN"),
+
+      "E-mail":
+        value("adminOwnEmail")
+    },
+
+    owner:"admin"
+  });
+
+}
+
+
+/* =========================
+   PARAMÈTRES ADMIN
+========================= */
+
+function saveAdminCredentials(){
+
+  const identifier =
+    value("newAdminIdentifier");
+
+  const password =
+    value("newAdminPassword");
+
+  if(!identifier || !password){
+
+    document.getElementById(
+      "adminSettingsMessage"
+    ).textContent =
+      "Les deux champs sont obligatoires.";
+
+    return;
+  }
+
+  localStorage.setItem(
+    ADMIN_ID_KEY,
+    identifier
+  );
+
+  localStorage.setItem(
+    ADMIN_PASSWORD_KEY,
+    password
+  );
+
+  document.getElementById(
+    "adminSettingsMessage"
+  ).textContent =
+    "Identifiant et mot de passe enregistrés.";
+
+}
+/* =========================
+   AFFICHAGE DES DEMANDES
+========================= */
+
+function renderMyRequests(){
+
+  const container =
+    document.getElementById(
+      "myRequestsList"
+    );
+
+  if(!container)return;
+
+  const requests =
+    getRequests();
+
+  const citizenRequests =
+    requests.filter(
+      request =>
+        request.owner === "citizen" ||
+        (
+          request.owner === "visa" &&
+          request.account === currentVisaEmail
+        )
+    );
+
+  if(!citizenRequests.length){
+
+    container.innerHTML = `
+      <div class="form-box">
+        Aucune demande enregistrée.
+      </div>
+    `;
+
+    return;
+  }
+
+  container.innerHTML =
+    citizenRequests
+      .slice()
+      .reverse()
+      .map(request => {
+
+        let statusClass = "";
+
+        if(request.status === "Acceptée")
+          statusClass = "accepted";
+
+        if(request.status === "Refusée")
+          statusClass = "rejected";
+
+        return `
+
+          <div class="request">
+
+            <div class="request-main">
+
+              <div>
+
+                <small>
+                  ${escapeHTML(request.id)}
+                </small>
+
+                <strong>
+                  ${escapeHTML(request.type)}
+                </strong>
+
+                <small>
+                  Déposé le
+                  ${escapeHTML(request.date)}
+                </small>
+
+              </div>
+
+              <div class="status ${statusClass}">
+                ${escapeHTML(request.status)}
+              </div>
+
+            </div>
+
+          </div>
+
+        `;
+
+      })
+      .join("");
+
+}
+
+
+/* =========================
+   ADMIN — DEMANDES
+========================= */
+
+function renderAdminRequests(){
+
+  const container =
+    document.getElementById(
+      "adminRequestsList"
+    );
+
+  if(!container)return;
+
+  const requests =
+    getRequests();
+
+  if(!requests.length){
+
+    container.innerHTML = `
+      <div class="form-box">
+        Aucune demande n'a encore été déposée.
+      </div>
+    `;
+
+    return;
+  }
+
+  container.innerHTML =
+    requests
+      .slice()
+      .reverse()
+      .map(request => {
+
+        let statusClass = "";
+
+        if(request.status === "Acceptée")
+          statusClass = "accepted";
+
+        if(request.status === "Refusée")
+          statusClass = "rejected";
+
+        let details = "";
+
+        Object.entries(
+          request.details || {}
+        ).forEach(([key,value]) => {
+
+          details += `
+            <small>
+              <b>${escapeHTML(key)} :</b>
+              ${escapeHTML(value)}
+            </small>
+          `;
+
+        });
+
+
+        let actions = "";
+
+        if(request.status === "Nouvelle"){
+
+          actions = `
+
+            <div class="request-actions">
+
+              <button
+                class="accept"
+                onclick="updateRequestStatus(
+                  '${request.id}',
+                  'Acceptée'
+                )">
+                ✓ Accepter
+              </button>
+
+              <button
+                class="reject"
+                onclick="updateRequestStatus(
+                  '${request.id}',
+                  'Refusée'
+                )">
+                ✕ Refuser
+              </button>
+
+            </div>
+
+          `;
+
+        }
+
+        if(request.status === "Acceptée"){
+
+          actions = `
+
+            <div class="request-actions">
+
+              <button
+                class="accept"
+                onclick="simulateEmail('${request.id}')">
+                ✉️ Préparer l'envoi par e-mail
+              </button>
+
+            </div>
+
+          `;
+
+        }
+
+
+        return `
+
+          <div class="request">
+
+            <div class="request-main">
+
+              <div>
+
+                <small>
+                  ${escapeHTML(request.id)}
+                  ·
+                  ${escapeHTML(request.date)}
+                </small>
+
+                <strong>
+                  ${escapeHTML(request.type)}
+                </strong>
+
+                ${details}
+
+              </div>
+
+              <div class="status ${statusClass}">
+                ${escapeHTML(request.status)}
+              </div>
+
+            </div>
+
+            ${actions}
+
+          </div>
+
+        `;
+
+      })
+      .join("");
+
+}
+
+
+/* =========================
+   ADMIN — NOTIFICATIONS
+========================= */
+
+function renderAdminNotifications(){
+
+  const container =
+    document.getElementById(
+      "adminNotificationsList"
+    );
+
+  if(!container)return;
+
+  const notifications =
+    getNotifications();
+
+  if(!notifications.length){
+
+    container.innerHTML = `
+      <div class="form-box">
+        Aucune notification.
+      </div>
+    `;
+
+    return;
+  }
+
+  container.innerHTML =
+    notifications
+      .slice()
+      .reverse()
+      .map(notification => `
+
+        <div class="request">
+
+          <div class="request-main">
+
+            <div>
+
+              <strong>
+                🔔
+                ${escapeHTML(
+                  notification.message
+                )}
+              </strong>
+
+              <small>
+                Référence :
+                ${escapeHTML(
+                  notification.requestId
+                )}
+              </small>
+
+              <small>
+                ${escapeHTML(
+                  notification.date
+                )}
+              </small>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      `)
+      .join("");
+
+}
+
+
+/* =========================
+   STATISTIQUES ADMIN
+========================= */
+
+function renderAdminStats(){
+
+  const requests =
+    getRequests();
+
+  const total =
+    requests.length;
+
+  const nouveau =
+    requests.filter(
+      r => r.status === "Nouvelle"
+    ).length;
+
+  const accepted =
+    requests.filter(
+      r => r.status === "Acceptée"
+    ).length;
+
+  const rejected =
+    requests.filter(
+      r => r.status === "Refusée"
+    ).length;
+
+
+  const totalElement =
+    document.getElementById(
+      "statTotal"
+    );
+
+  const newElement =
+    document.getElementById(
+      "statNew"
+    );
+
+  const acceptedElement =
+    document.getElementById(
+      "statAccepted"
+    );
+
+  const rejectedElement =
+    document.getElementById(
+      "statRejected"
+    );
+
+
+  if(totalElement)
+    totalElement.textContent = total;
+
+  if(newElement)
+    newElement.textContent = nouveau;
+
+  if(acceptedElement)
+    acceptedElement.textContent = accepted;
+
+  if(rejectedElement)
+    rejectedElement.textContent = rejected;
+
+}
+
+
+/* =========================
+   ENVOI E-MAIL
+========================= */
+
+function simulateEmail(requestId){
+
+  const request =
+    getRequests()
+      .find(
+        r => r.id === requestId
+      );
+
+  if(!request)return;
+
+  const email =
+    request.details["E-mail"] ||
+    request.account ||
+    "";
+
+  const subject =
+    encodeURIComponent(
+      `MOSTAKBAL — ${request.type}`
+    );
+
+  const body =
+    encodeURIComponent(
+
+      `Bonjour,\n\n` +
+
+      `Votre demande "${request.type}" ` +
+      `référencée ${request.id} ` +
+      `a été acceptée.\n\n` +
+
+      `Le document peut être transmis ` +
+      `par e-mail par l'administrateur.\n\n` +
+
+      `MOSTAKBAL`
+
+    );
+
+  if(email){
+
+    window.location.href =
+      `mailto:${email}?subject=${subject}&body=${body}`;
+
+  }else{
+
+    displayToast(
+      "Aucune adresse e-mail n'est enregistrée pour cette demande."
+    );
+
+  }
+
+}
+
+
+/* =========================
+   RENDU GLOBAL
+========================= */
+
+function renderEverything(){
+
+  renderMyRequests();
+
+  renderAdminRequests();
+
+  renderAdminNotifications();
+
+  renderAdminStats();
+
+}
+
+
+/* =========================
+   INITIALISATION
+========================= */
+
+renderEverything();
+
+</script>
+
+</body>
+</html>
