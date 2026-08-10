@@ -1,0 +1,3287 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#0b1220">
+<meta name="description" content="MOSTAKBAL — Portail administratif numérique">
+<title>MOSTAKBAL — Portail administratif</title>
+
+<style>
+:root {
+    --bg: #f4f7fb;
+    --card: #ffffff;
+    --text: #101828;
+    --muted: #667085;
+    --primary: #155eef;
+    --primary-dark: #0b4acb;
+    --border: #e4e7ec;
+    --success: #12b76a;
+    --warning: #f79009;
+    --danger: #f04438;
+    --shadow: 0 12px 35px rgba(16,24,40,.08);
+    --radius: 22px;
+}
+
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: Inter, ui-sans-serif, system-ui, -apple-system,
+                 BlinkMacSystemFont, "Segoe UI", sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+}
+
+button,
+input,
+select,
+textarea {
+    font: inherit;
+}
+
+button {
+    cursor: pointer;
+}
+
+.hidden {
+    display: none !important;
+}
+
+.app {
+    min-height: 100vh;
+}
+
+/* HEADER */
+
+.header {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(255,255,255,.92);
+    backdrop-filter: blur(18px);
+    border-bottom: 1px solid var(--border);
+}
+
+.header-inner {
+    width: min(1180px, calc(100% - 32px));
+    margin: auto;
+    min-height: 76px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 20px;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-weight: 800;
+    font-size: 21px;
+    letter-spacing: -.5px;
+}
+
+.logo-mark {
+    width: 42px;
+    height: 42px;
+    border-radius: 13px;
+    display: grid;
+    place-items: center;
+    background: linear-gradient(135deg,#155eef,#7f56d9);
+    color: white;
+    font-weight: 900;
+    box-shadow: 0 8px 20px rgba(21,94,239,.25);
+}
+
+.header-actions {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.profile-button {
+    width: 44px;
+    height: 44px;
+    border: 1px solid var(--border);
+    border-radius: 50%;
+    background: white;
+    display: grid;
+    place-items: center;
+    font-size: 20px;
+}
+
+/* PAGE */
+
+.page {
+    width: min(1180px, calc(100% - 32px));
+    margin: auto;
+    padding: 42px 0 80px;
+}
+
+.hero {
+    display: grid;
+    grid-template-columns: 1.4fr .8fr;
+    gap: 28px;
+    align-items: stretch;
+}
+
+.hero-main {
+    background: linear-gradient(135deg,#101828,#1d2939);
+    color: white;
+    border-radius: 30px;
+    padding: 46px;
+    min-height: 330px;
+    position: relative;
+    overflow: hidden;
+    box-shadow: var(--shadow);
+}
+
+.hero-main::after {
+    content: "";
+    position: absolute;
+    width: 280px;
+    height: 280px;
+    right: -80px;
+    bottom: -100px;
+    border-radius: 50%;
+    background: rgba(21,94,239,.35);
+    filter: blur(10px);
+}
+
+.hero-main h1 {
+    font-size: clamp(36px,6vw,64px);
+    line-height: 1;
+    letter-spacing: -2px;
+    margin-bottom: 20px;
+}
+
+.hero-main p {
+    max-width: 650px;
+    color: #d0d5dd;
+    line-height: 1.7;
+    font-size: 16px;
+}
+
+.hero-side {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 30px;
+    padding: 30px;
+    box-shadow: var(--shadow);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.hero-side h2 {
+    margin-bottom: 10px;
+}
+
+.hero-side p {
+    color: var(--muted);
+    line-height: 1.6;
+}
+
+/* BUTTONS */
+
+.primary-button,
+.secondary-button,
+.danger-button {
+    border: 0;
+    border-radius: 14px;
+    padding: 13px 18px;
+    font-weight: 700;
+    transition: .2s ease;
+}
+
+.primary-button {
+    background: var(--primary);
+    color: white;
+}
+
+.primary-button:hover {
+    background: var(--primary-dark);
+    transform: translateY(-1px);
+}
+
+.secondary-button {
+    background: #eef4ff;
+    color: var(--primary);
+}
+
+.secondary-button:hover {
+    background: #dce9ff;
+}
+
+.danger-button {
+    background: #fff1f0;
+    color: var(--danger);
+}
+
+.large-button {
+    width: 100%;
+    min-height: 64px;
+    text-align: left;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 20px;
+    margin-top: 12px;
+}
+
+/* SERVICES */
+
+.section {
+    margin-top: 38px;
+}
+
+.section-title {
+    margin-bottom: 18px;
+}
+
+.section-title h2 {
+    font-size: 25px;
+    letter-spacing: -.6px;
+}
+
+.section-title p {
+    color: var(--muted);
+    margin-top: 5px;
+}
+
+.service-grid {
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    gap: 20px;
+}
+
+.service-card {
+    border: 1px solid var(--border);
+    background: white;
+    border-radius: var(--radius);
+    padding: 28px;
+    box-shadow: var(--shadow);
+    transition: .2s ease;
+    cursor: pointer;
+}
+
+.service-card:hover {
+    transform: translateY(-4px);
+    border-color: #b2ccff;
+}
+
+.service-icon {
+    width: 56px;
+    height: 56px;
+    border-radius: 17px;
+    background: #eef4ff;
+    display: grid;
+    place-items: center;
+    font-size: 25px;
+    margin-bottom: 18px;
+}
+
+.service-card h3 {
+    font-size: 21px;
+    margin-bottom: 8px;
+}
+
+.service-card p {
+    color: var(--muted);
+    line-height: 1.55;
+}
+
+/* RESPONSIVE */
+
+@media (max-width: 820px) {
+    .hero {
+        grid-template-columns: 1fr;
+    }
+
+    .hero-main {
+        padding: 32px;
+    }
+
+    .service-grid {
+        grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 520px) {
+    .page {
+        width: min(100% - 20px, 1180px);
+        padding-top: 25px;
+    }
+
+    .header-inner {
+        width: calc(100% - 20px);
+    }
+
+    .hero-main {
+        border-radius: 23px;
+        padding: 27px;
+    }
+
+    .hero-side {
+        border-radius: 23px;
+        padding: 22px;
+    }
+}
+</style>
+</head>
+
+<body>
+<div class="app">
+
+<header class="header">
+    <div class="header-inner">
+        <div class="logo">
+            <div class="logo-mark">M</div>
+            <span>MOSTAKBAL</span>
+        </div>
+
+        <div class="header-actions">
+            <button
+                class="profile-button"
+                onclick="openProfile()"
+                aria-label="Profil">
+                👤
+            </button>
+        </div>
+    </div>
+</header>
+
+<main class="page">
+
+    <section class="hero">
+        <div class="hero-main">
+            <h1>MOSTAKBAL</h1>
+            <p>
+                Votre portail administratif numérique pour effectuer,
+                suivre et consulter vos démarches depuis un même espace.
+            </p>
+        </div>
+
+        <div class="hero-side">
+            <h2>Bienvenue</h2>
+            <p>
+                Sélectionnez le service dont vous avez besoin
+                pour commencer votre démarche.
+            </p>
+        </div>
+    </section>
+
+    <section class="section">
+        <div class="section-title">
+            <h2>Services</h2>
+            <p>Accédez directement à l'espace correspondant.</p>
+        </div>
+
+        <div class="service-grid">
+
+            <article
+                class="service-card"
+                onclick="openService('internal')">
+
+                <div class="service-icon">🏛️</div>
+
+                <h3>Service interne</h3>
+
+                <p>
+                    Accédez aux espaces citoyen, étranger
+                    et administratif.
+                </p>
+            </article>
+
+            <article
+                class="service-card"
+                onclick="openService('visa')">
+
+                <div class="service-icon">🌍</div>
+
+                <h3>Service visa</h3>
+
+                <p>
+                    Accédez aux démarches liées aux e-visas
+                    disponibles sur MOSTAKBAL.
+                </p>
+            </article>
+
+        </div>
+    </section>
+
+</main>
+
+<!-- MODALE PROFIL -->
+
+<div id="profileModal" class="hidden">
+    <div class="modal-backdrop" onclick="closeProfile()"></div>
+
+    <div class="modal-card">
+        <button
+            class="modal-close"
+            onclick="closeProfile()">×</button>
+
+        <div class="profile-big">👤</div>
+
+        <h2>Profil</h2>
+
+        <p id="profileText">
+            Aucun compte connecté.
+        </p>
+
+        <button
+            class="primary-button large-button"
+            onclick="goToLogin()">
+            Se connecter
+            <span>→</span>
+        </button>
+    </div>
+</div>
+
+<script>
+const appState = {
+    currentSpace: null,
+    currentUser: null,
+    requests: []
+};
+
+function openService(service) {
+    appState.currentSpace = service;
+
+    if (service === "internal") {
+        alert("Service interne — la sélection des espaces sera disponible dans la partie suivante.");
+        return;
+    }
+
+    if (service === "visa") {
+        alert("Service visa — les e-visas seront disponibles dans les parties suivantes.");
+    }
+}
+
+function openProfile() {
+    document.getElementById("profileModal").classList.remove("hidden");
+}
+
+function closeProfile() {
+    document.getElementById("profileModal").classList.add("hidden");
+}
+
+function goToLogin() {
+    closeProfile();
+    alert("Système de connexion — partie suivante.");
+}
+</script>
+
+</div>
+</body>
+</html>
+<!-- =========================================================
+     MOSTAKBAL — PARTIE 2/10
+     ESPACES : CITOYEN / ÉTRANGER / ADMINISTRATIF
+     ========================================================= -->
+
+<style>
+.space-page {
+    width: min(1180px, calc(100% - 32px));
+    margin: auto;
+    padding: 38px 0 70px;
+}
+
+.back-button {
+    border: 0;
+    background: transparent;
+    color: var(--muted);
+    font-weight: 700;
+    margin-bottom: 22px;
+}
+
+.space-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 18px;
+}
+
+.space-card {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 24px;
+    padding: 27px;
+    box-shadow: var(--shadow);
+    cursor: pointer;
+    transition: .2s ease;
+}
+
+.space-card:hover {
+    transform: translateY(-4px);
+    border-color: #b2ccff;
+}
+
+.space-card .icon {
+    width: 52px;
+    height: 52px;
+    border-radius: 16px;
+    background: #eef4ff;
+    display: grid;
+    place-items: center;
+    font-size: 24px;
+    margin-bottom: 17px;
+}
+
+.space-card h3 {
+    margin-bottom: 8px;
+}
+
+.space-card p {
+    color: var(--muted);
+    line-height: 1.55;
+}
+
+.auth-panel {
+    width: min(510px, 100%);
+    margin: 30px auto;
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 25px;
+    padding: 30px;
+    box-shadow: var(--shadow);
+}
+
+.auth-panel h2 {
+    margin-bottom: 8px;
+}
+
+.auth-panel > p {
+    color: var(--muted);
+    margin-bottom: 24px;
+    line-height: 1.5;
+}
+
+.form-group {
+    margin-bottom: 16px;
+}
+
+.form-group label {
+    display: block;
+    font-size: 14px;
+    font-weight: 700;
+    margin-bottom: 7px;
+}
+
+.form-group input,
+.form-group select,
+.form-group textarea {
+    width: 100%;
+    border: 1px solid var(--border);
+    border-radius: 13px;
+    padding: 13px 14px;
+    outline: none;
+    background: #fff;
+}
+
+.form-group input:focus,
+.form-group select:focus,
+.form-group textarea:focus {
+    border-color: var(--primary);
+    box-shadow: 0 0 0 4px #eef4ff;
+}
+
+.auth-actions {
+    display: grid;
+    gap: 10px;
+    margin-top: 20px;
+}
+
+@media (max-width: 850px) {
+    .space-grid {
+        grid-template-columns: 1fr;
+    }
+}
+</style>
+
+<script>
+function showInternalSpaces() {
+
+    document.querySelector("main.page").innerHTML = `
+        <section class="space-page">
+
+            <button class="back-button"
+                onclick="location.reload()">
+                ← Retour à l'accueil
+            </button>
+
+            <div class="section-title">
+                <h2>Service interne</h2>
+                <p>
+                    Choisissez votre espace administratif.
+                </p>
+            </div>
+
+            <div class="space-grid">
+
+                <article class="space-card"
+                    onclick="showCitizenAuth()">
+
+                    <div class="icon">👤</div>
+
+                    <h3>Espace citoyen</h3>
+
+                    <p>
+                        Effectuez et suivez vos démarches
+                        administratives citoyennes.
+                    </p>
+
+                </article>
+
+                <article class="space-card"
+                    onclick="showForeignAuth()">
+
+                    <div class="icon">🌍</div>
+
+                    <h3>Espace étranger</h3>
+
+                    <p>
+                        Gérez vos démarches et demandes
+                        concernant votre situation étrangère.
+                    </p>
+
+                </article>
+
+                <article class="space-card"
+                    onclick="showAdminAuth()">
+
+                    <div class="icon">🔐</div>
+
+                    <h3>Espace administratif</h3>
+
+                    <p>
+                        Accès réservé à l'administration
+                        de MOSTAKBAL.
+                    </p>
+
+                </article>
+
+            </div>
+        </section>
+    `;
+}
+
+function showCitizenAuth() {
+
+    document.querySelector("main.page").innerHTML = `
+        <section class="space-page">
+
+            <button class="back-button"
+                onclick="showInternalSpaces()">
+                ← Retour
+            </button>
+
+            <div class="auth-panel">
+
+                <h2>Espace citoyen</h2>
+
+                <p>
+                    Connectez-vous à votre compte ou
+                    créez un nouveau compte.
+                </p>
+
+                <div class="auth-actions">
+
+                    <button class="primary-button large-button"
+                        onclick="citizenLogin()">
+                        Se connecter
+                        <span>→</span>
+                    </button>
+
+                    <button class="secondary-button large-button"
+                        onclick="citizenRegister()">
+                        Créer un compte
+                        <span>+</span>
+                    </button>
+
+                </div>
+
+            </div>
+        </section>
+    `;
+}
+
+function showForeignAuth() {
+
+    document.querySelector("main.page").innerHTML = `
+        <section class="space-page">
+
+            <button class="back-button"
+                onclick="showInternalSpaces()">
+                ← Retour
+            </button>
+
+            <div class="auth-panel">
+
+                <h2>Espace étranger</h2>
+
+                <p>
+                    Connectez-vous ou créez votre compte
+                    pour accéder à vos démarches.
+                </p>
+
+                <div class="auth-actions">
+
+                    <button class="primary-button large-button"
+                        onclick="foreignLogin()">
+                        Se connecter
+                        <span>→</span>
+                    </button>
+
+                    <button class="secondary-button large-button"
+                        onclick="foreignRegister()">
+                        Créer un compte
+                        <span>+</span>
+                    </button>
+
+                </div>
+
+            </div>
+        </section>
+    `;
+}
+
+function showAdminAuth() {
+
+    document.querySelector("main.page").innerHTML = `
+        <section class="space-page">
+
+            <button class="back-button"
+                onclick="showInternalSpaces()">
+                ← Retour
+            </button>
+
+            <div class="auth-panel">
+
+                <h2>Espace administratif</h2>
+
+                <p>
+                    Accès sécurisé réservé à l'administrateur.
+                </p>
+
+                <div class="auth-actions">
+
+                    <button class="primary-button large-button"
+                        onclick="adminLogin()">
+                        Se connecter
+                        <span>→</span>
+                    </button>
+
+                </div>
+
+            </div>
+        </section>
+    `;
+}
+
+function citizenLogin() {
+    alert("Connexion citoyen — partie 3.");
+}
+
+function citizenRegister() {
+    alert("Création du compte citoyen — partie 3.");
+}
+
+function foreignLogin() {
+    alert("Connexion étranger — partie 3.");
+}
+
+function foreignRegister() {
+    alert("Création du compte étranger — partie 3.");
+}
+
+function adminLogin() {
+    alert("Connexion administrative — partie 3.");
+}
+
+/* On remplace le comportement du bouton Service interne */
+const originalOpenService = openService;
+
+openService = function(service) {
+
+    if (service === "internal") {
+        showInternalSpaces();
+        return;
+    }
+
+    if (service === "visa") {
+        showVisaHome();
+        return;
+    }
+};
+</script>
+<!-- =========================================================
+     MOSTAKBAL — PARTIE 3/10
+     COMPTES ET AUTHENTIFICATION
+     ========================================================= -->
+
+<script>
+const STORAGE_USERS = "mostakbal_users";
+const STORAGE_SESSION = "mostakbal_session";
+const STORAGE_REQUESTS = "mostakbal_requests";
+
+function getUsers() {
+    try {
+        return JSON.parse(localStorage.getItem(STORAGE_USERS)) || [];
+    } catch {
+        return [];
+    }
+}
+
+function saveUsers(users) {
+    localStorage.setItem(STORAGE_USERS, JSON.stringify(users));
+}
+
+function getRequests() {
+    try {
+        return JSON.parse(localStorage.getItem(STORAGE_REQUESTS)) || [];
+    } catch {
+        return [];
+    }
+}
+
+function saveRequests(requests) {
+    localStorage.setItem(STORAGE_REQUESTS, JSON.stringify(requests));
+}
+
+function setSession(user) {
+    localStorage.setItem(
+        STORAGE_SESSION,
+        JSON.stringify(user)
+    );
+
+    appState.currentUser = user;
+}
+
+function getSession() {
+    try {
+        return JSON.parse(
+            localStorage.getItem(STORAGE_SESSION)
+        );
+    } catch {
+        return null;
+    }
+}
+
+function logout() {
+    localStorage.removeItem(STORAGE_SESSION);
+    appState.currentUser = null;
+    location.reload();
+}
+
+function createUser(type, form) {
+
+    const users = getUsers();
+
+    const email = form.email.value.trim().toLowerCase();
+
+    if (!email || !form.password.value) {
+        alert("Veuillez remplir tous les champs.");
+        return;
+    }
+
+    if (users.some(user => user.email === email)) {
+        alert("Un compte existe déjà avec cette adresse.");
+        return;
+    }
+
+    const user = {
+        id: crypto.randomUUID(),
+        type,
+        nom: form.nom.value.trim(),
+        prenom: form.prenom.value.trim(),
+        email,
+        password: form.password.value,
+        createdAt: new Date().toISOString()
+    };
+
+    users.push(user);
+    saveUsers(users);
+
+    setSession(user);
+
+    alert("Compte créé. Connexion automatique effectuée.");
+
+    if (type === "citizen") {
+        showCitizenDashboard();
+    } else {
+        showForeignDashboard();
+    }
+}
+
+function loginUser(type, form) {
+
+    const email = form.email.value.trim().toLowerCase();
+    const password = form.password.value;
+
+    const users = getUsers();
+
+    const user = users.find(
+        u =>
+            u.type === type &&
+            u.email === email &&
+            u.password === password
+    );
+
+    if (!user) {
+        alert("Identifiants incorrects.");
+        return;
+    }
+
+    setSession(user);
+
+    if (type === "citizen") {
+        showCitizenDashboard();
+    } else {
+        showForeignDashboard();
+    }
+}
+
+function citizenLogin() {
+
+    document.querySelector("main.page").innerHTML = `
+        <section class="space-page">
+            <button class="back-button"
+                onclick="showCitizenAuth()">
+                ← Retour
+            </button>
+
+            <form class="auth-panel"
+                onsubmit="event.preventDefault(); loginUser('citizen', this);">
+
+                <h2>Connexion citoyen</h2>
+                <p>Accédez à votre espace personnel.</p>
+
+                <div class="form-group">
+                    <label>Adresse e-mail</label>
+                    <input
+                        name="email"
+                        type="email"
+                        autocomplete="email"
+                        required>
+                </div>
+
+                <div class="form-group">
+                    <label>Mot de passe</label>
+                    <input
+                        name="password"
+                        type="password"
+                        autocomplete="current-password"
+                        required>
+                </div>
+
+                <button class="primary-button"
+                    style="width:100%;">
+                    Se connecter
+                </button>
+
+            </form>
+        </section>
+    `;
+}
+
+function citizenRegister() {
+
+    document.querySelector("main.page").innerHTML = `
+        <section class="space-page">
+            <button class="back-button"
+                onclick="showCitizenAuth()">
+                ← Retour
+            </button>
+
+            <form class="auth-panel"
+                onsubmit="event.preventDefault(); createUser('citizen', this);">
+
+                <h2>Créer un compte citoyen</h2>
+                <p>
+                    Après la création, la connexion est automatique.
+                </p>
+
+                <div class="form-group">
+                    <label>Nom</label>
+                    <input name="nom" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Prénom</label>
+                    <input name="prenom" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Adresse e-mail</label>
+                    <input name="email" type="email" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Mot de passe</label>
+                    <input name="password" type="password" minlength="8" required>
+                </div>
+
+                <button class="primary-button"
+                    style="width:100%;">
+                    Créer mon compte
+                </button>
+
+            </form>
+        </section>
+    `;
+}
+
+function foreignLogin() {
+
+    document.querySelector("main.page").innerHTML = `
+        <section class="space-page">
+            <button class="back-button"
+                onclick="showForeignAuth()">
+                ← Retour
+            </button>
+
+            <form class="auth-panel"
+                onsubmit="event.preventDefault(); loginUser('foreign', this);">
+
+                <h2>Connexion étranger</h2>
+                <p>Accédez à votre espace personnel.</p>
+
+                <div class="form-group">
+                    <label>Adresse e-mail</label>
+                    <input name="email" type="email" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Mot de passe</label>
+                    <input name="password" type="password" required>
+                </div>
+
+                <button class="primary-button"
+                    style="width:100%;">
+                    Se connecter
+                </button>
+
+            </form>
+        </section>
+    `;
+}
+
+function foreignRegister() {
+
+    document.querySelector("main.page").innerHTML = `
+        <section class="space-page">
+            <button class="back-button"
+                onclick="showForeignAuth()">
+                ← Retour
+            </button>
+
+            <form class="auth-panel"
+                onsubmit="event.preventDefault(); createUser('foreign', this);">
+
+                <h2>Créer un compte étranger</h2>
+                <p>
+                    Créez votre espace personnel.
+                </p>
+
+                <div class="form-group">
+                    <label>Nom</label>
+                    <input name="nom" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Prénom</label>
+                    <input name="prenom" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Adresse e-mail</label>
+                    <input name="email" type="email" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Mot de passe</label>
+                    <input name="password" type="password" minlength="8" required>
+                </div>
+
+                <button class="primary-button"
+                    style="width:100%;">
+                    Créer mon compte
+                </button>
+
+            </form>
+        </section>
+    `;
+}
+</script>
+<!-- =========================================================
+     MOSTAKBAL — PARTIE 4/10
+     TABLEAUX DE BORD CITOYEN / ÉTRANGER
+     ========================================================= -->
+
+<style>
+.dashboard-header {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 26px;
+    padding: 28px;
+    margin-bottom: 20px;
+    box-shadow: var(--shadow);
+}
+
+.dashboard-header h1 {
+    margin-bottom: 7px;
+}
+
+.dashboard-header p {
+    color: var(--muted);
+}
+
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    gap: 16px;
+}
+
+.dashboard-card {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 21px;
+    padding: 22px;
+    box-shadow: var(--shadow);
+}
+
+.dashboard-card .number {
+    font-size: 30px;
+    font-weight: 800;
+    margin-bottom: 4px;
+}
+
+.dashboard-card .label {
+    color: var(--muted);
+}
+
+.dashboard-menu {
+    margin-top: 20px;
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    gap: 15px;
+}
+
+.menu-button {
+    border: 1px solid var(--border);
+    background: white;
+    border-radius: 19px;
+    padding: 22px;
+    text-align: left;
+    transition: .2s;
+}
+
+.menu-button:hover {
+    border-color: #b2ccff;
+    transform: translateY(-2px);
+}
+
+.menu-button strong {
+    display: block;
+    margin-bottom: 6px;
+}
+
+.menu-button span {
+    color: var(--muted);
+    font-size: 14px;
+}
+
+@media(max-width:700px) {
+    .dashboard-grid,
+    .dashboard-menu {
+        grid-template-columns: 1fr;
+    }
+}
+</style>
+
+<script>
+function showCitizenDashboard() {
+
+    const user = getSession();
+
+    if (!user) {
+        showCitizenAuth();
+        return;
+    }
+
+    const requests = getRequests()
+        .filter(r => r.userId === user.id);
+
+    document.querySelector("main.page").innerHTML = `
+        <section class="space-page">
+
+            <div class="dashboard-header">
+                <h1>Bonjour ${escapeHTML(user.prenom)} 👋</h1>
+                <p>
+                    Bienvenue dans votre espace citoyen.
+                </p>
+            </div>
+
+            <div class="dashboard-grid">
+
+                <div class="dashboard-card">
+                    <div class="number">
+                        ${requests.length}
+                    </div>
+                    <div class="label">
+                        Demandes
+                    </div>
+                </div>
+
+                <div class="dashboard-card">
+                    <div class="number">
+                        ${requests.filter(r => r.status === "En attente").length}
+                    </div>
+                    <div class="label">
+                        En attente
+                    </div>
+                </div>
+
+                <div class="dashboard-card">
+                    <div class="number">
+                        ${requests.filter(r => r.status === "Acceptée").length}
+                    </div>
+                    <div class="label">
+                        Acceptées
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="dashboard-menu">
+
+                <button class="menu-button"
+                    onclick="showCitizenRequests()">
+                    <strong>📋 Mes demandes</strong>
+                    <span>Consulter et suivre vos dossiers.</span>
+                </button>
+
+                <button class="menu-button"
+                    onclick="showCitizenProcedures()">
+                    <strong>➕ Faire une demande</strong>
+                    <span>Accéder aux démarches citoyennes.</span>
+                </button>
+
+                <button class="menu-button"
+                    onclick="showProfilePage()">
+                    <strong>👤 Mon profil</strong>
+                    <span>Consulter vos informations.</span>
+                </button>
+
+                <button class="menu-button"
+                    onclick="logout()">
+                    <strong>↪ Déconnexion</strong>
+                    <span>Quitter votre session.</span>
+                </button>
+
+            </div>
+
+        </section>
+    `;
+}
+
+function showForeignDashboard() {
+
+    const user = getSession();
+
+    if (!user) {
+        showForeignAuth();
+        return;
+    }
+
+    const requests = getRequests()
+        .filter(r => r.userId === user.id);
+
+    document.querySelector("main.page").innerHTML = `
+        <section class="space-page">
+
+            <div class="dashboard-header">
+                <h1>Bonjour ${escapeHTML(user.prenom)} 👋</h1>
+                <p>
+                    Bienvenue dans votre espace étranger.
+                </p>
+            </div>
+
+            <div class="dashboard-grid">
+
+                <div class="dashboard-card">
+                    <div class="number">
+                        ${requests.length}
+                    </div>
+                    <div class="label">
+                        Demandes
+                    </div>
+                </div>
+
+                <div class="dashboard-card">
+                    <div class="number">
+                        ${requests.filter(r => r.status === "En attente").length}
+                    </div>
+                    <div class="label">
+                        En attente
+                    </div>
+                </div>
+
+                <div class="dashboard-card">
+                    <div class="number">
+                        ${requests.filter(r => r.status === "Acceptée").length}
+                    </div>
+                    <div class="label">
+                        Acceptées
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="dashboard-menu">
+
+                <button class="menu-button"
+                    onclick="showForeignRequests()">
+                    <strong>📋 Mes demandes</strong>
+                    <span>Consulter vos dossiers.</span>
+                </button>
+
+                <button class="menu-button"
+                    onclick="showForeignProcedures()">
+                    <strong>➕ Faire une demande</strong>
+                    <span>
+                        E-visa, carte de statut,
+                        TIM et autres démarches.
+                    </span>
+                </button>
+
+                <button class="menu-button"
+                    onclick="showProfilePage()">
+                    <strong>👤 Mon profil</strong>
+                    <span>Consulter votre compte.</span>
+                </button>
+
+                <button class="menu-button"
+                    onclick="logout()">
+                    <strong>↪ Déconnexion</strong>
+                    <span>Quitter votre session.</span>
+                </button>
+
+            </div>
+
+        </section>
+    `;
+}
+
+function escapeHTML(value) {
+
+    return String(value)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+}
+
+function showProfilePage() {
+
+    const user = getSession();
+
+    if (!user) {
+        location.reload();
+        return;
+    }
+
+    document.querySelector("main.page").innerHTML = `
+        <section class="space-page">
+
+            <button class="back-button"
+                onclick="${
+                    user.type === "citizen"
+                    ? "showCitizenDashboard()"
+                    : "showForeignDashboard()"
+                }">
+                ← Retour
+            </button>
+
+            <div class="auth-panel">
+
+                <h2>Mon profil</h2>
+
+                <div class="form-group">
+                    <label>Nom</label>
+                    <input value="${escapeHTML(user.nom)}" disabled>
+                </div>
+
+                <div class="form-group">
+                    <label>Prénom</label>
+                    <input value="${escapeHTML(user.prenom)}" disabled>
+                </div>
+
+                <div class="form-group">
+                    <label>E-mail</label>
+                    <input value="${escapeHTML(user.email)}" disabled>
+                </div>
+
+                <button class="danger-button"
+                    style="width:100%;"
+                    onclick="logout()">
+                    Se déconnecter
+                </button>
+
+            </div>
+        </section>
+    `;
+}
+</script>
+<!-- =========================================================
+     MOSTAKBAL — PARTIE 5/10
+     ESPACE CITOYEN — DÉMARCHES
+     ========================================================= -->
+
+<script>
+function showCitizenProcedures() {
+
+    document.querySelector("main.page").innerHTML = `
+        <section class="space-page">
+
+            <button class="back-button"
+                onclick="showCitizenDashboard()">
+                ← Retour à mon espace
+            </button>
+
+            <div class="section-title">
+                <h2>Démarches citoyennes</h2>
+                <p>
+                    Sélectionnez une démarche.
+                </p>
+            </div>
+
+            <div class="space-grid">
+
+                <article class="space-card"
+                    onclick="openCitizenForm('CNI')">
+                    <div class="icon">🪪</div>
+                    <h3>CNI</h3>
+                    <p>
+                        Demande ou renouvellement
+                        de carte nationale d'identité.
+                    </p>
+                </article>
+
+                <article class="space-card"
+                    onclick="openCitizenForm('Passeport')">
+                    <div class="icon">📘</div>
+                    <h3>Passeport</h3>
+                    <p>
+                        Demande ou renouvellement
+                        de passeport.
+                    </p>
+                </article>
+
+                <article class="space-card"
+                    onclick="openCitizenForm('Certificat de nationalité')">
+                    <div class="icon">📜</div>
+                    <h3>Certificat de nationalité</h3>
+                    <p>
+                        Demande de certificat de nationalité.
+                    </p>
+                </article>
+
+                <article class="space-card"
+                    onclick="openCitizenForm('Acquisition de nationalité')">
+                    <div class="icon">🏛️</div>
+                    <h3>Acquisition de nationalité</h3>
+                    <p>
+                        Déposer une demande d'acquisition
+                        de nationalité.
+                    </p>
+                </article>
+
+                <article class="space-card"
+                    onclick="openCitizenForm('Extrait de naissance')">
+                    <div class="icon">📄</div>
+                    <h3>Extrait de naissance</h3>
+                    <p>
+                        Demander un extrait de naissance.
+                    </p>
+                </article>
+
+            </div>
+        </section>
+    `;
+}
+
+function openCitizenForm(type) {
+
+    document.querySelector("main.page").innerHTML = `
+        <section class="space-page">
+
+            <button class="back-button"
+                onclick="showCitizenProcedures()">
+                ← Retour aux démarches
+            </button>
+
+            <form class="auth-panel"
+                onsubmit="event.preventDefault();
+                submitCitizenRequest('${escapeHTML(type)}', this);">
+
+                <h2>${escapeHTML(type)}</h2>
+
+                <p>
+                    Complétez les informations demandées.
+                </p>
+
+                <div class="form-group">
+                    <label>Nom</label>
+                    <input name="nom" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Prénom</label>
+                    <input name="prenom" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Date de naissance</label>
+                    <input name="dateNaissance"
+                        type="date"
+                        required>
+                </div>
+
+                ${
+                    type === "Extrait de naissance"
+                    ? `
+                    <div class="form-group">
+                        <label>Lieu de naissance</label>
+                        <input name="lieuNaissance" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label>
+                            Numéro d'identification nationale
+                        </label>
+                        <input name="nin" required>
+                    </div>
+                    `
+                    : `
+                    <div class="form-group">
+                        <label>
+                            Numéro d'identification nationale
+                        </label>
+                        <input name="nin" required>
+                    </div>
+                    `
+                }
+
+                ${
+                    type === "CNI"
+                    ? `
+                    <div class="form-group">
+                        <label>Type de demande</label>
+                        <select name="sousType" required>
+                            <option value="">
+                                Sélectionner
+                            </option>
+                            <option>Première demande</option>
+                            <option>Renouvellement</option>
+                        </select>
+                    </div>
+                    `
+                    : ""
+                }
+
+                ${
+                    type === "Passeport"
+                    ? `
+                    <div class="form-group">
+                        <label>Type de demande</label>
+                        <select name="sousType" required>
+                            <option value="">
+                                Sélectionner
+                            </option>
+                            <option>Première demande</option>
+                            <option>Renouvellement</option>
+                        </select>
+                    </div>
+                    `
+                    : ""
+                }
+
+                <button class="primary-button"
+                    style="width:100%; margin-top:8px;">
+                    Déposer la demande
+                </button>
+
+            </form>
+        </section>
+    `;
+}
+
+function submitCitizenRequest(type, form) {
+
+    const user = getSession();
+
+    if (!user) {
+        alert("Votre session a expiré.");
+        location.reload();
+        return;
+    }
+
+    const request = {
+        id: crypto.randomUUID(),
+        reference: generateReference("INT"),
+        userId: user.id,
+        espace: "citoyen",
+        type,
+        sousType: form.sousType?.value || null,
+        nom: form.nom.value.trim(),
+        prenom: form.prenom.value.trim(),
+        dateNaissance: form.dateNaissance.value,
+        nin: form.nin?.value.trim() || null,
+        lieuNaissance: form.lieuNaissance?.value.trim() || null,
+        status: "En attente",
+        createdAt: new Date().toISOString()
+    };
+
+    const requests = getRequests();
+
+    requests.push(request);
+    saveRequests(requests);
+
+    showDepositConfirmation(request);
+}
+
+function generateReference(prefix) {
+
+    const now = new Date();
+
+    const date =
+        now.getFullYear().toString() +
+        String(now.getMonth()+1).padStart(2,"0") +
+        String(now.getDate()).padStart(2,"0");
+
+    const random =
+        Math.floor(100000 + Math.random() * 900000);
+
+    return `${prefix}-${date}-${random}`;
+}
+</script>
+<!-- =========================================================
+     MOSTAKBAL — PARTIE 6/10
+     ESPACE ÉTRANGER — DÉMARCHES
+     ========================================================= -->
+
+<script>
+function showForeignProcedures() {
+
+    document.querySelector("main.page").innerHTML = `
+        <section class="space-page">
+
+            <button class="back-button"
+                onclick="showForeignDashboard()">
+                ← Retour à mon espace
+            </button>
+
+            <div class="section-title">
+                <h2>Démarches étrangères</h2>
+                <p>
+                    Sélectionnez une démarche.
+                </p>
+            </div>
+
+            <div class="space-grid">
+
+                <article class="space-card"
+                    onclick="openForeignForm('E-visa')">
+
+                    <div class="icon">🌍</div>
+
+                    <h3>E-visa</h3>
+
+                    <p>
+                        Travail, stagiaire ou
+                        mineur accompagné.
+                    </p>
+
+                </article>
+
+                <article class="space-card"
+                    onclick="openForeignForm('Carte de statut')">
+
+                    <div class="icon">🪪</div>
+
+                    <h3>Carte de statut</h3>
+
+                    <p>
+                        Travail ou stagiaire.
+                    </p>
+
+                </article>
+
+                <article class="space-card"
+                    onclick="openForeignForm(
+                        'Titre d’identité pour mineur étranger'
+                    )">
+
+                    <div class="icon">🧒</div>
+
+                    <h3>
+                        Titre d'identité pour
+                        mineur étranger
+                    </h3>
+
+                    <p>
+                        Déposer une demande de TIM.
+                    </p>
+
+                </article>
+
+                <article class="space-card"
+                    onclick="openForeignForm(
+                        'Autorisation de travail'
+                    )">
+
+                    <div class="icon">💼</div>
+
+                    <h3>Autorisation de travail</h3>
+
+                    <p>
+                        Déposer une demande
+                        d'autorisation de travail.
+                    </p>
+
+                </article>
+
+            </div>
+        </section>
+    `;
+}
+
+function openForeignForm(type) {
+
+    let extraFields = "";
+
+    if (type === "E-visa") {
+
+        extraFields = `
+            <div class="form-group">
+                <label>Type d'e-visa</label>
+
+                <select name="visaType" required>
+                    <option value="">
+                        Sélectionner
+                    </option>
+
+                    <option value="Travail">
+                        Travail
+                    </option>
+
+                    <option value="Stagiaire">
+                        Stagiaire
+                    </option>
+
+                    <option value="Mineur accompagné">
+                        Mineur accompagné
+                    </option>
+                </select>
+            </div>
+        `;
+    }
+
+    if (type === "Carte de statut") {
+
+        extraFields = `
+            <div class="form-group">
+                <label>Statut</label>
+
+                <select name="statut" required>
+                    <option value="">
+                        Sélectionner
+                    </option>
+
+                    <option value="Travail">
+                        Travail
+                    </option>
+
+                    <option value="Stagiaire">
+                        Stagiaire
+                    </option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label>Numéro étranger</label>
+                <input name="numeroEtranger" required>
+            </div>
+        `;
+    }
+
+    if (
+        type ===
+        "Titre d’identité pour mineur étranger"
+    ) {
+
+        extraFields = `
+            <div class="form-group">
+                <label>
+                    Numéro étranger
+                </label>
+                <input name="numeroEtranger" required>
+            </div>
+
+            <div class="form-group">
+                <label>
+                    Visa du mineur
+                </label>
+                <input type="file"
+                    name="visaMineur"
+                    accept=".pdf,.jpg,.jpeg,.png"
+                    required>
+            </div>
+
+            <div class="form-group">
+                <label>
+                    Pièce d'identité du mineur
+                </label>
+                <input type="file"
+                    name="pieceIdentiteMineur"
+                    accept=".pdf,.jpg,.jpeg,.png"
+                    required>
+            </div>
+
+            <div class="form-group">
+                <label>
+                    Photo d'identité du mineur
+                </label>
+                <input type="file"
+                    name="photoMineur"
+                    accept=".jpg,.jpeg,.png"
+                    required>
+            </div>
+
+            <div class="form-group">
+                <label>
+                    Justificatif de domicile
+                </label>
+                <input type="file"
+                    name="domicile"
+                    accept=".pdf,.jpg,.jpeg,.png"
+                    required>
+            </div>
+
+            <div class="form-group">
+                <label>
+                    Acte de naissance délivré
+                    par les autorités étrangères
+                </label>
+                <input type="file"
+                    name="acteNaissance"
+                    accept=".pdf,.jpg,.jpeg,.png"
+                    required>
+            </div>
+
+            <div class="form-group">
+                <label>
+                    Documents attestant
+                    l'autorité parentale
+                </label>
+                <input type="file"
+                    name="autoriteParentale"
+                    accept=".pdf,.jpg,.jpeg,.png"
+                    required>
+            </div>
+        `;
+    }
+
+    if (type === "Autorisation de travail") {
+
+        extraFields = `
+            <div class="form-group">
+                <label>Numéro étranger</label>
+                <input name="numeroEtranger" required>
+            </div>
+
+            <div class="form-group">
+                <label>
+                    Justificatif de domicile
+                </label>
+                <input type="file"
+                    name="domicile"
+                    accept=".pdf,.jpg,.jpeg,.png"
+                    required>
+            </div>
+
+            <div class="form-group">
+                <label>
+                    Document justificatif
+                </label>
+                <input type="file"
+                    name="document"
+                    accept=".pdf,.jpg,.jpeg,.png"
+                    required>
+            </div>
+        `;
+    }
+
+    document.querySelector("main.page").innerHTML = `
+        <section class="space-page">
+
+            <button class="back-button"
+                onclick="showForeignProcedures()">
+                ← Retour aux démarches
+            </button>
+
+            <form class="auth-panel"
+                onsubmit="event.preventDefault();
+                submitForeignRequest('${escapeHTML(type)}', this);">
+
+                <h2>${escapeHTML(type)}</h2>
+
+                <p>
+                    Complétez les informations
+                    nécessaires à votre demande.
+                </p>
+
+                <div class="form-group">
+                    <label>Nom</label>
+                    <input name="nom" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Prénom</label>
+                    <input name="prenom" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Date de naissance</label>
+                    <input
+                        name="dateNaissance"
+                        type="date"
+                        required>
+                </div>
+
+                <div class="form-group">
+                    <label>Numéro de passeport</label>
+                    <input name="passeport" required>
+                </div>
+
+                ${extraFields}
+
+                <button class="primary-button"
+                    style="width:100%; margin-top:8px;">
+                    Déposer la demande
+                </button>
+
+            </form>
+        </section>
+    `;
+}
+
+function submitForeignRequest(type, form) {
+
+    const user = getSession();
+
+    if (!user) {
+        alert("Votre session a expiré.");
+        location.reload();
+        return;
+    }
+
+    let numeroEtranger =
+        form.numeroEtranger?.value.trim() || null;
+
+    /*
+       Pour une confirmation de dépôt d'e-visa,
+       le numéro étranger reste N/A.
+    */
+
+    if (type === "E-visa") {
+        numeroEtranger = "N/A";
+    }
+
+    const request = {
+        id: crypto.randomUUID(),
+
+        reference: generateReference("EXT"),
+
+        userId: user.id,
+
+        espace: "etranger",
+
+        type,
+
+        sousType:
+            form.visaType?.value ||
+            form.statut?.value ||
+            null,
+
+        nom: form.nom.value.trim(),
+
+        prenom: form.prenom.value.trim(),
+
+        dateNaissance: form.dateNaissance.value,
+
+        passeport: form.passeport.value.trim(),
+
+        numeroEtranger,
+
+        status: "En attente",
+
+        createdAt: new Date().toISOString()
+    };
+
+    const requests = getRequests();
+
+    requests.push(request);
+
+    saveRequests(requests);
+
+    showDepositConfirmation(request);
+}
+</script>
+<!-- =========================================================
+     MOSTAKBAL — PARTIE 7/10
+     DEMANDES + CONFIRMATION DE DÉPÔT
+     ========================================================= -->
+
+<style>
+.request-list {
+    display: grid;
+    gap: 13px;
+    margin-top: 20px;
+}
+
+.request-item {
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 18px;
+    padding: 20px;
+}
+
+.request-top {
+    display: flex;
+    justify-content: space-between;
+    gap: 15px;
+}
+
+.status {
+    display: inline-flex;
+    padding: 6px 10px;
+    border-radius: 999px;
+    background: #fff7ed;
+    color: #c2410c;
+    font-size: 12px;
+    font-weight: 800;
+}
+
+.request-item p {
+    color: var(--muted);
+    margin-top: 6px;
+    font-size: 14px;
+}
+
+.confirmation-card {
+    max-width: 760px;
+    margin: auto;
+    background: white;
+    border: 1px solid var(--border);
+    border-radius: 27px;
+    padding: 34px;
+    box-shadow: var(--shadow);
+}
+
+.confirmation-logo {
+    font-size: 23px;
+    font-weight: 900;
+    margin-bottom: 30px;
+}
+
+.confirmation-title {
+    text-align: center;
+    margin-bottom: 28px;
+}
+
+.confirmation-title h1 {
+    font-size: 28px;
+}
+
+.confirmation-title p {
+    color: var(--muted);
+    margin-top: 6px;
+}
+
+.confirmation-table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.confirmation-table td {
+    padding: 13px 10px;
+    border-bottom: 1px solid var(--border);
+}
+
+.confirmation-table td:first-child {
+    font-weight: 700;
+    width: 42%;
+}
+
+.confirmation-actions {
+    display: flex;
+    gap: 10px;
+    margin-top: 25px;
+}
+
+@media(max-width:600px) {
+    .confirmation-card {
+        padding: 22px;
+    }
+
+    .confirmation-actions {
+        flex-direction: column;
+    }
+}
+</style>
+
+<script>
+function showCitizenRequests() {
+    showRequestsForCurrentUser("citizen");
+}
+
+function showForeignRequests() {
+    showRequestsForCurrentUser("foreign");
+}
+
+function showRequestsForCurrentUser(type) {
+
+    const user = getSession();
+
+    if (!user) {
+        location.reload();
+        return;
+    }
+
+    const requests = getRequests()
+        .filter(r => r.userId === user.id);
+
+    const back =
+        type === "citizen"
+        ? "showCitizenDashboard()"
+        : "showForeignDashboard()";
+
+    document.querySelector("main.page").innerHTML = `
+        <section class="space-page">
+
+            <button class="back-button"
+                onclick="${back}">
+                ← Retour
+            </button>
+
+            <div class="section-title">
+                <h2>Mes demandes</h2>
+                <p>
+                    Retrouvez ici vos dossiers personnels.
+                </p>
+            </div>
+
+            <div class="request-list">
+
+                ${
+                    requests.length === 0
+                    ? `
+                        <div class="dashboard-card">
+                            Aucune demande enregistrée.
+                        </div>
+                    `
+                    : requests.map(request => `
+                        <article class="request-item">
+
+                            <div class="request-top">
+
+                                <strong>
+                                    ${escapeHTML(request.type)}
+                                    ${
+                                        request.sousType
+                                        ? " — " +
+                                          escapeHTML(request.sousType)
+                                        : ""
+                                    }
+                                </strong>
+
+                                <span class="status">
+                                    ${escapeHTML(request.status)}
+                                </span>
+
+                            </div>
+
+                            <p>
+                                Référence :
+                                ${escapeHTML(request.reference)}
+                            </p>
+
+                            <p>
+                                Déposée le :
+                                ${formatDate(request.createdAt)}
+                            </p>
+
+                            <button
+                                class="secondary-button"
+                                style="margin-top:12px;"
+                                onclick='showDepositConfirmation(
+                                    ${JSON.stringify(request)}
+                                )'>
+                                Voir la confirmation
+                            </button>
+
+                        </article>
+                    `).join("")
+                }
+
+            </div>
+
+        </section>
+    `;
+}
+
+function formatDate(value) {
+
+    return new Intl.DateTimeFormat(
+        "fr-FR",
+        {
+            dateStyle: "medium",
+            timeStyle: "short"
+        }
+    ).format(new Date(value));
+}
+
+function showDepositConfirmation(request) {
+
+    const user = getSession();
+
+    document.querySelector("main.page").innerHTML = `
+        <section class="space-page">
+
+            <button class="back-button"
+                onclick="${
+                    request.espace === "citoyen"
+                    ? "showCitizenRequests()"
+                    : "showForeignRequests()"
+                }">
+                ← Retour
+            </button>
+
+            <div class="confirmation-card"
+                id="confirmationDocument">
+
+                <div class="confirmation-logo">
+                    MOSTAKBAL
+                </div>
+
+                <div class="confirmation-title">
+
+                    <h1>CONFIRMATION DE DÉPÔT</h1>
+
+                    <p>
+                        Demande enregistrée
+                    </p>
+
+                </div>
+
+                <table class="confirmation-table">
+
+                    <tr>
+                        <td>Référence</td>
+                        <td>
+                            ${escapeHTML(request.reference)}
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>Nom</td>
+                        <td>
+                            ${escapeHTML(request.nom)}
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>Prénom</td>
+                        <td>
+                            ${escapeHTML(request.prenom)}
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>Démarche</td>
+                        <td>
+                            ${escapeHTML(request.type)}
+                        </td>
+                    </tr>
+
+                    ${
+                        request.sousType
+                        ? `
+                        <tr>
+                            <td>Type</td>
+                            <td>
+                                ${escapeHTML(request.sousType)}
+                            </td>
+                        </tr>
+                        `
+                        : ""
+                    }
+
+                    <tr>
+                        <td>Numéro étranger</td>
+                        <td>
+                            ${escapeHTML(
+                                request.numeroEtranger || "N/A"
+                            )}
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>Statut</td>
+                        <td>
+                            ${escapeHTML(request.status)}
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td>Date de dépôt</td>
+                        <td>
+                            ${formatDate(request.createdAt)}
+                        </td>
+                    </tr>
+
+                </table>
+
+                <div style="
+                    margin-top:25px;
+                    padding:16px;
+                    border-radius:15px;
+                    background:#f7f8fa;
+                    color:#475467;
+                    line-height:1.6;
+                    font-size:14px;
+                ">
+                    Votre demande a été enregistrée.
+                    Conservez cette référence pour consulter
+                    son suivi dans votre espace personnel.
+                </div>
+
+            </div>
+
+            <div class="confirmation-actions">
+
+                <button class="primary-button"
+                    onclick="downloadConfirmationPDF()">
+                    Télécharger la confirmation
+                </button>
+
+                <button class="secondary-button"
+                    onclick="${
+                        request.espace === "citoyen"
+                        ? "showCitizenDashboard()"
+                        : "showForeignDashboard()"
+                    }">
+                    Retour à mon espace
+                </button>
+
+            </div>
+
+        </section>
+    `;
+}
+
+function downloadConfirmationPDF() {
+
+    /*
+       Génération côté navigateur pour le prototype.
+       La partie suivante ajoute la génération PDF
+       complète et structurée.
+    */
+
+    const documentElement =
+        document.getElementById("confirmationDocument");
+
+    if (!documentElement) return;
+
+    const printWindow = window.open("", "_blank");
+
+    printWindow.document.write(`
+        <!DOCTYPE html>
+        <html lang="fr">
+        <head>
+            <meta charset="UTF-8">
+            <title>Confirmation de dépôt</title>
+
+            <style>
+                body {
+                    font-family: Arial, sans-serif;
+                    padding: 45px;
+                    color: #101828;
+                }
+
+                h1 {
+                    text-align: center;
+                    margin-bottom: 30px;
+                }
+
+                table {
+                    width: 100%;
+                    border-collapse: collapse;
+                }
+
+                td {
+                    padding: 12px;
+                    border-bottom: 1px solid #ddd;
+                }
+
+                td:first-child {
+                    font-weight: bold;
+                    width: 40%;
+                }
+
+                .logo {
+                    font-size: 25px;
+                    font-weight: bold;
+                    margin-bottom: 35px;
+                }
+            </style>
+        </head>
+
+        <body>
+
+            <div class="logo">
+                MOSTAKBAL
+            </div>
+
+            ${documentElement.innerHTML}
+
+        </body>
+        </html>
+    `);
+
+    printWindow.document.close();
+
+    setTimeout(() => {
+        printWindow.print();
+    }, 400);
+}
+</script>
+<!-- =========================================================
+     MOSTAKBAL — PARTIE 8/10
+     E-VISA + CARTE DE STATUT + TIM
+     ========================================================= -->
+
+<script>
+function showVisaHome() {
+
+    document.querySelector("main.page").innerHTML = `
+        <section class="space-page">
+
+            <button class="back-button"
+                onclick="location.reload()">
+                ← Retour à l'accueil
+            </button>
+
+            <div class="dashboard-header">
+                <h1>Service visa 🌍</h1>
+                <p>
+                    Sélectionnez la catégorie d'e-visa
+                    souhaitée.
+                </p>
+            </div>
+
+            <div class="space-grid">
+
+                <article class="space-card"
+                    onclick="openPublicVisa('Travail')">
+
+                    <div class="icon">💼</div>
+
+                    <h3>E-visa travail</h3>
+
+                    <p>
+                        Demande d'e-visa pour motif de travail.
+                    </p>
+
+                </article>
+
+                <article class="space-card"
+                    onclick="openPublicVisa('Stagiaire')">
+
+                    <div class="icon">🎓</div>
+
+                    <h3>E-visa stagiaire</h3>
+
+                    <p>
+                        Demande d'e-visa pour un stage.
+                    </p>
+
+                </article>
+
+                <article class="space-card"
+                    onclick="openPublicVisa('Mineur accompagné')">
+
+                    <div class="icon">🧒</div>
+
+                    <h3>E-visa mineur accompagné</h3>
+
+                    <p>
+                        Demande destinée au mineur accompagné.
+                    </p>
+
+                </article>
+
+            </div>
+
+        </section>
+    `;
+}
+
+function openPublicVisa(type) {
+
+    document.querySelector("main.page").innerHTML = `
+        <section class="space-page">
+
+            <button class="back-button"
+                onclick="showVisaHome()">
+                ← Retour
+            </button>
+
+            <form class="auth-panel"
+                onsubmit="
+                    event.preventDefault();
+                    alert(
+                        'Pour déposer cette demande, connectez-vous à votre espace étranger.'
+                    );
+                ">
+
+                <h2>E-visa</h2>
+
+                <p>
+                    Type sélectionné :
+                    <strong>${escapeHTML(type)}</strong>
+                </p>
+
+                <div class="form-group">
+                    <label>Nom</label>
+                    <input required>
+                </div>
+
+                <div class="form-group">
+                    <label>Prénom</label>
+                    <input required>
+                </div>
+
+                <div class="form-group">
+                    <label>Numéro de passeport</label>
+                    <input required>
+                </div>
+
+                <button class="primary-button"
+                    style="width:100%;">
+                    Continuer
+                </button>
+
+            </form>
+        </section>
+    `;
+}
+
+/* Initialisation de session */
+
+document.addEventListener("DOMContentLoaded", () => {
+
+    const session = getSession();
+
+    if (session) {
+        appState.currentUser = session;
+    }
+
+});
+</script>
+<!-- =========================================================
+     MOSTAKBAL — PARTIE 9/10
+     ESPACE ADMINISTRATIF
+     ========================================================= -->
+
+<style>
+.admin-stat-grid {
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:15px;
+    margin-bottom:20px;
+}
+
+.admin-stat {
+    background:white;
+    border:1px solid var(--border);
+    border-radius:20px;
+    padding:20px;
+    box-shadow:var(--shadow);
+}
+
+.admin-stat strong {
+    display:block;
+    font-size:28px;
+    margin-bottom:5px;
+}
+
+.admin-stat span {
+    color:var(--muted);
+}
+
+.admin-table-wrapper {
+    overflow-x:auto;
+    background:white;
+    border:1px solid var(--border);
+    border-radius:20px;
+    box-shadow:var(--shadow);
+}
+
+.admin-table {
+    width:100%;
+    border-collapse:collapse;
+    min-width:760px;
+}
+
+.admin-table th,
+.admin-table td {
+    padding:14px;
+    text-align:left;
+    border-bottom:1px solid var(--border);
+}
+
+.admin-table th {
+    background:#f8fafc;
+    font-size:13px;
+}
+
+@media(max-width:900px) {
+    .admin-stat-grid {
+        grid-template-columns:repeat(2,1fr);
+    }
+}
+</style>
+
+<script>
+/*
+   Compte administratif unique pour le prototype.
+
+   Dans une vraie application, les identifiants ne doivent
+   jamais être conservés directement dans le JavaScript.
+   Ils doivent être gérés côté serveur avec des mots de passe
+   hachés et des sessions sécurisées.
+*/
+
+const ADMIN_STORAGE = "mostakbal_admin";
+
+function getAdminCredentials() {
+
+    try {
+        return JSON.parse(
+            localStorage.getItem(ADMIN_STORAGE)
+        ) || {
+            identifier: "admin",
+            password: "admin-demo"
+        };
+    } catch {
+        return {
+            identifier: "admin",
+            password: "admin-demo"
+        };
+    }
+}
+
+function saveAdminCredentials(data) {
+    localStorage.setItem(
+        ADMIN_STORAGE,
+        JSON.stringify(data)
+    );
+}
+
+function adminLogin() {
+
+    document.querySelector("main.page").innerHTML = `
+        <section class="space-page">
+
+            <button class="back-button"
+                onclick="showInternalSpaces()">
+                ← Retour
+            </button>
+
+            <form class="auth-panel"
+                onsubmit="
+                    event.preventDefault();
+                    authenticateAdmin(this);
+                ">
+
+                <h2>Espace administratif</h2>
+
+                <p>
+                    Connexion de l'administrateur.
+                </p>
+
+                <div class="form-group">
+                    <label>Identifiant</label>
+                    <input
+                        name="identifier"
+                        autocomplete="username"
+                        required>
+                </div>
+
+                <div class="form-group">
+                    <label>Mot de passe</label>
+                    <input
+                        name="password"
+                        type="password"
+                        autocomplete="current-password"
+                        required>
+                </div>
+
+                <button class="primary-button"
+                    style="width:100%;">
+                    Se connecter
+                </button>
+
+            </form>
+
+        </section>
+    `;
+}
+
+function authenticateAdmin(form) {
+
+    const admin = getAdminCredentials();
+
+    if (
+        form.identifier.value !== admin.identifier ||
+        form.password.value !== admin.password
+    ) {
+        alert("Identifiant ou mot de passe incorrect.");
+        return;
+    }
+
+    showAdminDashboard();
+}
+
+function showAdminDashboard() {
+
+    const requests = getRequests();
+
+    document.querySelector("main.page").innerHTML = `
+        <section class="space-page">
+
+            <div class="dashboard-header">
+
+                <h1>
+                    Administration MOSTAKBAL
+                </h1>
+
+                <p>
+                    Gestion centralisée des demandes.
+                </p>
+
+            </div>
+
+            <div class="admin-stat-grid">
+
+                <div class="admin-stat">
+                    <strong>
+                        ${requests.length}
+                    </strong>
+                    <span>
+                        Total des demandes
+                    </span>
+                </div>
+
+                <div class="admin-stat">
+                    <strong>
+                        ${
+                            requests.filter(
+                                r => r.status === "En attente"
+                            ).length
+                        }
+                    </strong>
+                    <span>
+                        En attente
+                    </span>
+                </div>
+
+                <div class="admin-stat">
+                    <strong>
+                        ${
+                            requests.filter(
+                                r => r.status === "Acceptée"
+                            ).length
+                        }
+                    </strong>
+                    <span>
+                        Acceptées
+                    </span>
+                </div>
+
+                <div class="admin-stat">
+                    <strong>
+                        ${
+                            requests.filter(
+                                r => r.status === "Refusée"
+                            ).length
+                        }
+                    </strong>
+                    <span>
+                        Refusées
+                    </span>
+                </div>
+
+            </div>
+
+            <div class="dashboard-menu">
+
+                <button class="menu-button"
+                    onclick="showAdminRequests()">
+                    <strong>📋 Toutes les demandes</strong>
+                    <span>
+                        Consulter les dossiers enregistrés.
+                    </span>
+                </button>
+
+                <button class="menu-button"
+                    onclick="showAdminSettings()">
+                    <strong>⚙️ Paramètres administrateur</strong>
+                    <span>
+                        Modifier l'identifiant et le mot de passe.
+                    </span>
+                </button>
+
+                <button class="menu-button"
+                    onclick="showInternalSpaces()">
+                    <strong>↩ Retour aux espaces</strong>
+                    <span>
+                        Revenir à la sélection des espaces.
+                    </span>
+                </button>
+
+            </div>
+
+        </section>
+    `;
+}
+
+function showAdminRequests() {
+
+    const requests = getRequests();
+
+    document.querySelector("main.page").innerHTML = `
+        <section class="space-page">
+
+            <button class="back-button"
+                onclick="showAdminDashboard()">
+                ← Administration
+            </button>
+
+            <div class="section-title">
+                <h2>Toutes les demandes</h2>
+                <p>
+                    Vue administrative des dossiers.
+                </p>
+            </div>
+
+            <div class="admin-table-wrapper">
+
+                <table class="admin-table">
+
+                    <thead>
+                        <tr>
+                            <th>Référence</th>
+                            <th>Espace</th>
+                            <th>Démarche</th>
+                            <th>Type</th>
+                            <th>Statut</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+
+                        ${
+                            requests.map(request => `
+                                <tr>
+
+                                    <td>
+                                        ${escapeHTML(request.reference)}
+                                    </td>
+
+                                    <td>
+                                        ${escapeHTML(request.espace)}
+                                    </td>
+
+                                    <td>
+                                        ${escapeHTML(request.type)}
+                                    </td>
+
+                                    <td>
+                                        ${
+                                            escapeHTML(
+                                                request.sousType || "—"
+                                            )
+                                        }
+                                    </td>
+
+                                    <td>
+                                        ${escapeHTML(request.status)}
+                                    </td>
+
+                                    <td>
+
+                                        <button
+                                            class="secondary-button"
+                                            onclick='adminChangeStatus(
+                                                ${JSON.stringify(request)}
+                                            )'>
+                                            Modifier
+                                        </button>
+
+                                    </td>
+
+                                </tr>
+                            `).join("")
+                        }
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </section>
+    `;
+}
+
+function adminChangeStatus(request) {
+
+    const requests = getRequests();
+
+    const target = requests.find(
+        r => r.id === request.id
+    );
+
+    if (!target) return;
+
+    const newStatus = prompt(
+        "Nouveau statut : En attente, Acceptée ou Refusée",
+        target.status
+    );
+
+    if (!newStatus) return;
+
+    const allowed = [
+        "En attente",
+        "Acceptée",
+        "Refusée"
+    ];
+
+    if (!allowed.includes(newStatus)) {
+        alert("Statut invalide.");
+        return;
+    }
+
+    target.status = newStatus;
+
+    saveRequests(requests);
+
+    showAdminRequests();
+}
+
+function showAdminSettings() {
+
+    const admin = getAdminCredentials();
+
+    document.querySelector("main.page").innerHTML = `
+        <section class="space-page">
+
+            <button class="back-button"
+                onclick="showAdminDashboard()">
+                ← Administration
+            </button>
+
+            <form class="auth-panel"
+                onsubmit="
+                    event.preventDefault();
+                    updateAdminCredentials(this);
+                ">
+
+                <h2>Paramètres administrateur</h2>
+
+                <p>
+                    C'est ici que tu peux modifier
+                    l'identifiant et le mot de passe
+                    du compte administratif unique.
+                </p>
+
+                <div class="form-group">
+                    <label>Nouvel identifiant</label>
+                    <input
+                        name="identifier"
+                        value="${escapeHTML(admin.identifier)}"
+                        required>
+                </div>
+
+                <div class="form-group">
+                    <label>Nouveau mot de passe</label>
+                    <input
+                        name="password"
+                        type="password"
+                        minlength="8"
+                        required>
+                </div>
+
+                <button class="primary-button"
+                    style="width:100%;">
+                    Enregistrer
+                </button>
+
+            </form>
+
+        </section>
+    `;
+}
+
+function updateAdminCredentials(form) {
+
+    saveAdminCredentials({
+        identifier: form.identifier.value.trim(),
+        password: form.password.value
+    });
+
+    alert(
+        "Les identifiants administrateur ont été modifiés."
+    );
+
+    showAdminDashboard();
+}
+</script>
+<!-- =========================================================
+     MOSTAKBAL — PARTIE 10/10
+     INITIALISATION FINALE + PROTECTION DE L'INTERFACE
+     ========================================================= -->
+
+<script>
+/* =========================================================
+   INITIALISATION
+   ========================================================= */
+
+(function initializeMostakbal() {
+
+    const session = getSession();
+
+    if (!session) {
+        return;
+    }
+
+    appState.currentUser = session;
+
+})();
+
+/* =========================================================
+   ROUTAGE DU BOUTON PROFIL
+   ========================================================= */
+
+function openProfile() {
+
+    const user = getSession();
+
+    if (!user) {
+        showInternalSpaces();
+        return;
+    }
+
+    showProfilePage();
+}
+
+/* =========================================================
+   RETOUR ACCUEIL
+   ========================================================= */
+
+function goHome() {
+
+    location.reload();
+
+}
+
+/* =========================================================
+   NETTOYAGE AUTOMATIQUE DES DONNÉES INVALIDES
+   ========================================================= */
+
+function cleanupRequests() {
+
+    const requests = getRequests();
+
+    const valid = requests.filter(
+        request =>
+            request &&
+            request.id &&
+            request.userId &&
+            request.reference &&
+            request.type
+    );
+
+    if (valid.length !== requests.length) {
+        saveRequests(valid);
+    }
+
+}
+
+cleanupRequests();
+
+/* =========================================================
+   EMPÊCHER UNE PERTE ACCIDENTELLE DU FORMULAIRE
+   ========================================================= */
+
+let formChanged = false;
+
+document.addEventListener("input", event => {
+
+    if (
+        event.target.matches(
+            "input, textarea, select"
+        )
+    ) {
+        formChanged = true;
+    }
+
+});
+
+document.addEventListener("submit", () => {
+
+    formChanged = false;
+
+});
+
+window.addEventListener("beforeunload", event => {
+
+    if (!formChanged) return;
+
+    event.preventDefault();
+    event.returnValue = "";
+
+});
+
+/* =========================================================
+   AFFICHAGE D'UNE DEMANDE APRÈS CONNEXION
+   ========================================================= */
+
+function continueToUserSpace() {
+
+    const user = getSession();
+
+    if (!user) {
+        location.reload();
+        return;
+    }
+
+    if (user.type === "citizen") {
+        showCitizenDashboard();
+    }
+
+    if (user.type === "foreign") {
+        showForeignDashboard();
+    }
+
+}
+
+/* =========================================================
+   COMPATIBILITÉ DU PROFIL AVEC LA SESSION
+   ========================================================= */
+
+function refreshProfileButton() {
+
+    const button =
+        document.querySelector(".profile-button");
+
+    if (!button) return;
+
+    const user = getSession();
+
+    button.title = user
+        ? `${user.prenom} ${user.nom}`
+        : "Profil";
+
+}
+
+/* =========================================================
+   LANCEMENT
+   ========================================================= */
+
+refreshProfileButton();
+
+/*
+=============================================================
+IMPORTANT POUR LA VERSION DE PRODUCTION
+=============================================================
+
+Cette version est un prototype fonctionnel côté navigateur.
+
+Pour une vraie application administrative, il faudra remplacer :
+
+- localStorage pour les comptes ;
+- localStorage pour les demandes ;
+- les mots de passe côté navigateur ;
+- la génération locale des références ;
+
+par un serveur sécurisé avec :
+
+- authentification serveur ;
+- mots de passe hachés ;
+- sessions sécurisées ;
+- HTTPS ;
+- contrôle des permissions ;
+- validation serveur ;
+- base de données ;
+- journalisation ;
+- protection CSRF ;
+- limitation des tentatives de connexion ;
+- stockage sécurisé des fichiers ;
+- génération PDF côté serveur.
+
+Le prototype conserve toutefois la structure MOSTAKBAL :
+Service interne → Citoyen / Étranger / Administratif
+Service visa → E-visa
+Espace étranger → E-visa / Carte de statut / TIM /
+Autorisation de travail
+Espace citoyen → CNI / Passeport /
+Certificat de nationalité / Acquisition de nationalité /
+Extrait de naissance
+Espace administratif → gestion des demandes /
+identifiant / mot de passe.
+
+=============================================================
+FIN DU CODE MOSTAKBAL — 10/10
+=============================================================
+</script>
+<script>
+/* =====================================================
+   CONFIGURATION DU COMPTE ADMINISTRATEUR
+   ===================================================== */
+
+const ADMIN_CONFIG = {
+    identifiant: "NR-2601-0001-M-FON",
+    motDePasse: "Alamimohammed12?"
+};
+
+/* =====================================================
+   FIN DE LA CONFIGURATION ADMINISTRATEUR
+   ===================================================== */
+</script>
