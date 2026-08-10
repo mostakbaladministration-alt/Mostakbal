@@ -3382,3 +3382,211 @@ renderEverything();
 
 </body>
 </html>
+<script>
+/* ============================================================
+   MOSTAKBAL — NOUVEAU LOCAL STORAGE
+   À placer APRÈS LA PARTIE 10/10
+   ============================================================ */
+
+(function () {
+
+    /* ------------------------------------------------------------
+       1. ANCIEN STOCKAGE
+       ------------------------------------------------------------ */
+
+    const ANCIENNES_CLES = [
+        "mostakbal_admin",
+        "mostakbal_admin_v1",
+        "mostakbal_requests",
+        "mostakbal_requests_v1",
+        "mostakbal_visa_accounts",
+        "mostakbal_visa_accounts_v1"
+    ];
+
+    ANCIENNES_CLES.forEach(function (cle) {
+        localStorage.removeItem(cle);
+    });
+
+
+    /* ------------------------------------------------------------
+       2. NOUVELLES CLÉS
+       ------------------------------------------------------------ */
+
+    const ADMIN_STORAGE = "mostakbal_admin_v2";
+    const DEMANDES_STORAGE = "mostakbal_demandes_v2";
+    const COMPTES_STORAGE = "mostakbal_comptes_v2";
+
+
+    /* ------------------------------------------------------------
+       3. CRÉATION DU NOUVEAU COMPTE ADMIN
+       ------------------------------------------------------------ */
+
+    const adminExistant = localStorage.getItem(ADMIN_STORAGE);
+
+    if (!adminExistant) {
+
+        const nouvelAdmin = {
+            identifiant: "ADMIN",
+            motDePasse: "MOSTAKBAL2026"
+        };
+
+        localStorage.setItem(
+            ADMIN_STORAGE,
+            JSON.stringify(nouvelAdmin)
+        );
+    }
+
+
+    /* ------------------------------------------------------------
+       4. INITIALISATION DES DEMANDES
+       ------------------------------------------------------------ */
+
+    if (!localStorage.getItem(DEMANDES_STORAGE)) {
+        localStorage.setItem(
+            DEMANDES_STORAGE,
+            JSON.stringify([])
+        );
+    }
+
+
+    /* ------------------------------------------------------------
+       5. INITIALISATION DES COMPTES
+       ------------------------------------------------------------ */
+
+    if (!localStorage.getItem(COMPTES_STORAGE)) {
+        localStorage.setItem(
+            COMPTES_STORAGE,
+            JSON.stringify([])
+        );
+    }
+
+
+    /* ------------------------------------------------------------
+       6. FONCTION POUR RÉCUPÉRER L'ADMIN
+       ------------------------------------------------------------ */
+
+    window.getMostakbalAdmin = function () {
+
+        const donnees = localStorage.getItem(ADMIN_STORAGE);
+
+        if (!donnees) {
+            return null;
+        }
+
+        try {
+            return JSON.parse(donnees);
+        } catch (erreur) {
+            return null;
+        }
+    };
+
+
+    /* ------------------------------------------------------------
+       7. FONCTION DE CONNEXION ADMIN
+       ------------------------------------------------------------ */
+
+    window.verifierConnexionMostakbal = function (
+        identifiant,
+        motDePasse
+    ) {
+
+        const admin = window.getMostakbalAdmin();
+
+        if (!admin) {
+            return false;
+        }
+
+        return (
+            identifiant === admin.identifiant &&
+            motDePasse === admin.motDePasse
+        );
+    };
+
+
+    /* ------------------------------------------------------------
+       8. MODIFIER IDENTIFIANT + MOT DE PASSE ADMIN
+       ------------------------------------------------------------ */
+
+    window.modifierIdentifiantsMostakbal = function (
+        nouvelIdentifiant,
+        nouveauMotDePasse
+    ) {
+
+        if (
+            !nouvelIdentifiant ||
+            !nouveauMotDePasse
+        ) {
+            return false;
+        }
+
+        const nouvelAdmin = {
+            identifiant: nouvelIdentifiant,
+            motDePasse: nouveauMotDePasse
+        };
+
+        localStorage.setItem(
+            ADMIN_STORAGE,
+            JSON.stringify(nouvelAdmin)
+        );
+
+        return true;
+    };
+
+
+    /* ------------------------------------------------------------
+       9. FONCTIONS POUR LES DEMANDES
+       ------------------------------------------------------------ */
+
+    window.getDemandesMostakbal = function () {
+
+        try {
+
+            return JSON.parse(
+                localStorage.getItem(DEMANDES_STORAGE)
+            ) || [];
+
+        } catch (erreur) {
+
+            return [];
+
+        }
+    };
+
+
+    window.enregistrerDemandeMostakbal = function (demande) {
+
+        const demandes = window.getDemandesMostakbal();
+
+        demandes.push(demande);
+
+        localStorage.setItem(
+            DEMANDES_STORAGE,
+            JSON.stringify(demandes)
+        );
+
+        return true;
+    };
+
+
+    /* ------------------------------------------------------------
+       10. MESSAGE DE CONFIRMATION
+       ------------------------------------------------------------ */
+
+    console.log(
+        "MOSTAKBAL : ancien localStorage désactivé."
+    );
+
+    console.log(
+        "MOSTAKBAL : nouveau localStorage activé."
+    );
+
+    console.log(
+        "Identifiant admin initial : ADMIN"
+    );
+
+    console.log(
+        "Mot de passe admin initial : MOSTAKBAL2026"
+    );
+
+})();
+</script>
