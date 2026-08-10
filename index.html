@@ -1,0 +1,2264 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MOSTAKBAL — Portail administratif</title>
+
+<style>
+:root{
+  --blue:#0057d9;
+  --blue2:#0b1f35;
+  --green:#087f5b;
+  --purple:#6942c5;
+  --bg:#f4f6f9;
+  --white:#fff;
+  --text:#17212f;
+  --muted:#667085;
+  --border:#dfe5ec;
+  --shadow:0 18px 55px rgba(15,35,60,.09);
+}
+
+*{
+  box-sizing:border-box;
+  margin:0;
+  padding:0;
+}
+
+html{
+  scroll-behavior:smooth;
+}
+
+body{
+  min-height:100vh;
+  background:
+    radial-gradient(circle at 85% 0%,#e7efff,transparent 30%),
+    var(--bg);
+  color:var(--text);
+  font-family:Inter,system-ui,-apple-system,"Segoe UI",sans-serif;
+}
+
+button,input,select{
+  font:inherit;
+}
+
+button{
+  cursor:pointer;
+}
+
+.header{
+  height:76px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 clamp(18px,5vw,70px);
+  background:rgba(255,255,255,.94);
+  backdrop-filter:blur(18px);
+  border-bottom:1px solid var(--border);
+  position:sticky;
+  top:0;
+  z-index:100;
+}
+
+.logo{
+  display:flex;
+  align-items:center;
+  gap:12px;
+  border:0;
+  background:none;
+  text-align:left;
+}
+
+.logo-mark{
+  width:44px;
+  height:44px;
+  display:grid;
+  place-items:center;
+  border-radius:13px;
+  background:linear-gradient(135deg,var(--blue),#4678e8);
+  color:white;
+  font-size:20px;
+  font-weight:950;
+}
+
+.logo-name{
+  font-size:17px;
+  font-weight:950;
+}
+
+.logo-subtitle{
+  color:var(--muted);
+  font-size:9px;
+  text-transform:uppercase;
+  letter-spacing:.1em;
+}
+
+.header-actions{
+  display:flex;
+  gap:8px;
+}
+
+.icon-button{
+  width:42px;
+  height:42px;
+  border:0;
+  border-radius:12px;
+  background:#eef2f6;
+}
+
+.container,
+.page{
+  width:min(1180px,calc(100% - 30px));
+  margin:auto;
+}
+
+.container{
+  padding:55px 0 80px;
+}
+
+.page{
+  display:none;
+  padding:45px 0 80px;
+}
+
+.page.active{
+  display:block;
+  animation:pageIn .25s ease;
+}
+
+@keyframes pageIn{
+  from{
+    opacity:0;
+    transform:translateY(10px);
+  }
+  to{
+    opacity:1;
+    transform:none;
+  }
+}
+
+.hero{
+  display:grid;
+  grid-template-columns:1.1fr .9fr;
+  gap:55px;
+  align-items:center;
+  min-height:420px;
+}
+
+.badge{
+  display:inline-flex;
+  align-items:center;
+  gap:8px;
+  padding:8px 12px;
+  border-radius:50px;
+  background:#edf4ff;
+  color:var(--blue);
+  font-size:9px;
+  font-weight:950;
+  letter-spacing:.12em;
+}
+
+.badge-dot{
+  width:7px;
+  height:7px;
+  border-radius:50%;
+  background:#19a36f;
+}
+
+.hero h1{
+  margin-top:20px;
+  font-size:clamp(45px,6vw,68px);
+  line-height:.98;
+  letter-spacing:-4px;
+}
+
+.hero h1 span{
+  display:block;
+  color:var(--blue);
+}
+
+.hero p{
+  max-width:600px;
+  margin-top:22px;
+  color:var(--muted);
+  font-size:16px;
+  line-height:1.7;
+}
+
+.hero-visual{
+  position:relative;
+  height:340px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+}
+
+.hero-card{
+  width:280px;
+  padding:28px;
+  background:white;
+  border:1px solid var(--border);
+  border-radius:27px;
+  box-shadow:var(--shadow);
+  transform:rotate(-3deg);
+}
+
+.hero-icon{
+  width:62px;
+  height:62px;
+  display:grid;
+  place-items:center;
+  border-radius:18px;
+  background:#edf4ff;
+  font-size:28px;
+}
+
+.hero-card h2{
+  margin-top:18px;
+}
+
+.hero-card p{
+  margin-top:7px;
+  font-size:11px;
+}
+
+.hero-status{
+  margin-top:20px;
+  padding:11px;
+  border-radius:12px;
+  background:#eaf8f2;
+  color:var(--green);
+  font-size:10px;
+  font-weight:850;
+}
+
+.floating-card{
+  position:absolute;
+  right:0;
+  bottom:25px;
+  width:170px;
+  padding:17px;
+  border-radius:18px;
+  background:white;
+  border:1px solid var(--border);
+  box-shadow:var(--shadow);
+  transform:rotate(4deg);
+}
+
+.floating-card strong{
+  font-size:10px;
+}
+
+.floating-card p{
+  margin-top:5px;
+  font-size:9px;
+}
+
+.section-title{
+  margin:15px 0 20px;
+}
+
+.section-title small,
+.page-heading span{
+  color:var(--blue);
+  font-size:9px;
+  font-weight:950;
+  letter-spacing:.13em;
+}
+
+.section-title h2{
+  margin-top:7px;
+  font-size:28px;
+}
+
+.section-title p{
+  margin-top:6px;
+  color:var(--muted);
+  font-size:12px;
+}
+
+.services{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:20px;
+}
+
+.service{
+  position:relative;
+  min-height:325px;
+  padding:30px;
+  border:0;
+  border-radius:27px;
+  color:white;
+  text-align:left;
+  overflow:hidden;
+  transition:.25s;
+}
+
+.service:hover{
+  transform:translateY(-6px);
+  box-shadow:0 28px 65px rgba(10,30,55,.18);
+}
+
+.service-internal{
+  background:linear-gradient(135deg,var(--blue2),var(--blue));
+}
+
+.service-visa{
+  background:linear-gradient(135deg,#07523f,var(--green));
+}
+
+.service-top{
+  display:flex;
+  justify-content:space-between;
+}
+
+.service-icon{
+  width:62px;
+  height:62px;
+  display:grid;
+  place-items:center;
+  border-radius:18px;
+  background:rgba(255,255,255,.13);
+  font-size:28px;
+}
+
+.service-arrow{
+  width:44px;
+  height:44px;
+  display:grid;
+  place-items:center;
+  border-radius:50%;
+  background:rgba(255,255,255,.13);
+}
+
+.service-content{
+  position:absolute;
+  left:30px;
+  right:30px;
+  bottom:29px;
+}
+
+.service-content small{
+  color:rgba(255,255,255,.68);
+  font-size:8px;
+  font-weight:950;
+  letter-spacing:.13em;
+}
+
+.service-content h2{
+  margin-top:7px;
+  font-size:34px;
+}
+
+.service-content p{
+  margin-top:8px;
+  color:rgba(255,255,255,.77);
+  font-size:12px;
+  line-height:1.5;
+}
+</style>
+</head>
+
+<body>
+
+<header class="header">
+
+  <button class="logo" onclick="goHome()">
+    <div class="logo-mark">M</div>
+
+    <div>
+      <div class="logo-name">MOSTAKBAL</div>
+      <div class="logo-subtitle">
+        Portail administratif numérique
+      </div>
+    </div>
+  </button>
+
+  <div class="header-actions">
+    <button class="icon-button" onclick="showNotice('Les notifications sont accessibles depuis les espaces concernés.')">🔔</button>
+    <button class="icon-button" onclick="showNotice('Le profil est disponible après connexion.')">👤</button>
+  </div>
+
+</header>
+
+<main class="container" id="home">
+
+  <section class="hero">
+
+    <div>
+
+      <div class="badge">
+        <span class="badge-dot"></span>
+        PORTAIL ADMINISTRATIF NUMÉRIQUE
+      </div>
+
+      <h1>
+        Bienvenue sur
+        <span>MOSTAKBAL</span>
+      </h1>
+
+      <p>
+        Un portail administratif numérique moderne,
+        simple et accessible pour vos démarches
+        et vos services.
+      </p>
+
+    </div>
+
+    <div class="hero-visual">
+
+      <div class="hero-card">
+
+        <div class="hero-icon">
+          🏛️
+        </div>
+
+        <h2>
+          Un portail unique
+        </h2>
+
+        <p>
+          Retrouvez vos services administratifs
+          dans une interface claire et moderne.
+        </p>
+
+        <div class="hero-status">
+          ✓ Services disponibles
+        </div>
+
+      </div>
+
+      <div class="floating-card">
+        <strong>📄 ESPACE NUMÉRIQUE</strong>
+        <p>
+          Vos démarches réunies au même endroit.
+        </p>
+      </div>
+
+    </div>
+
+  </section>
+
+  <div class="section-title">
+
+    <small>ACCÈS AUX SERVICES</small>
+
+    <h2>
+      Que souhaitez-vous faire ?
+    </h2>
+
+    <p>
+      Choisissez l'un des deux services principaux.
+    </p>
+
+  </div>
+
+  <div class="services">
+
+    <button
+      class="service service-internal"
+      onclick="showPage('internal')">
+
+      <div class="service-top">
+
+        <div class="service-icon">
+          🏛️
+        </div>
+
+        <div class="service-arrow">
+          →
+        </div>
+
+      </div>
+
+      <div class="service-content">
+
+        <small>
+          ACCÈS AUX ESPACES
+        </small>
+
+        <h2>
+          Service interne
+        </h2>
+
+        <p>
+          Espace étranger, espace citoyen
+          et espace administratif.
+        </p>
+
+      </div>
+
+    </button>
+
+
+    <button
+      class="service service-visa"
+      onclick="showPage('visa')">
+
+      <div class="service-top">
+
+        <div class="service-icon">
+          🛂
+        </div>
+
+        <div class="service-arrow">
+          →
+        </div>
+
+      </div>
+
+      <div class="service-content">
+
+        <small>
+          SANS CONNEXION
+        </small>
+
+        <h2>
+          Service visa
+        </h2>
+
+        <p>
+          Commencez votre demande de visa
+          directement, sans connexion.
+        </p>
+
+      </div>
+
+    </button>
+
+  </div>
+
+  </main>
+  <!-- PARTIE 2/10 — SERVICE INTERNE -->
+
+<section class="page" id="internal">
+
+  <button class="back-button" onclick="goHome()">
+    ← Retour à l'accueil
+  </button>
+
+  <div class="page-heading">
+    <span>SERVICE INTERNE</span>
+    <h1>Choisissez votre espace</h1>
+    <p>
+      Sélectionnez l'espace correspondant à votre situation.
+    </p>
+  </div>
+
+  <div class="space-grid">
+
+    <button
+      class="space-card space-green"
+      onclick="showPage('foreign')">
+
+      <div class="space-icon">
+        🌍
+      </div>
+
+      <div class="space-arrow">
+        →
+      </div>
+
+      <small>
+        SERVICE INTERNE
+      </small>
+
+      <h2>
+        Espace étranger
+      </h2>
+
+      <p>
+        Démarches et services destinés
+        aux étrangers.
+      </p>
+
+    </button>
+
+
+    <button
+      class="space-card space-blue"
+      onclick="showPage('citizen')">
+
+      <div class="space-icon">
+        👤
+      </div>
+
+      <div class="space-arrow">
+        →
+      </div>
+
+      <small>
+        SERVICE INTERNE
+      </small>
+
+      <h2>
+        Espace citoyen
+      </h2>
+
+      <p>
+        Vos démarches et documents
+        administratifs.
+      </p>
+
+    </button>
+
+
+    <button
+      class="space-card space-purple"
+      onclick="showPage('admin-login')">
+
+      <div class="space-icon">
+        🏛️
+      </div>
+
+      <div class="space-arrow">
+        →
+      </div>
+
+      <small>
+        SERVICE INTERNE
+      </small>
+
+      <h2>
+        Espace administratif
+      </h2>
+
+      <p>
+        Gestion et traitement
+        des demandes.
+      </p>
+
+    </button>
+
+  </div>
+
+</section>
+
+<style>
+
+.back-button{
+  border:0;
+  background:transparent;
+  color:var(--muted);
+  font-size:12px;
+  font-weight:800;
+  margin-bottom:30px;
+}
+
+.page-heading h1{
+  margin-top:8px;
+  font-size:clamp(36px,5vw,55px);
+  letter-spacing:-2.5px;
+}
+
+.page-heading p{
+  margin-top:8px;
+  color:var(--muted);
+  font-size:14px;
+}
+
+.space-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:18px;
+  margin-top:30px;
+}
+
+.space-card{
+  min-height:300px;
+  padding:27px;
+  border:0;
+  border-radius:27px;
+  color:#fff;
+  text-align:left;
+  position:relative;
+  overflow:hidden;
+  transition:.25s;
+}
+
+.space-card:hover{
+  transform:translateY(-6px);
+  box-shadow:var(--shadow);
+}
+
+.space-green{
+  background:linear-gradient(135deg,#07523f,#087f5b);
+}
+
+.space-blue{
+  background:linear-gradient(135deg,#0b1f35,#0057d9);
+}
+
+.space-purple{
+  background:linear-gradient(135deg,#32175f,#6942c5);
+}
+
+.space-icon{
+  width:60px;
+  height:60px;
+  display:grid;
+  place-items:center;
+  border-radius:18px;
+  background:rgba(255,255,255,.13);
+  font-size:27px;
+}
+
+.space-arrow{
+  position:absolute;
+  right:25px;
+  top:25px;
+  width:42px;
+  height:42px;
+  display:grid;
+  place-items:center;
+  border-radius:50%;
+  background:rgba(255,255,255,.13);
+}
+
+.space-card small{
+  position:absolute;
+  left:27px;
+  bottom:83px;
+  font-size:8px;
+  font-weight:900;
+  letter-spacing:.12em;
+  color:rgba(255,255,255,.65);
+}
+
+.space-card h2{
+  position:absolute;
+  left:27px;
+  bottom:53px;
+  font-size:24px;
+}
+
+.space-card p{
+  position:absolute;
+  left:27px;
+  right:27px;
+  bottom:25px;
+  font-size:10px;
+  color:rgba(255,255,255,.75);
+}
+
+  </style>
+  <!-- PARTIE 3/10 — ESPACE ÉTRANGER -->
+
+<section class="page" id="foreign">
+
+  <button class="back-button" onclick="showPage('internal')">
+    ← Retour
+  </button>
+
+  <div class="page-heading">
+    <span>ESPACE ÉTRANGER</span>
+    <h1>Connexion</h1>
+    <p>
+      Accédez à votre espace personnel.
+    </p>
+  </div>
+
+  <div class="form-card">
+
+    <div class="form-icon">
+      🌍
+    </div>
+
+    <h2>
+      Se connecter
+    </h2>
+
+    <label>
+      Identifiant
+    </label>
+
+    <input
+      id="foreign-id"
+      type="text"
+      autocomplete="username"
+      placeholder="Votre identifiant">
+
+    <label>
+      Mot de passe
+    </label>
+
+    <input
+      id="foreign-password"
+      type="password"
+      autocomplete="current-password"
+      placeholder="Votre mot de passe">
+
+    <button
+      class="primary-button"
+      onclick="foreignLogin()">
+
+      Se connecter
+
+    </button>
+
+    <button
+      class="secondary-button"
+      onclick="showPage('foreign-register')">
+
+      Créer un compte
+
+    </button>
+
+    <p
+      id="foreign-message"
+      class="message">
+    </p>
+
+  </div>
+
+</section>
+
+
+<section class="page" id="foreign-register">
+
+  <button class="back-button" onclick="showPage('foreign')">
+    ← Retour
+  </button>
+
+  <div class="page-heading">
+    <span>ESPACE ÉTRANGER</span>
+    <h1>Créer un compte</h1>
+    <p>
+      Créez votre espace personnel.
+    </p>
+  </div>
+
+  <div class="form-card">
+
+    <label>
+      Nom
+    </label>
+
+    <input
+      id="foreign-register-lastname"
+      type="text">
+
+    <label>
+      Prénom
+    </label>
+
+    <input
+      id="foreign-register-firstname"
+      type="text">
+
+    <label>
+      Adresse e-mail
+    </label>
+
+    <input
+      id="foreign-register-email"
+      type="email">
+
+    <label>
+      Mot de passe
+    </label>
+
+    <input
+      id="foreign-register-password"
+      type="password">
+
+    <button
+      class="primary-button"
+      onclick="createForeignAccount()">
+
+      Créer mon compte
+
+    </button>
+
+    <p
+      id="foreign-register-message"
+      class="message">
+    </p>
+
+  </div>
+
+</section>
+<!-- PARTIE 4/10 — ESPACE CITOYEN -->
+
+<section class="page" id="citizen">
+
+  <button class="back-button" onclick="showPage('internal')">
+    ← Retour
+  </button>
+
+  <div class="page-heading">
+    <span>ESPACE CITOYEN</span>
+    <h1>Mes démarches</h1>
+    <p>
+      Retrouvez vos principales démarches administratives.
+    </p>
+  </div>
+
+  <div class="dashboard-grid">
+
+    <button
+      class="dashboard-card"
+      onclick="showPage('birth')">
+
+      <div class="dashboard-icon">
+        📄
+      </div>
+
+      <strong>
+        Extrait de naissance
+      </strong>
+
+      <span>
+        Demander un extrait
+      </span>
+
+    </button>
+
+
+    <button class="dashboard-card">
+
+      <div class="dashboard-icon">
+        🪪
+      </div>
+
+      <strong>
+        Carte nationale d'identité
+      </strong>
+
+      <span>
+        Première demande ou renouvellement
+      </span>
+
+    </button>
+
+
+    <button class="dashboard-card">
+
+      <div class="dashboard-icon">
+        🛂
+      </div>
+
+      <strong>
+        Passeport
+      </strong>
+
+      <span>
+        Première demande ou renouvellement
+      </span>
+
+    </button>
+
+
+    <button class="dashboard-card">
+
+      <div class="dashboard-icon">
+        💼
+      </div>
+
+      <strong>
+        Autorisation de travail
+      </strong>
+
+      <span>
+        Effectuer une demande
+      </span>
+
+    </button>
+
+
+    <button class="dashboard-card">
+
+      <div class="dashboard-icon">
+        📁
+      </div>
+
+      <strong>
+        Mes demandes
+      </strong>
+
+      <span>
+        Consulter mes démarches
+      </span>
+
+    </button>
+
+
+    <button class="dashboard-card">
+
+      <div class="dashboard-icon">
+        📜
+      </div>
+
+      <strong>
+        Mes documents
+      </strong>
+
+      <span>
+        Consulter les documents disponibles
+      </span>
+
+    </button>
+
+  </div>
+
+</section>
+
+
+<style>
+
+.dashboard-grid{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:16px;
+  margin-top:30px;
+}
+
+.dashboard-card{
+  padding:23px;
+  border:1px solid var(--border);
+  border-radius:19px;
+  background:#fff;
+  text-align:left;
+  transition:.22s;
+}
+
+.dashboard-card:hover{
+  transform:translateY(-4px);
+  box-shadow:var(--shadow);
+}
+
+.dashboard-icon{
+  width:45px;
+  height:45px;
+  display:grid;
+  place-items:center;
+  border-radius:13px;
+  background:#edf4ff;
+  font-size:22px;
+}
+
+.dashboard-card strong{
+  display:block;
+  margin-top:13px;
+  font-size:14px;
+}
+
+.dashboard-card span{
+  display:block;
+  margin-top:6px;
+  color:var(--muted);
+  font-size:10px;
+}
+
+</style>
+<!-- PARTIE 5/10 — EXTRAIT DE NAISSANCE -->
+
+<section class="page" id="birth">
+
+  <button class="back-button" onclick="showPage('citizen')">
+    ← Retour
+  </button>
+
+  <div class="page-heading">
+    <span>DÉMARCHE CITOYEN</span>
+    <h1>Extrait de naissance</h1>
+    <p>
+      Renseignez les informations nécessaires.
+    </p>
+  </div>
+
+  <div class="form-card">
+
+    <label>
+      Nom
+    </label>
+
+    <input
+      id="birth-lastname"
+      type="text">
+
+    <label>
+      Prénom
+    </label>
+
+    <input
+      id="birth-firstname"
+      type="text">
+
+    <label>
+      Date de naissance
+    </label>
+
+    <input
+      id="birth-date"
+      type="date">
+
+    <label>
+      Lieu de naissance
+    </label>
+
+    <input
+      id="birth-place"
+      type="text">
+
+    <label>
+      Numéro d'identification nationale
+    </label>
+
+    <input
+      id="birth-nin"
+      type="text">
+
+    <button
+      class="primary-button"
+      onclick="submitBirth()">
+
+      Déposer la demande
+
+    </button>
+
+    <div
+      id="birth-result"
+      class="result">
+    </div>
+
+  </div>
+
+</section>
+
+
+<section class="page" id="confirmation">
+
+  <button class="back-button" onclick="showPage('citizen')">
+    ← Retour
+  </button>
+
+  <div class="confirmation-card">
+
+    <div class="confirmation-logo">
+      M
+    </div>
+
+    <div class="confirmation-brand">
+      MOSTAKBAL
+    </div>
+
+    <h1>
+      Confirmation de dépôt
+    </h1>
+
+    <div class="success-box">
+      ✓ Demande déposée avec succès
+    </div>
+
+    <div class="confirmation-data">
+
+      <div>
+        <small>RÉFÉRENCE</small>
+        <strong id="confirmation-reference"></strong>
+      </div>
+
+      <div>
+        <small>NOM</small>
+        <strong id="confirmation-name"></strong>
+      </div>
+
+      <div>
+        <small>DÉMARCHE</small>
+        <strong>Extrait de naissance</strong>
+      </div>
+
+      <div>
+        <small>DATE</small>
+        <strong id="confirmation-date"></strong>
+      </div>
+
+    </div>
+
+    <button
+      class="primary-button"
+      onclick="window.print()">
+
+      Imprimer / enregistrer
+
+    </button>
+
+  </div>
+
+</section>
+
+
+<style>
+
+.form-card{
+  max-width:620px;
+  margin-top:30px;
+  padding:30px;
+  background:white;
+  border:1px solid var(--border);
+  border-radius:25px;
+  box-shadow:var(--shadow);
+}
+
+.form-icon{
+  width:60px;
+  height:60px;
+  display:grid;
+  place-items:center;
+  border-radius:18px;
+  background:#edf4ff;
+  font-size:27px;
+  margin-bottom:18px;
+}
+
+.form-card h2{
+  margin-bottom:15px;
+}
+
+.form-card label{
+  display:block;
+  margin-top:12px;
+  font-size:11px;
+  font-weight:800;
+}
+
+.form-card input,
+.form-card select{
+  width:100%;
+  margin-top:7px;
+  padding:14px;
+  border:1px solid var(--border);
+  border-radius:12px;
+  background:#fafbfd;
+  outline:none;
+}
+
+.form-card input:focus,
+.form-card select:focus{
+  border-color:var(--blue);
+  box-shadow:0 0 0 3px rgba(0,87,217,.08);
+}
+
+.primary-button{
+  width:100%;
+  margin-top:18px;
+  padding:14px;
+  border:0;
+  border-radius:12px;
+  background:var(--blue);
+  color:white;
+  font-weight:850;
+}
+
+.secondary-button{
+  width:100%;
+  margin-top:10px;
+  padding:13px;
+  border:1px solid var(--border);
+  border-radius:12px;
+  background:white;
+  color:var(--text);
+  font-weight:750;
+}
+
+.message{
+  margin-top:14px;
+  font-size:11px;
+}
+
+.result{
+  margin-top:15px;
+  padding:14px;
+  border-radius:12px;
+  background:#f5f8fc;
+  font-size:11px;
+}
+
+.confirmation-card{
+  max-width:650px;
+  margin:30px auto;
+  padding:35px;
+  background:white;
+  border:1px solid var(--border);
+  border-radius:25px;
+  box-shadow:var(--shadow);
+}
+
+.confirmation-logo{
+  width:55px;
+  height:55px;
+  display:grid;
+  place-items:center;
+  border-radius:15px;
+  background:var(--blue);
+  color:white;
+  font-size:24px;
+  font-weight:950;
+}
+
+.confirmation-brand{
+  margin-top:10px;
+  font-weight:950;
+}
+
+.confirmation-card h1{
+  margin-top:28px;
+}
+
+.success-box{
+  margin-top:20px;
+  padding:14px;
+  border-radius:12px;
+  background:#eaf8f2;
+  color:var(--green);
+  font-weight:800;
+}
+
+.confirmation-data{
+  margin-top:20px;
+}
+
+.confirmation-data div{
+  padding:14px 0;
+  border-bottom:1px solid var(--border);
+}
+
+.confirmation-data small{
+  display:block;
+  color:var(--muted);
+  font-size:8px;
+  font-weight:900;
+  letter-spacing:.1em;
+}
+
+.confirmation-data strong{
+  display:block;
+  margin-top:5px;
+  font-size:13px;
+}
+
+      </style>
+      <!-- PARTIE 6/10 — CONNEXION ADMINISTRATEUR -->
+
+<section class="page" id="admin-login">
+
+  <button class="back-button" onclick="showPage('internal')">
+    ← Retour
+  </button>
+
+  <div class="page-heading">
+    <span>ESPACE ADMINISTRATIF</span>
+    <h1>Connexion administrateur</h1>
+    <p>
+      Accédez à votre espace de gestion.
+    </p>
+  </div>
+
+  <div class="form-card">
+
+    <div class="form-icon">
+      🏛️
+    </div>
+
+    <label>
+      Identifiant
+    </label>
+
+    <input
+      id="admin-id"
+      type="text"
+      autocomplete="username"
+      placeholder="Identifiant administratif">
+
+    <label>
+      Mot de passe
+    </label>
+
+    <input
+      id="admin-password"
+      type="password"
+      autocomplete="current-password"
+      placeholder="Mot de passe">
+
+    <button
+      class="primary-button"
+      onclick="adminLogin()">
+
+      Se connecter
+
+    </button>
+
+    <p
+      id="admin-message"
+      class="message">
+    </p>
+
+  </div>
+
+</section>
+
+
+<section class="page" id="admin-dashboard">
+
+  <div class="admin-header">
+
+    <div>
+      <span>ESPACE ADMINISTRATIF</span>
+
+      <h1>
+        Tableau de bord
+      </h1>
+
+      <p>
+        Gestion de votre espace administratif.
+      </p>
+    </div>
+
+    <button
+      class="logout-button"
+      onclick="adminLogout()">
+
+      Déconnexion
+
+    </button>
+
+  </div>
+
+  <div class="stats-grid">
+
+    <div class="stat-card">
+      <small>DEMANDES</small>
+      <strong>0</strong>
+    </div>
+
+    <div class="stat-card">
+      <small>EN TRAITEMENT</small>
+      <strong>0</strong>
+    </div>
+
+    <div class="stat-card">
+      <small>ACCEPTÉES</small>
+      <strong>0</strong>
+    </div>
+
+  </div>
+
+  <div class="dashboard-grid">
+
+    <button class="dashboard-card">
+      <div class="dashboard-icon">📥</div>
+      <strong>Nouvelles demandes</strong>
+      <span>Consulter les demandes reçues.</span>
+    </button>
+
+    <button class="dashboard-card">
+      <div class="dashboard-icon">📨</div>
+      <strong>Notifications</strong>
+      <span>Consulter les informations importantes.</span>
+    </button>
+
+    <button
+      class="dashboard-card"
+      onclick="showPage('admin-settings')">
+
+      <div class="dashboard-icon">⚙️</div>
+      <strong>Compte administrateur</strong>
+      <span>
+        Changer l'identifiant et le mot de passe.
+      </span>
+
+    </button>
+
+    <button class="dashboard-card">
+      <div class="dashboard-icon">📊</div>
+      <strong>Activité</strong>
+      <span>Vue générale de l'activité.</span>
+    </button>
+
+  </div>
+
+</section>
+
+
+<style>
+
+.admin-header{
+  display:flex;
+  align-items:flex-start;
+  justify-content:space-between;
+  gap:20px;
+}
+
+.admin-header span{
+  color:var(--blue);
+  font-size:9px;
+  font-weight:950;
+  letter-spacing:.13em;
+}
+
+.admin-header h1{
+  margin-top:7px;
+  font-size:42px;
+  letter-spacing:-2px;
+}
+
+.admin-header p{
+  margin-top:5px;
+  color:var(--muted);
+  font-size:13px;
+}
+
+.logout-button{
+  padding:12px 16px;
+  border:0;
+  border-radius:12px;
+  background:#eef2f6;
+  font-size:11px;
+  font-weight:800;
+}
+
+.stats-grid{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:15px;
+  margin-top:30px;
+}
+
+.stat-card{
+  padding:22px;
+  background:#fff;
+  border:1px solid var(--border);
+  border-radius:18px;
+}
+
+.stat-card small{
+  color:var(--muted);
+  font-size:9px;
+  font-weight:800;
+}
+
+.stat-card strong{
+  display:block;
+  margin-top:8px;
+  font-size:28px;
+}
+
+</style>
+<!-- PARTIE 7/10 — PARAMÈTRES ADMINISTRATEUR -->
+
+<section class="page" id="admin-settings">
+
+  <button
+    class="back-button"
+    onclick="showPage('admin-dashboard')">
+
+    ← Retour au tableau de bord
+
+  </button>
+
+  <div class="page-heading">
+    <span>COMPTE ADMINISTRATEUR</span>
+
+    <h1>
+      Paramètres du compte
+    </h1>
+
+    <p>
+      Modifiez les informations de connexion.
+    </p>
+  </div>
+
+  <div class="form-card">
+
+    <div class="form-icon">
+      ⚙️
+    </div>
+
+    <label>
+      Identifiant actuel
+    </label>
+
+    <input
+      id="current-admin-id"
+      type="text"
+      disabled>
+
+    <label>
+      Nouvel identifiant
+    </label>
+
+    <input
+      id="new-admin-id"
+      type="text"
+      placeholder="Nouvel identifiant">
+
+    <label>
+      Nouveau mot de passe
+    </label>
+
+    <input
+      id="new-admin-password"
+      type="password"
+      placeholder="Nouveau mot de passe">
+
+    <button
+      class="primary-button"
+      onclick="saveAdminSettings()">
+
+      Enregistrer les modifications
+
+    </button>
+
+    <p
+      id="settings-message"
+      class="message">
+    </p>
+
+  </div>
+
+</section>
+
+
+<style>
+
+@media(max-width:850px){
+
+  .space-grid{
+    grid-template-columns:1fr;
+  }
+
+  .hero{
+    grid-template-columns:1fr;
+  }
+
+  .hero-visual{
+    display:none;
+  }
+
+  .stats-grid{
+    grid-template-columns:1fr;
+  }
+
+}
+
+@media(max-width:600px){
+
+  .services,
+  .dashboard-grid{
+    grid-template-columns:1fr;
+  }
+
+  .admin-header{
+    flex-direction:column;
+  }
+
+  .hero h1{
+    font-size:45px;
+  }
+
+}
+
+@media print{
+
+  .header,
+  .back-button,
+  .primary-button,
+  .logout-button{
+    display:none !important;
+  }
+
+  body{
+    background:#fff;
+  }
+
+}
+
+      </style>
+      <!-- PARTIE 8/10 — SERVICE VISA SANS CONNEXION -->
+
+<section class="page" id="visa">
+
+  <button class="back-button" onclick="goHome()">
+    ← Retour à l'accueil
+  </button>
+
+  <div class="page-heading">
+
+    <span>SERVICE VISA</span>
+
+    <h1>
+      Demande de visa
+    </h1>
+
+    <p>
+      Cette démarche peut être commencée sans connexion.
+    </p>
+
+  </div>
+
+  <div class="form-card">
+
+    <div class="form-icon">
+      🛂
+    </div>
+
+    <label>
+      Nom
+    </label>
+
+    <input
+      id="visa-lastname"
+      type="text">
+
+    <label>
+      Prénom
+    </label>
+
+    <input
+      id="visa-firstname"
+      type="text">
+
+    <label>
+      Adresse e-mail
+    </label>
+
+    <input
+      id="visa-email"
+      type="email">
+
+    <label>
+      Type de visa
+    </label>
+
+    <select id="visa-type">
+
+      <option value="">
+        Sélectionner
+      </option>
+
+      <option>
+        Visa court séjour
+      </option>
+
+      <option>
+        Visa long séjour
+      </option>
+
+      <option>
+        Visa étudiant
+      </option>
+
+    </select>
+
+    <button
+      class="primary-button"
+      onclick="submitVisa()">
+
+      Continuer
+
+    </button>
+
+    <div
+      id="visa-result"
+      class="result">
+    </div>
+
+  </div>
+
+</section>
+<!-- PARTIE 9/10 — STYLES COMPLÉMENTAIRES -->
+
+<style>
+
+#visa .form-card{
+  position:relative;
+}
+
+#visa .form-icon{
+  background:#eaf8f2;
+}
+
+#visa .primary-button{
+  background:var(--green);
+}
+
+#visa .primary-button:hover{
+  filter:brightness(.95);
+}
+
+#visa-result{
+  line-height:1.7;
+}
+
+.notice-box{
+  margin-top:20px;
+  padding:15px;
+  border:1px solid var(--border);
+  border-radius:14px;
+  background:#f8fafc;
+  color:var(--muted);
+  font-size:11px;
+  line-height:1.6;
+}
+
+.danger-message{
+  color:#b42318;
+}
+
+.success-message{
+  color:var(--green);
+}
+
+</style>
+<!-- PARTIE 10/10 — JAVASCRIPT COMPLET -->
+
+<script>
+
+/* ==============================
+   NAVIGATION
+============================== */
+
+function showPage(id){
+
+  document
+    .querySelectorAll(".page")
+    .forEach(page => {
+      page.classList.remove("active");
+    });
+
+  document
+    .getElementById("home")
+    .style.display = "none";
+
+  const target =
+    document.getElementById(id);
+
+  if(!target){
+    console.error("Page introuvable :",id);
+    return;
+  }
+
+  target.classList.add("active");
+
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
+}
+
+
+function goHome(){
+
+  document
+    .querySelectorAll(".page")
+    .forEach(page => {
+      page.classList.remove("active");
+    });
+
+  document
+    .getElementById("home")
+    .style.display = "block";
+
+  window.scrollTo({
+    top:0,
+    behavior:"smooth"
+  });
+}
+
+
+function showNotice(message){
+  alert(message);
+}
+
+
+/* ==============================
+   COMPTE ÉTRANGER
+============================== */
+
+function createForeignAccount(){
+
+  const lastname =
+    document
+      .getElementById("foreign-register-lastname")
+      .value.trim();
+
+  const firstname =
+    document
+      .getElementById("foreign-register-firstname")
+      .value.trim();
+
+  const email =
+    document
+      .getElementById("foreign-register-email")
+      .value.trim();
+
+  const password =
+    document
+      .getElementById("foreign-register-password")
+      .value;
+
+  const message =
+    document
+      .getElementById("foreign-register-message");
+
+  if(!lastname || !firstname || !email || !password){
+
+    message.textContent =
+      "Veuillez compléter tous les champs.";
+
+    message.className =
+      "message danger-message";
+
+    return;
+  }
+
+  localStorage.setItem(
+    "mostakbal_foreign_demo_email",
+    email
+  );
+
+  message.textContent =
+    "Compte de démonstration créé.";
+
+  message.className =
+    "message success-message";
+}
+
+
+function foreignLogin(){
+
+  const id =
+    document
+      .getElementById("foreign-id")
+      .value.trim();
+
+  const password =
+    document
+      .getElementById("foreign-password")
+      .value;
+
+  const message =
+    document
+      .getElementById("foreign-message");
+
+  if(!id || !password){
+
+    message.textContent =
+      "Veuillez renseigner vos identifiants.";
+
+    message.className =
+      "message danger-message";
+
+    return;
+  }
+
+  message.textContent =
+    "Connexion de démonstration réussie.";
+
+  message.className =
+    "message success-message";
+}
+
+
+/* ==============================
+   ADMINISTRATEUR
+============================== */
+
+function getAdminId(){
+
+  return localStorage.getItem(
+    "mostakbal_admin_id"
+  ) || "ADMIN-DEMO";
+}
+
+
+function adminLogin(){
+
+  const id =
+    document
+      .getElementById("admin-id")
+      .value.trim();
+
+  const password =
+    document
+      .getElementById("admin-password")
+      .value;
+
+  const message =
+    document
+      .getElementById("admin-message");
+
+  const savedId =
+    localStorage.getItem(
+      "mostakbal_admin_id"
+    );
+
+  const savedPassword =
+    localStorage.getItem(
+      "mostakbal_admin_password"
+    );
+
+  if(!id || !password){
+
+    message.textContent =
+      "Veuillez renseigner l'identifiant et le mot de passe.";
+
+    message.className =
+      "message danger-message";
+
+    return;
+  }
+
+  if(savedId && id !== savedId){
+
+    message.textContent =
+      "Identifiant incorrect.";
+
+    message.className =
+      "message danger-message";
+
+    return;
+  }
+
+  if(savedPassword && password !== savedPassword){
+
+    message.textContent =
+      "Mot de passe incorrect.";
+
+    message.className =
+      "message danger-message";
+
+    return;
+  }
+
+  message.textContent =
+    "Connexion réussie.";
+
+  message.className =
+    "message success-message";
+
+  setTimeout(() => {
+
+    showPage("admin-dashboard");
+
+  },350);
+}
+
+
+function adminLogout(){
+
+  showPage("admin-login");
+
+}
+
+
+function saveAdminSettings(){
+
+  const newId =
+    document
+      .getElementById("new-admin-id")
+      .value.trim();
+
+  const newPassword =
+    document
+      .getElementById("new-admin-password")
+      .value;
+
+  const message =
+    document
+      .getElementById("settings-message");
+
+  if(!newId || !newPassword){
+
+    message.textContent =
+      "Veuillez renseigner le nouvel identifiant et le nouveau mot de passe.";
+
+    message.className =
+      "message danger-message";
+
+    return;
+  }
+
+  localStorage.setItem(
+    "mostakbal_admin_id",
+    newId
+  );
+
+  localStorage.setItem(
+    "mostakbal_admin_password",
+    newPassword
+  );
+
+  document
+    .getElementById("current-admin-id")
+    .value = newId;
+
+  message.textContent =
+    "Les informations du compte ont été enregistrées sur cet appareil.";
+
+  message.className =
+    "message success-message";
+}
+
+
+/* ==============================
+   EXTRAIT DE NAISSANCE
+============================== */
+
+function submitBirth(){
+
+  const lastname =
+    document
+      .getElementById("birth-lastname")
+      .value.trim();
+
+  const firstname =
+    document
+      .getElementById("birth-firstname")
+      .value.trim();
+
+  const date =
+    document
+      .getElementById("birth-date")
+      .value;
+
+  const place =
+    document
+      .getElementById("birth-place")
+      .value.trim();
+
+  const nin =
+    document
+      .getElementById("birth-nin")
+      .value.trim();
+
+  const result =
+    document
+      .getElementById("birth-result");
+
+  if(
+    !lastname ||
+    !firstname ||
+    !date ||
+    !place ||
+    !nin
+  ){
+
+    result.textContent =
+      "Veuillez compléter tous les champs.";
+
+    result.style.color =
+      "#b42318";
+
+    return;
+  }
+
+  const reference =
+    "MOST-" +
+    Date.now()
+      .toString()
+      .slice(-8);
+
+  document
+    .getElementById("confirmation-reference")
+    .textContent = reference;
+
+  document
+    .getElementById("confirmation-name")
+    .textContent =
+      firstname + " " + lastname;
+
+  document
+    .getElementById("confirmation-date")
+    .textContent =
+      new Date()
+        .toLocaleDateString("fr-FR");
+
+  showPage("confirmation");
+}
+
+
+/* ==============================
+   SERVICE VISA
+============================== */
+
+function submitVisa(){
+
+  const lastname =
+    document
+      .getElementById("visa-lastname")
+      .value.trim();
+
+  const firstname =
+    document
+      .getElementById("visa-firstname")
+      .value.trim();
+
+  const email =
+    document
+      .getElementById("visa-email")
+      .value.trim();
+
+  const visaType =
+    document
+      .getElementById("visa-type")
+      .value;
+
+  const result =
+    document
+      .getElementById("visa-result");
+
+  if(
+    !lastname ||
+    !firstname ||
+    !email ||
+    !visaType
+  ){
+
+    result.textContent =
+      "Veuillez compléter tous les champs.";
+
+    result.style.color =
+      "#b42318";
+
+    return;
+  }
+
+  const reference =
+    "VISA-" +
+    Date.now()
+      .toString()
+      .slice(-8);
+
+  result.innerHTML =
+    "<strong>Demande préparée</strong><br><br>" +
+    "Référence : " + reference +
+    "<br>Demandeur : " +
+    firstname + " " + lastname +
+    "<br>Type : " + visaType;
+
+  result.style.color =
+    "#087f5b";
+}
+
+
+/* ==============================
+   INITIALISATION
+============================== */
+
+document.addEventListener(
+  "DOMContentLoaded",
+  () => {
+
+    document
+      .getElementById("current-admin-id")
+      .value = getAdminId();
+
+  }
+);
+
+</script>
+
+</body>
+</html>
