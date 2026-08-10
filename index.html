@@ -1876,6 +1876,49 @@ document.addEventListener(
 */
 
 </script>
+<script>
+/* CORRECTION NAVIGATION SERVICE INTERNE */
 
+function showPage(id) {
+
+    document.querySelectorAll(".page").forEach(function(page) {
+        page.classList.remove("active");
+    });
+
+    const page = document.getElementById(id);
+
+    if (!page) {
+        console.error("Page introuvable :", id);
+        return;
+    }
+
+    page.classList.add("active");
+
+    window.scrollTo({
+        top: 0,
+        behavior: "smooth"
+    });
+}
+
+
+/* Bouton SERVICE INTERNE */
+
+document.addEventListener("DOMContentLoaded", function() {
+
+    const serviceInterne =
+        document.querySelector(
+            '[onclick="showPage(\'internal\')"]'
+        );
+
+    if (serviceInterne) {
+
+        serviceInterne.onclick = function() {
+            showPage("internal");
+        };
+
+    }
+
+});
+</script>
 </body>
 </html>
