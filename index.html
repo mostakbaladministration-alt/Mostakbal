@@ -1,0 +1,2905 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>MOSTAKBAL — Portail administratif</title>
+
+<style>
+:root{
+    --blue:#087cff;
+    --cyan:#35d9ff;
+    --dark:#03101f;
+    --dark2:#071b31;
+    --panel:#0b2440;
+    --line:#1d466d;
+    --text:#f4fbff;
+    --muted:#9bb6cf;
+    --red:#ff3f62;
+    --green:#35e39d;
+}
+
+*{
+    box-sizing:border-box;
+    margin:0;
+    padding:0;
+}
+
+body{
+    font-family:Inter,Segoe UI,Arial,sans-serif;
+    background:
+        radial-gradient(circle at 15% 0%,#104a79 0%,transparent 35%),
+        radial-gradient(circle at 90% 20%,#073d69 0%,transparent 30%),
+        linear-gradient(135deg,#020914,#06182a 55%,#020a14);
+    color:var(--text);
+    min-height:100vh;
+}
+
+button,
+input,
+select,
+textarea{
+    font:inherit;
+}
+
+button{
+    cursor:pointer;
+}
+
+.hidden{
+    display:none!important;
+}
+
+header{
+    height:78px;
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    padding:0 32px;
+    border-bottom:1px solid #ffffff15;
+    background:#03101fd9;
+    backdrop-filter:blur(20px);
+    position:sticky;
+    top:0;
+    z-index:100;
+}
+
+.brand{
+    display:flex;
+    align-items:center;
+    gap:13px;
+    font-size:19px;
+    font-weight:900;
+    letter-spacing:.12em;
+}
+
+.logo-m{
+    width:45px;
+    height:45px;
+    display:grid;
+    place-items:center;
+    border-radius:15px;
+    background:linear-gradient(145deg,#71ecff,#087cff 60%,#1144ff);
+    box-shadow:0 0 35px #008cff88;
+    font-size:25px;
+    font-weight:1000;
+}
+
+.header-button{
+    border:1px solid #ffffff1c;
+    background:#ffffff0a;
+    color:white;
+    border-radius:12px;
+    padding:11px 16px;
+}
+
+.hero{
+    max-width:1200px;
+    margin:auto;
+    padding:90px 25px 45px;
+}
+
+.hero-label{
+    color:var(--cyan);
+    font-size:12px;
+    font-weight:900;
+    letter-spacing:.18em;
+}
+
+.hero h1{
+    font-size:clamp(42px,7vw,82px);
+    line-height:.96;
+    margin:18px 0;
+    background:linear-gradient(90deg,#fff,#91e8ff,#40bfff);
+    -webkit-background-clip:text;
+    color:transparent;
+}
+
+.hero p{
+    max-width:760px;
+    color:var(--muted);
+    font-size:18px;
+    line-height:1.7;
+}
+
+.services{
+    max-width:1200px;
+    margin:auto;
+    padding:20px 25px 70px;
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:22px;
+}
+
+.service{
+    padding:32px;
+    border-radius:28px;
+    border:1px solid #ffffff18;
+    background:linear-gradient(145deg,#0c2946e8,#06172ae8);
+    box-shadow:0 30px 80px #0007;
+}
+
+.service:hover{
+    border-color:#27b9ff66;
+}
+
+.service h2{
+    margin:20px 0 8px;
+    font-size:28px;
+}
+
+.service p{
+    color:var(--muted);
+    line-height:1.6;
+    margin-bottom:25px;
+}
+
+.primary{
+    border:0;
+    color:white;
+    font-weight:900;
+    border-radius:15px;
+    padding:15px 20px;
+    background:linear-gradient(135deg,#087cff,#26c8ff);
+    box-shadow:0 14px 35px #008cff35;
+}
+
+.secondary{
+    border:1px solid #ffffff1c;
+    color:white;
+    font-weight:800;
+    border-radius:15px;
+    padding:15px 20px;
+    background:#ffffff09;
+}
+
+@media(max-width:750px){
+    .services{
+        grid-template-columns:1fr;
+    }
+
+    header{
+        padding:0 15px;
+    }
+
+    .brand span{
+        display:none;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <div class="brand">
+        <div class="logo-m">M</div>
+        <span>MOSTAKBAL</span>
+    </div>
+
+    <button class="header-button" onclick="openLogin()">
+        Se connecter
+    </button>
+</header>
+
+<main id="home">
+
+    <section class="hero">
+        <div class="hero-label">
+            PORTAIL ADMINISTRATIF NUMÉRIQUE
+        </div>
+
+        <h1>
+            Le futur des démarches.
+        </h1>
+
+        <p>
+            Un portail moderne réunissant les services internes
+            et les services visa dans une interface unique,
+            futuriste et sécurisée.
+        </p>
+    </section>
+
+    <section class="services">
+
+        <article class="service">
+            <div class="logo-m">M</div>
+
+            <h2>
+                Services internes
+            </h2>
+
+            <p>
+                Espace étranger, espace citoyen et espace administratif.
+            </p>
+
+            <button
+                class="primary"
+                onclick="openInternalServices()">
+                Accéder aux services internes
+            </button>
+        </article>
+
+
+        <article class="service">
+            <div class="logo-m">V</div>
+
+            <h2>
+                Services visa
+            </h2>
+
+            <p>
+                Service dédié exclusivement aux visas long séjour.
+            </p>
+
+            <button
+                class="primary"
+                onclick="openVisaServices()">
+                Accéder aux services visa
+            </button>
+        </article>
+
+    </section>
+
+</main>
+
+<script>
+function openInternalServices(){
+    document.getElementById("home").classList.add("hidden");
+    document.getElementById("internal").classList.remove("hidden");
+}
+
+function openVisaServices(){
+    document.getElementById("home").classList.add("hidden");
+    document.getElementById("visa").classList.remove("hidden");
+}
+</script>
+
+</body>
+</html>
+<section id="internal" class="hidden">
+
+<header>
+    <div class="brand">
+        <div class="logo-m">M</div>
+        <span>MOSTAKBAL</span>
+    </div>
+
+    <button class="header-button" onclick="goHome()">
+        Accueil
+    </button>
+</header>
+
+<main class="page">
+
+    <div class="page-title">
+        <span> SERVICES INTERNES </span>
+        <h1>
+            Choisissez votre espace
+        </h1>
+        <p>
+            Chaque espace possède ses propres démarches
+            et fonctionnalités.
+        </p>
+    </div>
+
+
+    <div class="space-grid">
+
+        <article class="space-card">
+
+            <div class="space-icon">
+                E
+            </div>
+
+            <h2>
+                Espace étranger
+            </h2>
+
+            <p>
+                Démarches liées au séjour,
+                à l'autorisation de travail
+                et à l'acquisition de nationalité.
+            </p>
+
+            <button
+                class="primary"
+                onclick="openForeignSpace()">
+                Entrer
+            </button>
+
+        </article>
+
+
+        <article class="space-card">
+
+            <div class="space-icon">
+                C
+            </div>
+
+            <h2>
+                Espace citoyen
+            </h2>
+
+            <p>
+                Démarches citoyennes,
+                documents d'identité et
+                documents administratifs.
+            </p>
+
+            <button
+                class="primary"
+                onclick="openCitizenSpace()">
+                Entrer
+            </button>
+
+        </article>
+
+
+        <article class="space-card">
+
+            <div class="space-icon">
+                A
+            </div>
+
+            <h2>
+                Espace administratif
+            </h2>
+
+            <p>
+                Espace réservé à l'administrateur
+                pour l'instruction et la messagerie.
+            </p>
+
+            <button
+                class="primary"
+                onclick="openAdminLogin()">
+                Entrer
+            </button>
+
+        </article>
+
+    </div>
+
+</main>
+
+</section>
+
+<style>
+.page{
+    max-width:1200px;
+    margin:auto;
+    padding:55px 25px;
+}
+
+.page-title{
+    margin-bottom:30px;
+}
+
+.page-title span{
+    color:var(--cyan);
+    font-size:12px;
+    font-weight:900;
+    letter-spacing:.18em;
+}
+
+.page-title h1{
+    font-size:42px;
+    margin:12px 0;
+}
+
+.page-title p{
+    color:var(--muted);
+}
+
+.space-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:20px;
+}
+
+.space-card{
+    background:linear-gradient(145deg,#0b2946,#06172a);
+    border:1px solid #ffffff16;
+    border-radius:25px;
+    padding:28px;
+    box-shadow:0 25px 60px #0006;
+}
+
+.space-icon{
+    width:58px;
+    height:58px;
+    border-radius:18px;
+    display:grid;
+    place-items:center;
+    background:linear-gradient(145deg,#36dfff,#087cff);
+    font-size:25px;
+    font-weight:1000;
+    box-shadow:0 0 30px #008cff55;
+}
+
+.space-card h2{
+    margin:20px 0 10px;
+}
+
+.space-card p{
+    color:var(--muted);
+    line-height:1.65;
+    min-height:85px;
+}
+
+@media(max-width:850px){
+    .space-grid{
+        grid-template-columns:1fr;
+    }
+}
+</style>
+
+<script>
+function goHome(){
+    document.querySelectorAll("main,section").forEach(x=>{
+        if(x.id !== "home") x.classList.add("hidden");
+    });
+
+    document.getElementById("home").classList.remove("hidden");
+}
+</script>
+<section id="foreign" class="hidden">
+
+<header>
+    <div class="brand">
+        <div class="logo-m">M</div>
+        <span>ESPACE ÉTRANGER</span>
+    </div>
+
+    <button class="header-button"
+            onclick="openInternalServices()">
+        Retour
+    </button>
+</header>
+
+<main class="page">
+
+    <div class="page-title">
+        <span>ESPACE ÉTRANGER</span>
+        <h1>Ma propre démarche</h1>
+    </div>
+
+
+    <div class="space-grid">
+
+        <article class="space-card">
+
+            <h2>Carte de statut</h2>
+
+            <p>
+                Première demande ou renouvellement.
+            </p>
+
+            <button class="primary"
+                    onclick="openStatusForm()">
+                Commencer
+            </button>
+
+        </article>
+
+
+        <article class="space-card">
+
+            <h2>Autorisation de travail</h2>
+
+            <p>
+                Déposer une demande d'autorisation
+                de travail.
+            </p>
+
+            <button class="primary"
+                    onclick="openWorkForm()">
+                Commencer
+            </button>
+
+        </article>
+
+
+        <article class="space-card">
+
+            <h2>Acquisition de nationalité</h2>
+
+            <p>
+                Demande d'acquisition de nationalité.
+                Cette démarche appartient à l'espace étranger.
+            </p>
+
+            <button class="primary"
+                    onclick="openNationalityForm()">
+                Commencer
+            </button>
+
+        </article>
+
+    </div>
+
+</main>
+
+</section>
+
+
+<section id="statusForm" class="hidden">
+
+<header>
+    <div class="brand">
+        <div class="logo-m">M</div>
+        <span>CARTE DE STATUT</span>
+    </div>
+</header>
+
+<main class="page">
+
+<div class="form-card">
+
+<h1>Carte de statut</h1>
+
+<div class="form-grid">
+
+<div>
+<label>Nom</label>
+<input id="foreignNom">
+</div>
+
+<div>
+<label>Prénom</label>
+<input id="foreignPrenom">
+</div>
+
+<div>
+<label>Date de naissance</label>
+<input type="date" id="foreignBirth">
+</div>
+
+<div>
+<label>Numéro étranger</label>
+<input id="foreignNumber">
+</div>
+
+<div class="full">
+<label>Motif</label>
+
+<select id="foreignMotif">
+<option value="travail">
+Travail
+</option>
+
+<option value="stage">
+Stagiaire
+</option>
+</select>
+</div>
+
+</div>
+
+
+<div class="document-box">
+
+<h3>Documents demandés</h3>
+
+<ul>
+<li>Document d'identité : passeport ou carte d'identité</li>
+<li>Justificatif d'assurance</li>
+<li>Pour travail : certificat d'embauche, promesse d'embauche ou contrat de travail</li>
+<li>Pour stage : contrat de stage</li>
+</ul>
+
+</div>
+
+
+<button class="primary"
+        onclick="submitForeignRequest()">
+Déposer la demande
+</button>
+
+</div>
+
+</main>
+
+</section>
+
+
+<script>
+
+function openForeignSpace(){
+    hideEverything();
+    document.getElementById("foreign").classList.remove("hidden");
+}
+
+function openStatusForm(){
+    hideEverything();
+    document.getElementById("statusForm").classList.remove("hidden");
+}
+
+function submitForeignRequest(){
+
+    const motif =
+        document.getElementById("foreignMotif").value;
+
+    const request = {
+        reference:"MSK-"+Date.now(),
+        type:"Carte de statut",
+        motif:motif,
+        space:"Étranger",
+        status:"À instruire"
+    };
+
+    saveRequest(request);
+
+    showConfirmation(request.reference);
+}
+
+</script>
+<section id="citizen" class="hidden">
+
+<header>
+    <div class="brand">
+        <div class="logo-m">M</div>
+        <span>ESPACE CITOYEN</span>
+    </div>
+
+    <button class="header-button"
+            onclick="openInternalServices()">
+        Retour
+    </button>
+</header>
+
+
+<main class="page">
+
+<div class="page-title">
+<span>ESPACE CITOYEN</span>
+<h1>Ma propre démarche</h1>
+</div>
+
+
+<div class="space-grid">
+
+<article class="space-card">
+<h2>CNI</h2>
+<p>Première demande ou renouvellement.</p>
+<button class="primary"
+onclick="openCitizenForm('CNI')">
+Commencer
+</button>
+</article>
+
+
+<article class="space-card">
+<h2>Passeport</h2>
+<p>Première demande ou renouvellement.</p>
+<button class="primary"
+onclick="openCitizenForm('Passeport')">
+Commencer
+</button>
+</article>
+
+
+<article class="space-card">
+<h2>Passe Santé M</h2>
+<p>Première demande ou renouvellement.</p>
+<button class="primary"
+onclick="openCitizenForm('Passe Santé M')">
+Commencer
+</button>
+</article>
+
+
+<article class="space-card">
+<h2>Extrait de naissance</h2>
+<p>
+Formulaire direct avec génération du document.
+</p>
+<button class="primary"
+onclick="openBirthForm()">
+Commencer
+</button>
+</article>
+
+
+</div>
+
+</main>
+
+</section>
+
+
+<section id="citizenForm" class="hidden">
+
+<header>
+<div class="brand">
+<div class="logo-m">M</div>
+<span>DÉMARCHE CITOYENNE</span>
+</div>
+</header>
+
+
+<main class="page">
+
+<div class="form-card">
+
+<h1 id="citizenTitle"></h1>
+
+
+<label>Type de demande</label>
+
+<select id="citizenType">
+<option>Première demande</option>
+<option>Renouvellement</option>
+</select>
+
+
+<div class="form-grid">
+
+<div>
+<label>Nom</label>
+<input id="citizenNom">
+</div>
+
+<div>
+<label>Prénom</label>
+<input id="citizenPrenom">
+</div>
+
+<div>
+<label>Date de naissance</label>
+<input type="date" id="citizenBirth">
+</div>
+
+<div>
+<label>Numéro d'identification nationale</label>
+<input id="citizenNin">
+</div>
+
+</div>
+
+
+<div id="citizenDocuments"
+class="document-box">
+</div>
+
+
+<button class="primary"
+onclick="submitCitizenRequest()">
+Déposer la demande
+</button>
+
+</div>
+
+</main>
+
+</section>
+
+
+<script>
+
+let selectedCitizenType="";
+
+function openCitizenSpace(){
+    hideEverything();
+    document.getElementById("citizen").classList.remove("hidden");
+}
+
+function openCitizenForm(type){
+
+    selectedCitizenType=type;
+
+    hideEverything();
+
+    document
+        .getElementById("citizenForm")
+        .classList.remove("hidden");
+
+    document
+        .getElementById("citizenTitle")
+        .textContent=type;
+
+    updateCitizenDocuments();
+}
+
+document
+.getElementById("citizenType")
+.addEventListener("change",updateCitizenDocuments);
+
+
+function updateCitizenDocuments(){
+
+    const renewal =
+        document.getElementById("citizenType").value
+        === "Renouvellement";
+
+    let html="";
+
+    if(selectedCitizenType==="CNI"){
+
+        html=renewal
+        ? `
+        <h3>Documents du renouvellement</h3>
+        <ul>
+        <li>Ancienne CNI</li>
+        <li>Preuve d'identité délivrée par les autorités internes</li>
+        <li>Acte de naissance délivré par les autorités internes</li>
+        <li>Photo d'identité</li>
+        </ul>
+        `
+        : `
+        <h3>Documents de première demande</h3>
+        <ul>
+        <li>Preuve d'identité délivrée par les autorités internes</li>
+        <li>Acte de naissance délivré par les autorités internes</li>
+        <li>Photo d'identité</li>
+        <li>Acquisition de nationalité si nécessaire</li>
+        </ul>
+        `;
+    }
+
+    if(selectedCitizenType==="Passeport"){
+
+        html=renewal
+        ? `
+        <h3>Documents du renouvellement</h3>
+        <ul>
+        <li>Ancien passeport</li>
+        <li>Nouvelle photo</li>
+        <li>Preuve d'identité délivrée par les autorités internes</li>
+        </ul>
+        `
+        : `
+        <h3>Documents de première demande</h3>
+        <ul>
+        <li>Preuve d'identité délivrée par les autorités internes</li>
+        <li>Photo d'identité</li>
+        <li>Acquisition de nationalité si nécessaire</li>
+        </ul>
+        `;
+    }
+
+    if(selectedCitizenType==="Passe Santé M"){
+
+        html=renewal
+        ? `
+        <h3>Documents du renouvellement</h3>
+        <ul>
+        <li>Ancien Passe Santé M</li>
+        <li>Preuve d'identité délivrée par les autorités internes</li>
+        <li>Numéro de sécurité sociale demandé dans le formulaire</li>
+        </ul>
+        `
+        : `
+        <h3>Documents de première demande</h3>
+        <ul>
+        <li>Pièce d'identité délivrée par les autorités internes</li>
+        <li>Le numéro de sécurité sociale sera généré lors de la création</li>
+        </ul>
+        `;
+    }
+
+    document
+    .getElementById("citizenDocuments")
+    .innerHTML=html;
+}
+
+</script>
+<section id="birthForm" class="hidden">
+
+<header>
+<div class="brand">
+<div class="logo-m">M</div>
+<span>EXTRAIT DE NAISSANCE</span>
+</div>
+</header>
+
+
+<main class="page">
+
+<div class="form-card">
+
+<h1>Demander un extrait de naissance</h1>
+
+<div class="form-grid">
+
+<div>
+<label>Nom</label>
+<input id="birthNom">
+</div>
+
+<div>
+<label>Prénom</label>
+<input id="birthPrenom">
+</div>
+
+<div>
+<label>Date de naissance</label>
+<input type="date" id="birthDate">
+</div>
+
+<div>
+<label>Lieu de naissance</label>
+<input id="birthPlace">
+</div>
+
+<div>
+<label>NIN</label>
+<input id="birthNin">
+</div>
+
+<div>
+<label>Numéro de téléphone</label>
+<input id="birthPhone">
+</div>
+
+<div class="full">
+<label>Adresse mail</label>
+<input type="email" id="birthEmail">
+</div>
+
+</div>
+
+
+<div class="notice">
+Aucun numéro étranger n'est demandé dans ce formulaire.
+</div>
+
+
+<button class="primary"
+onclick="generateBirthDocument()">
+Générer mon extrait de naissance
+</button>
+
+</div>
+
+</main>
+
+</section>
+
+
+<script>
+
+function openBirthForm(){
+
+    hideEverything();
+
+    document
+    .getElementById("birthForm")
+    .classList.remove("hidden");
+}
+
+
+function generateBirthDocument(){
+
+    const nom =
+        document.getElementById("birthNom").value;
+
+    const prenom =
+        document.getElementById("birthPrenom").value;
+
+    const date =
+        document.getElementById("birthDate").value;
+
+    const lieu =
+        document.getElementById("birthPlace").value;
+
+    const nin =
+        document.getElementById("birthNin").value;
+
+
+    const html=`
+
+    <html>
+
+    <head>
+
+    <style>
+
+    body{
+        font-family:Arial;
+        padding:50px;
+        color:#09243d;
+    }
+
+    .logo{
+        width:70px;
+        height:70px;
+        background:#087cff;
+        color:white;
+        border-radius:20px;
+        display:grid;
+        place-items:center;
+        font-size:38px;
+        font-weight:bold;
+    }
+
+    h1{
+        color:#087cff;
+        margin-top:40px;
+    }
+
+    .box{
+        border:2px solid #087cff;
+        padding:25px;
+        border-radius:20px;
+        margin-top:30px;
+    }
+
+    </style>
+
+    </head>
+
+    <body>
+
+    <div class="logo">M</div>
+
+    <h1>
+    EXTRAIT DE NAISSANCE
+    </h1>
+
+    <div class="box">
+
+    <p><b>Nom :</b> ${nom}</p>
+
+    <p><b>Prénom :</b> ${prenom}</p>
+
+    <p><b>Date de naissance :</b> ${date}</p>
+
+    <p><b>Lieu de naissance :</b> ${lieu}</p>
+
+    <p><b>NIN :</b> ${nin}</p>
+
+    </div>
+
+    <p>
+    Document généré par MOSTAKBAL.
+    </p>
+
+    </body>
+    </html>
+    `;
+
+
+    const win=window.open("");
+
+    win.document.write(html);
+
+    win.document.close();
+
+    win.print();
+}
+
+</script>
+<section id="visa" class="hidden">
+
+<header>
+
+<div class="brand">
+<div class="logo-m">M</div>
+<span>SERVICE VISA</span>
+</div>
+
+<button class="header-button"
+onclick="goHome()">
+Accueil
+</button>
+
+</header>
+
+
+<main class="page">
+
+<div class="page-title">
+
+<span>SERVICE VISA</span>
+
+<h1>
+Visas long séjour
+</h1>
+
+<p>
+Le service visa ne contient pas de visa court séjour.
+</p>
+
+</div>
+
+
+<div class="space-grid">
+
+
+<article class="space-card">
+
+<div class="space-icon">
+M
+</div>
+
+<h2>
+Visa mineur accompagné
+</h2>
+
+<p>
+Demande destinée au mineur accompagné
+par son parent ou représentant légal.
+</p>
+
+<button class="primary"
+onclick="openVisaForm('Visa mineur accompagné')">
+Commencer
+</button>
+
+</article>
+
+
+<article class="space-card">
+
+<div class="space-icon">
+T
+</div>
+
+<h2>
+Visa travail
+</h2>
+
+<p>
+Demande de visa long séjour pour travail.
+</p>
+
+<button class="primary"
+onclick="openVisaForm('Visa travail')">
+Commencer
+</button>
+
+</article>
+
+
+<article class="space-card">
+
+<div class="space-icon">
+S
+</div>
+
+<h2>
+Visa stage
+</h2>
+
+<p>
+Demande de visa long séjour pour stage.
+</p>
+
+<button class="primary"
+onclick="openVisaForm('Visa stage')">
+Commencer
+</button>
+
+</article>
+
+
+</div>
+
+</main>
+
+</section>
+
+
+<section id="visaForm" class="hidden">
+
+<header>
+
+<div class="brand">
+<div class="logo-m">M</div>
+<span>DEMANDE DE VISA</span>
+</div>
+
+</header>
+
+
+<main class="page">
+
+<div class="form-card">
+
+<h1 id="visaTitle"></h1>
+
+
+<div class="form-grid">
+
+<div>
+<label>Nom</label>
+<input id="visaNom">
+</div>
+
+<div>
+<label>Prénom</label>
+<input id="visaPrenom">
+</div>
+
+<div>
+<label>Date de naissance</label>
+<input type="date" id="visaBirth">
+</div>
+
+<div>
+<label>Numéro de passeport</label>
+<input id="visaPassport">
+</div>
+
+</div>
+
+
+<div id="visaDocuments"
+class="document-box">
+</div>
+
+
+<button class="primary"
+onclick="submitVisa()">
+Déposer la demande
+</button>
+
+</div>
+
+</main>
+
+</section>
+
+
+<script>
+
+let selectedVisa="";
+
+function openVisaServices(){
+
+    hideEverything();
+
+    document
+    .getElementById("visa")
+    .classList.remove("hidden");
+}
+
+
+function openVisaForm(type){
+
+    selectedVisa=type;
+
+    hideEverything();
+
+    document
+    .getElementById("visaForm")
+    .classList.remove("hidden");
+
+    document
+    .getElementById("visaTitle")
+    .textContent=type;
+
+
+    let documents="";
+
+
+    if(type==="Visa mineur accompagné"){
+
+        documents=`
+
+        <h3>Documents nécessaires</h3>
+
+        <ul>
+
+        <li>Passeport du mineur</li>
+
+        <li>Visa du mineur</li>
+
+        <li>Justificatif d'assurance</li>
+
+        <li>Pièce d'identité du parent ou représentant légal</li>
+
+        <li>Documents attestant la régularité du séjour du représentant légal</li>
+
+        <li>Document relatif à l'autorité parentale</li>
+
+        </ul>
+
+        `;
+    }
+
+
+    if(type==="Visa travail"){
+
+        documents=`
+
+        <h3>Documents nécessaires</h3>
+
+        <ul>
+
+        <li>Passeport</li>
+
+        <li>Justificatif d'assurance</li>
+
+        <li>Documents nécessaires au visa travail</li>
+
+        </ul>
+
+        `;
+    }
+
+
+    if(type==="Visa stage"){
+
+        documents=`
+
+        <h3>Documents nécessaires</h3>
+
+        <ul>
+
+        <li>Passeport</li>
+
+        <li>Justificatif d'assurance</li>
+
+        <li>Contrat ou convention de stage</li>
+
+        </ul>
+
+        `;
+    }
+
+
+    document
+    .getElementById("visaDocuments")
+    .innerHTML=documents;
+}
+
+</script>
+<section id="adminLogin" class="hidden">
+
+<div class="auth-page">
+
+<div class="auth-card">
+
+<div class="logo-m">
+M
+</div>
+
+<span class="eyebrow">
+ESPACE ADMINISTRATIF
+</span>
+
+<h1>
+Connexion administrateur
+</h1>
+
+<p>
+Compte réservé à l'administrateur.
+</p>
+
+
+<label>
+Identifiant
+</label>
+
+<input
+id="adminUsername"
+autocomplete="username"
+>
+
+
+<label>
+Mot de passe
+</label>
+
+<input
+id="adminPassword"
+type="password"
+autocomplete="current-password"
+>
+
+
+<button
+class="primary"
+onclick="adminLogin()">
+Se connecter
+</button>
+
+
+<div class="notice">
+
+<b>Première connexion :</b>
+
+<br>
+
+Identifiant provisoire :
+<code>ADMIN-MSK-2040</code>
+
+<br>
+
+Mot de passe provisoire :
+<code>MSK-2040-FIRST-LOGIN</code>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+
+<section id="adminSetup" class="hidden">
+
+<div class="auth-page">
+
+<div class="auth-card">
+
+<div class="logo-m">
+M
+</div>
+
+<span class="eyebrow">
+PREMIÈRE CONNEXION
+</span>
+
+<h1>
+Créer votre compte administrateur
+</h1>
+
+<p>
+Vous devez remplacer les identifiants provisoires
+avant d'accéder à l'espace administratif.
+</p>
+
+
+<label>
+Nouvel identifiant
+</label>
+
+<input id="newAdminUsername">
+
+
+<label>
+Nouveau mot de passe
+</label>
+
+<input
+id="newAdminPassword"
+type="password"
+>
+
+
+<label>
+Confirmer le nouveau mot de passe
+</label>
+
+<input
+id="newAdminPasswordConfirm"
+type="password"
+>
+
+
+<button
+class="primary"
+onclick="createAdminAccount()">
+Créer mon compte
+</button>
+
+</div>
+
+</div>
+
+</section>
+
+
+<script>
+
+const ADMIN_TEMP_USER=
+"ADMIN-MSK-2040";
+
+const ADMIN_TEMP_PASSWORD=
+"MSK-2040-FIRST-LOGIN";
+
+
+function openAdminLogin(){
+
+    hideEverything();
+
+    document
+    .getElementById("adminLogin")
+    .classList.remove("hidden");
+}
+
+
+function adminLogin(){
+
+    const username=
+        document
+        .getElementById("adminUsername")
+        .value;
+
+    const password=
+        document
+        .getElementById("adminPassword")
+        .value;
+
+
+    if(
+        !localStorage.getItem("MOSTAKBAL_ADMIN_SETUP")
+        &&
+        username===ADMIN_TEMP_USER
+        &&
+        password===ADMIN_TEMP_PASSWORD
+    ){
+
+        hideEverything();
+
+        document
+        .getElementById("adminSetup")
+        .classList.remove("hidden");
+
+        return;
+    }
+
+
+    if(
+        username===localStorage.getItem("MOSTAKBAL_ADMIN_USER")
+        &&
+        password===localStorage.getItem("MOSTAKBAL_ADMIN_PASSWORD")
+    ){
+
+        openAdminDashboard();
+
+        return;
+    }
+
+
+    alert("Identifiant ou mot de passe incorrect.");
+}
+
+
+function createAdminAccount(){
+
+    const username=
+        document
+        .getElementById("newAdminUsername")
+        .value
+        .trim();
+
+    const password=
+        document
+        .getElementById("newAdminPassword")
+        .value;
+
+    const confirm=
+        document
+        .getElementById("newAdminPasswordConfirm")
+        .value;
+
+
+    if(username.length<4){
+
+        alert("Identifiant trop court.");
+
+        return;
+    }
+
+
+    if(password.length<12){
+
+        alert(
+            "Le mot de passe doit contenir au moins 12 caractères."
+        );
+
+        return;
+    }
+
+
+    if(password!==confirm){
+
+        alert(
+            "Les mots de passe ne correspondent pas."
+        );
+
+        return;
+    }
+
+
+    localStorage.setItem(
+        "MOSTAKBAL_ADMIN_USER",
+        username
+    );
+
+    localStorage.setItem(
+        "MOSTAKBAL_ADMIN_PASSWORD",
+        password
+    );
+
+    localStorage.setItem(
+        "MOSTAKBAL_ADMIN_SETUP",
+        "true"
+    );
+
+
+    alert(
+        "Votre compte administrateur a été créé."
+    );
+
+    openAdminDashboard();
+}
+
+</script>
+<section id="adminDashboard" class="hidden">
+
+<header>
+
+<div class="brand">
+<div class="logo-m">M</div>
+<span>ESPACE ADMINISTRATIF</span>
+</div>
+
+<button
+class="header-button"
+onclick="logoutAdmin()">
+Déconnexion
+</button>
+
+</header>
+
+
+<main class="page">
+
+<div class="page-title">
+
+<span>
+ESPACE ADMINISTRATIF
+</span>
+
+<h1>
+Tableau de bord
+</h1>
+
+</div>
+
+
+<div class="admin-grid">
+
+
+<article class="admin-card">
+
+<div class="admin-icon">
++
+</div>
+
+<h2>
+Ma propre démarche
+</h2>
+
+<p>
+Effectuer une démarche personnelle
+comme citoyen.
+</p>
+
+<button
+class="primary"
+onclick="openCitizenSpace()">
+Ouvrir
+</button>
+
+</article>
+
+
+<article class="admin-card">
+
+<div class="admin-icon notification-icon">
+
+<span id="notificationBadge">
+0
+</span>
+
+</div>
+
+<h2>
+Notifications
+</h2>
+
+<p>
+Consulter les événements enregistrés.
+</p>
+
+<button
+class="primary"
+onclick="openNotifications()">
+Ouvrir
+</button>
+
+</article>
+
+
+<article class="admin-card">
+
+<div class="admin-icon notification-icon">
+
+<span id="instructionBadge">
+0
+</span>
+
+</div>
+
+<h2>
+Instruction des demandes
+</h2>
+
+<p>
+Visa · Étranger · Citoyen.
+</p>
+
+<button
+class="primary"
+onclick="openInstructions()">
+Ouvrir
+</button>
+
+</article>
+
+
+<article class="admin-card">
+
+<div class="admin-icon">
+M
+</div>
+
+<h2>
+Messagerie
+</h2>
+
+<p>
+Messages, demandes de complément
+et observations.
+</p>
+
+<button
+class="primary"
+onclick="openMessaging()">
+Ouvrir
+</button>
+
+</article>
+
+
+</div>
+
+</main>
+
+</section>
+
+
+<style>
+
+.admin-grid{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:18px;
+}
+
+.admin-card{
+    padding:25px;
+    background:linear-gradient(
+        145deg,
+        #0b2946,
+        #06172a
+    );
+    border:1px solid #ffffff16;
+    border-radius:24px;
+    box-shadow:0 25px 60px #0006;
+}
+
+.admin-icon{
+    width:55px;
+    height:55px;
+    display:grid;
+    place-items:center;
+    border-radius:17px;
+    background:linear-gradient(
+        145deg,
+        #36dfff,
+        #087cff
+    );
+    font-weight:1000;
+    font-size:24px;
+}
+
+.notification-icon{
+    position:relative;
+}
+
+.notification-icon span{
+    background:var(--red);
+    color:white;
+    min-width:25px;
+    height:25px;
+    padding:0 7px;
+    border-radius:50%;
+    display:grid;
+    place-items:center;
+    font-size:12px;
+}
+
+.admin-card h2{
+    margin:20px 0 10px;
+}
+
+.admin-card p{
+    color:var(--muted);
+    line-height:1.6;
+    min-height:70px;
+}
+
+@media(max-width:1000px){
+
+    .admin-grid{
+        grid-template-columns:repeat(2,1fr);
+    }
+}
+
+@media(max-width:600px){
+
+    .admin-grid{
+        grid-template-columns:1fr;
+    }
+}
+
+</style>
+
+
+<script>
+
+function openAdminDashboard(){
+
+    hideEverything();
+
+    document
+    .getElementById("adminDashboard")
+    .classList.remove("hidden");
+
+    updateAdminBadges();
+}
+
+
+function logoutAdmin(){
+
+    hideEverything();
+
+    document
+    .getElementById("home")
+    .classList.remove("hidden");
+}
+
+
+function updateAdminBadges(){
+
+    const requests=
+        JSON.parse(
+            localStorage.getItem(
+                "MOSTAKBAL_REQUESTS"
+            ) || "[]"
+        );
+
+
+    document
+    .getElementById("instructionBadge")
+    .textContent=
+        requests.filter(
+            x=>x.status==="À instruire"
+        ).length;
+
+
+    const notifications=
+        JSON.parse(
+            localStorage.getItem(
+                "MOSTAKBAL_NOTIFICATIONS"
+            ) || "[]"
+        );
+
+
+    document
+    .getElementById("notificationBadge")
+    .textContent=
+        notifications.length;
+}
+
+</script>
+<section id="instructions" class="hidden">
+
+<header>
+
+<div class="brand">
+<div class="logo-m">M</div>
+<span>INSTRUCTION DES DEMANDES</span>
+</div>
+
+<button
+class="header-button"
+onclick="openAdminDashboard()">
+Retour
+</button>
+
+</header>
+
+
+<main class="page">
+
+<div class="page-title">
+
+<span>
+SERVICE INSTRUCTEUR
+</span>
+
+<h1>
+Demandes à instruire
+</h1>
+
+</div>
+
+
+<div id="requestList"
+class="request-list">
+</div>
+
+</main>
+
+</section>
+
+
+<section id="requestDetail" class="hidden">
+
+<header>
+
+<div class="brand">
+<div class="logo-m">M</div>
+<span>DOSSIER</span>
+</div>
+
+<button
+class="header-button"
+onclick="openInstructions()">
+Retour
+</button>
+
+</header>
+
+
+<main class="page">
+
+<div class="form-card">
+
+<h1 id="requestTitle"></h1>
+
+<div id="requestInformation"></div>
+
+
+<h2>
+Documents
+</h2>
+
+<div id="requestDocuments"></div>
+
+
+<h2>
+Actions
+</h2>
+
+<div class="action-grid">
+
+<button
+class="secondary"
+onclick="requestComplement()">
+Demande de complément
+</button>
+
+<button
+class="secondary"
+onclick="addObservation()">
+Ajouter une observation
+</button>
+
+<button
+class="primary"
+onclick="validateRequest()">
+Valider la demande
+</button>
+
+<button
+class="danger-button"
+onclick="refuseRequest()">
+Refuser
+</button>
+
+</div>
+
+</div>
+
+</main>
+
+</section>
+
+
+<script>
+
+let currentRequestIndex=null;
+
+
+function openInstructions(){
+
+    hideEverything();
+
+    document
+    .getElementById("instructions")
+    .classList.remove("hidden");
+
+
+    renderRequests();
+}
+
+
+function renderRequests(){
+
+    const requests=
+        JSON.parse(
+            localStorage.getItem(
+                "MOSTAKBAL_REQUESTS"
+            ) || "[]"
+        );
+
+
+    const list=
+        document.getElementById(
+            "requestList"
+        );
+
+
+    if(!requests.length){
+
+        list.innerHTML=`
+
+        <div class="notice">
+        Aucune demande à instruire.
+        </div>
+
+        `;
+
+        return;
+    }
+
+
+    list.innerHTML=
+        requests.map((request,index)=>`
+
+        <article class="request-row">
+
+            <div>
+
+                <strong>
+                ${request.type}
+                </strong>
+
+                <small>
+                ${request.space}
+                ·
+                ${request.reference}
+                </small>
+
+            </div>
+
+
+            <div>
+
+                <span class="status">
+                ${request.status}
+                </span>
+
+                <button
+                class="primary"
+                onclick="openRequest(${index})">
+                Lire
+                </button>
+
+            </div>
+
+        </article>
+
+        `).join("");
+}
+
+
+function openRequest(index){
+
+    currentRequestIndex=index;
+
+    const requests=
+        JSON.parse(
+            localStorage.getItem(
+                "MOSTAKBAL_REQUESTS"
+            ) || "[]"
+        );
+
+
+    const request=
+        requests[index];
+
+
+    hideEverything();
+
+    document
+    .getElementById("requestDetail")
+    .classList.remove("hidden");
+
+
+    document
+    .getElementById("requestTitle")
+    .textContent=
+        request.type;
+
+
+    document
+    .getElementById("requestInformation")
+    .innerHTML=`
+
+    <div class="notice">
+
+    <b>Référence :</b>
+    ${request.reference}
+
+    <br>
+
+    <b>Espace :</b>
+    ${request.space}
+
+    <br>
+
+    <b>Statut :</b>
+    ${request.status}
+
+    </div>
+
+    `;
+
+
+    document
+    .getElementById("requestDocuments")
+    .innerHTML=
+        (request.documents || [])
+        .map(document=>`
+
+        <div class="document-row">
+
+            <span>
+            ${document.name}
+            </span>
+
+            <button
+            class="secondary"
+            onclick="saveDocument()">
+            Enregistrer
+            </button>
+
+        </div>
+
+        `)
+        .join("");
+}
+
+
+function requestComplement(){
+
+    updateRequestStatus(
+        "Complément demandé"
+    );
+
+    addMessage(
+        "Demande de complément",
+        "Votre dossier nécessite des documents complémentaires."
+    );
+}
+
+
+function addObservation(){
+
+    addMessage(
+        "Observation administrative",
+        "Une observation a été ajoutée à votre dossier."
+    );
+}
+
+
+function validateRequest(){
+
+    updateRequestStatus(
+        "Acceptée"
+    );
+
+    addMessage(
+        "Demande acceptée",
+        "Votre demande a été acceptée. Veuillez joindre votre confirmation de dépôt pour récupérer le document."
+    );
+}
+
+
+function refuseRequest(){
+
+    updateRequestStatus(
+        "Refusée"
+    );
+
+    addMessage(
+        "Demande refusée",
+        "Votre demande a été refusée."
+    );
+}
+
+
+function updateRequestStatus(status){
+
+    const requests=
+        JSON.parse(
+            localStorage.getItem(
+                "MOSTAKBAL_REQUESTS"
+            ) || "[]"
+        );
+
+
+    requests[currentRequestIndex]
+    .status=status;
+
+
+    localStorage.setItem(
+        "MOSTAKBAL_REQUESTS",
+        JSON.stringify(requests)
+    );
+
+
+    openInstructions();
+}
+
+
+function addMessage(title,text){
+
+    const messages=
+        JSON.parse(
+            localStorage.getItem(
+                "MOSTAKBAL_MESSAGES"
+            ) || "[]"
+        );
+
+
+    messages.push({
+
+        date:new Date()
+        .toLocaleString("fr-FR"),
+
+        title:title,
+
+        text:text
+
+    });
+
+
+    localStorage.setItem(
+        "MOSTAKBAL_MESSAGES",
+        JSON.stringify(messages)
+    );
+
+
+    alert(
+        "Message enregistré dans la messagerie."
+    );
+}
+
+</script>
+<section id="notifications" class="hidden">
+
+<header>
+
+<div class="brand">
+<div class="logo-m">M</div>
+<span>NOTIFICATIONS</span>
+</div>
+
+<button
+class="header-button"
+onclick="openAdminDashboard()">
+Retour
+</button>
+
+</header>
+
+
+<main class="page">
+
+<div class="page-title">
+
+<span>
+CENTRE DE NOTIFICATIONS
+</span>
+
+<h1>
+Notifications
+</h1>
+
+</div>
+
+<div id="notificationList"></div>
+
+</main>
+
+</section>
+
+
+<section id="messaging" class="hidden">
+
+<header>
+
+<div class="brand">
+<div class="logo-m">M</div>
+<span>MESSAGERIE</span>
+</div>
+
+<button
+class="header-button"
+onclick="openAdminDashboard()">
+Retour
+</button>
+
+</header>
+
+
+<main class="page">
+
+<div class="page-title">
+
+<span>
+MESSAGERIE ADMINISTRATIVE
+</span>
+
+<h1>
+Messages
+</h1>
+
+</div>
+
+
+<div id="messageList"></div>
+
+</main>
+
+</section>
+
+
+<script>
+
+function openNotifications(){
+
+    hideEverything();
+
+    document
+    .getElementById("notifications")
+    .classList.remove("hidden");
+
+
+    renderNotifications();
+}
+
+
+function renderNotifications(){
+
+    const notifications=
+        JSON.parse(
+            localStorage.getItem(
+                "MOSTAKBAL_NOTIFICATIONS"
+            ) || "[]"
+        );
+
+
+    document
+    .getElementById("notificationList")
+    .innerHTML=
+        notifications
+        .slice()
+        .reverse()
+        .map(n=>`
+
+        <div class="notification-row">
+
+            <div>
+
+                <strong>
+                ${n.title}
+                </strong>
+
+                <p>
+                ${n.text}
+                </p>
+
+            </div>
+
+            <time>
+            ${n.date}
+            </time>
+
+        </div>
+
+        `)
+        .join("") ||
+
+        `<div class="notice">
+        Aucune notification.
+        </div>`;
+}
+
+
+function openMessaging(){
+
+    hideEverything();
+
+    document
+    .getElementById("messaging")
+    .classList.remove("hidden");
+
+
+    renderMessages();
+}
+
+
+function renderMessages(){
+
+    const messages=
+        JSON.parse(
+            localStorage.getItem(
+                "MOSTAKBAL_MESSAGES"
+            ) || "[]"
+        );
+
+
+    document
+    .getElementById("messageList")
+    .innerHTML=
+        messages
+        .slice()
+        .reverse()
+        .map(m=>`
+
+        <article class="message">
+
+            <div class="message-header">
+
+                <strong>
+                ${m.title}
+                </strong>
+
+                <time>
+                ${m.date}
+                </time>
+
+            </div>
+
+            <p>
+            ${m.text}
+            </p>
+
+        </article>
+
+        `)
+        .join("") ||
+
+        `<div class="notice">
+        Aucune conversation.
+        </div>`;
+}
+
+
+function saveRequest(request){
+
+    const requests=
+        JSON.parse(
+            localStorage.getItem(
+                "MOSTAKBAL_REQUESTS"
+            ) || "[]"
+        );
+
+
+    request.documents=[
+        {
+            name:
+            "Preuve d'identité délivrée par les autorités internes"
+        },
+        {
+            name:
+            "Justificatif d'assurance"
+        }
+    ];
+
+
+    requests.push(request);
+
+
+    localStorage.setItem(
+        "MOSTAKBAL_REQUESTS",
+        JSON.stringify(requests)
+    );
+
+
+    const notifications=
+        JSON.parse(
+            localStorage.getItem(
+                "MOSTAKBAL_NOTIFICATIONS"
+            ) || "[]"
+        );
+
+
+    notifications.push({
+
+        title:"Nouvelle demande",
+
+        text:
+        "Une nouvelle demande est disponible dans Instruction des demandes.",
+
+        date:
+        new Date()
+        .toLocaleString("fr-FR")
+
+    });
+
+
+    localStorage.setItem(
+        "MOSTAKBAL_NOTIFICATIONS",
+        JSON.stringify(notifications)
+    );
+}
+
+
+function showConfirmation(reference){
+
+    const confirmation=`
+
+    <div class="modal">
+
+        <div class="modal-box">
+
+            <div class="logo-m">
+            M
+            </div>
+
+            <span class="eyebrow">
+            CONFIRMATION DE DÉPÔT
+            </span>
+
+            <h1>
+            Demande enregistrée
+            </h1>
+
+            <p>
+            Votre demande a bien été déposée.
+            </p>
+
+            <div class="confirmation">
+
+                <b>
+                Référence
+                </b>
+
+                <strong>
+                ${reference}
+                </strong>
+
+                <p>
+                Conservez cette confirmation de dépôt.
+                Elle pourra être demandée pour récupérer
+                votre document lorsque votre demande sera acceptée.
+                </p>
+
+            </div>
+
+            <button
+            class="primary"
+            onclick="window.print()">
+            Imprimer / enregistrer
+            </button>
+
+        </div>
+
+    </div>
+
+    `;
+
+
+    document.body.insertAdjacentHTML(
+        "beforeend",
+        confirmation
+    );
+}
+
+
+function hideEverything(){
+
+    document
+    .querySelectorAll(
+        "main,section"
+    )
+    .forEach(element=>{
+        element.classList.add("hidden");
+    });
+}
+
+</script>
+
+
+<style>
+
+.form-card{
+    max-width:900px;
+    margin:auto;
+    padding:30px;
+    background:linear-gradient(
+        145deg,
+        #0b2946,
+        #06172a
+    );
+    border:1px solid #ffffff18;
+    border-radius:25px;
+    box-shadow:0 30px 80px #0007;
+}
+
+.form-grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:15px;
+    margin:25px 0;
+}
+
+.form-grid .full{
+    grid-column:1/-1;
+}
+
+label{
+    display:block;
+    margin-bottom:7px;
+    color:#bcd4e8;
+    font-weight:800;
+}
+
+input,
+select,
+textarea{
+    width:100%;
+    padding:14px;
+    background:#031322;
+    color:white;
+    border:1px solid #245274;
+    border-radius:12px;
+    outline:none;
+}
+
+input:focus,
+select:focus,
+textarea:focus{
+    border-color:var(--blue);
+    box-shadow:0 0 0 3px #087cff22;
+}
+
+.document-box{
+    margin:25px 0;
+    padding:20px;
+    background:#061a2e;
+    border:1px solid #ffffff14;
+    border-radius:17px;
+}
+
+.document-box li{
+    color:#b5cce0;
+    margin:10px 0;
+}
+
+.notice{
+    margin:18px 0;
+    padding:16px;
+    border-radius:15px;
+    background:#0b2944;
+    border:1px solid #2475a9;
+    color:#d7efff;
+}
+
+.request-list{
+    display:grid;
+    gap:13px;
+}
+
+.request-row,
+.notification-row,
+.message,
+.document-row{
+    padding:18px;
+    border:1px solid #ffffff15;
+    border-radius:17px;
+    background:#ffffff07;
+    margin-bottom:12px;
+}
+
+.request-row{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:15px;
+}
+
+.request-row small{
+    display:block;
+    color:var(--muted);
+    margin-top:7px;
+}
+
+.status{
+    display:inline-block;
+    padding:7px 10px;
+    border-radius:999px;
+    background:#123653;
+    color:#7fddff;
+    margin-right:8px;
+    font-size:12px;
+}
+
+.notification-row,
+.message{
+    display:flex;
+    justify-content:space-between;
+    gap:20px;
+}
+
+.notification-row p,
+.message p{
+    color:var(--muted);
+    margin-top:8px;
+    line-height:1.6;
+}
+
+.notification-row time,
+.message time{
+    color:#78a0bd;
+    white-space:nowrap;
+    font-size:12px;
+}
+
+.document-row{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.action-grid{
+    display:flex;
+    flex-wrap:wrap;
+    gap:10px;
+    margin-top:20px;
+}
+
+.danger-button{
+    border:0;
+    border-radius:12px;
+    padding:13px 18px;
+    background:#b92345;
+    color:white;
+    font-weight:900;
+}
+
+.auth-page{
+    min-height:100vh;
+    display:grid;
+    place-items:center;
+    padding:25px;
+    background:
+        radial-gradient(circle at 50% 0%,#124d7d,#020b15 55%);
+}
+
+.auth-card{
+    width:min(500px,100%);
+    padding:35px;
+    border-radius:28px;
+    border:1px solid #ffffff18;
+    background:#071b2eeF;
+    box-shadow:0 35px 100px #0009;
+}
+
+.auth-card h1{
+    margin:18px 0 10px;
+    font-size:35px;
+}
+
+.auth-card p{
+    color:var(--muted);
+    line-height:1.6;
+    margin-bottom:20px;
+}
+
+.auth-card label{
+    margin-top:15px;
+}
+
+.auth-card .primary{
+    width:100%;
+    margin-top:22px;
+}
+
+.eyebrow{
+    display:block;
+    color:var(--cyan);
+    font-weight:900;
+    letter-spacing:.14em;
+    font-size:11px;
+    margin-top:20px;
+}
+
+.modal{
+    position:fixed;
+    inset:0;
+    z-index:500;
+    background:#000b;
+    backdrop-filter:blur(10px);
+    display:grid;
+    place-items:center;
+    padding:20px;
+}
+
+.modal-box{
+    width:min(650px,100%);
+    padding:35px;
+    border-radius:27px;
+    background:#071b2f;
+    border:1px solid #ffffff20;
+}
+
+.confirmation{
+    margin:20px 0;
+    padding:20px;
+    border:1px solid #238fd0;
+    background:#06213a;
+    border-radius:18px;
+}
+
+.confirmation strong{
+    display:block;
+    font-size:22px;
+    color:var(--cyan);
+    margin:8px 0 15px;
+}
+
+@media(max-width:650px){
+
+    .form-grid{
+        grid-template-columns:1fr;
+    }
+
+    .form-grid .full{
+        grid-column:auto;
+    }
+
+    .request-row,
+    .notification-row,
+    .message{
+        flex-direction:column;
+        align-items:flex-start;
+    }
+}
+
+</style>
