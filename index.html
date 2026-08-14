@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Administration numérique MOSTAKBAL</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{--r:#e30613;--b:#0757c9;--y:#ffd400;--n:#03050a;--g:rgba(255,255,255,.09);--bd:rgba(255,255,255,.2)}
+body{min-height:100vh;color:#fff;font-family:Inter,Arial,sans-serif;background:radial-gradient(circle at 5% 5%,rgba(227,6,19,.82),transparent 29%),radial-gradient(circle at 96% 8%,rgba(7,87,201,.82),transparent 31%),radial-gradient(circle at 48% 92%,rgba(255,212,0,.34),transparent 30%),linear-gradient(135deg,#020308,#071b3d 28%,#05070d 51%,#191600 73%,#070205);background-attachment:fixed}
+button{font:inherit;color:inherit;cursor:pointer}
+.app{min-height:100vh;padding:20px}
+.top{max-width:1450px;margin:auto auto 22px;padding:13px 16px 13px 20px;display:flex;align-items:center;justify-content:space-between;border:1px solid var(--bd);border-radius:24px;background:rgba(255,255,255,.07);backdrop-filter:blur(28px);box-shadow:0 25px 70px #0008}
+.brand{display:flex;align-items:center;gap:14px}
+.logo{width:54px;height:54px;border-radius:17px;display:grid;place-items:center;background:linear-gradient(135deg,var(--r),var(--b) 48%,var(--y));font-size:26px;font-weight:950;box-shadow:0 0 28px #ffd40022}
+.brand h1{font-size:19px}.brand p{font-size:11px;color:#ffffffaa;margin-top:4px}
+.menu{width:48px;height:48px;border-radius:15px;border:1px solid var(--bd);background:#ffffff0d}
+.hero,.services,.section{max-width:1450px;margin:auto}
+.hero{padding:50px 46px;border:1px solid var(--bd);border-radius:32px;background:linear-gradient(120deg,#e3061333,#0757c92e,#ffd4001c,#ffffff0b);backdrop-filter:blur(30px);box-shadow:0 30px 90px #0008;margin-bottom:25px}
+.status{display:inline-flex;gap:9px;padding:8px 13px;border:1px solid var(--bd);border-radius:999px;background:#ffffff0d;font-size:11px;margin-bottom:19px}
+.dot{width:7px;height:7px;border-radius:50%;background:#42df70;box-shadow:0 0 13px #42df70}
+.hero h2{font-size:clamp(35px,5vw,62px);letter-spacing:-3px;margin-bottom:18px;background:linear-gradient(90deg,#fff,#d7e7ff,#fff,#ffe46b,#ffb4b8);-webkit-background-clip:text;color:transparent}
+.hero p{max-width:760px;color:#ffffffb3;line-height:1.75}
+.label{max-width:1450px;margin:0 auto 13px;color:#ffffff8a;font-size:11px;text-transform:uppercase;letter-spacing:1.8px}
+.services{display:grid;grid-template-columns:repeat(2,1fr);gap:20px}
+.card{position:relative;min-height:275px;padding:31px;overflow:hidden;border:1px solid var(--bd);border-radius:29px;background:#ffffff0d;backdrop-filter:blur(24px);box-shadow:0 25px 65px #0006;transition:.28s}
+.card:hover{transform:translateY(-8px);background:#ffffff14}
+.icon{width:61px;height:61px;border-radius:19px;display:grid;place-items:center;background:linear-gradient(135deg,#e306134d,#0757c94d,#ffd40030);border:1px solid var(--bd);font-size:27px;margin-bottom:25px}
+.card h3{font-size:26px;margin-bottom:11px}.card p{color:#ffffffa6;font-size:13px;line-height:1.7}
+.arrow{position:absolute;right:24px;top:24px;width:41px;height:41px;border-radius:13px;border:1px solid var(--bd);background:#ffffff0d;display:grid;place-items:center}
+.line{height:3px;max-width:1450px;margin:24px auto;background:linear-gradient(90deg,var(--r),var(--b),var(--y),var(--r));border-radius:99px}
+@media(max-width:850px){.services{grid-template-columns:1fr}.hero{padding:38px 28px}}
+@media(max-width:560px){.app{padding:11px}.brand h1{font-size:15px}.brand p{font-size:9px}.logo{width:45px;height:45px}.hero{padding:30px 22px;border-radius:23px}.hero h2{font-size:35px}.card{min-height:225px;padding:24px}}
+</style>
+</head>
+<body>
+<div class="app">
+<header class="top">
+<div class="brand"><div class="logo">M</div><div><h1>Administration numérique MOSTAKBAL</h1><p>Portail administratif numérique</p></div></div>
+<button class="menu" onclick="menu()">☰</button>
+</header>
+<section class="hero">
+<div class="status"><span class="dot"></span>Portail numérique sécurisé</div>
+<h2>L'administration,<br>autrement.</h2>
+<p>Bienvenue sur MOSTAKBAL. Accédez simplement aux services numériques disponibles selon votre situation.</p>
+</section>
+<div class="label">Services disponibles</div>
+<section class="services">
+<div class="card" onclick="serviceInterne()"><div class="arrow">→</div><div class="icon">🏛️</div><h3>Service interne</h3><p>Accédez aux espaces Citoyen, Étranger et Administratif.</p></div>
+<div class="card" onclick="serviceVisa()"><div class="arrow">→</div><div class="icon">✈️</div><h3>Service visa</h3><p>Accédez aux demandes de visa travail, stage et mineur accompagné.</p></div>
+</section>
+<div class="line"></div>
+</div>
+<script>
+const $=s=>document.querySelector(s);
+function menu(){alert("Menu MOSTAKBAL")}
+function serviceInterne(){showLogin("interne")}
+function serviceVisa(){showLogin("visa")}
+</script>
+</body>
+ </html>
+ <script>
+function showLogin(type){
+document.body.innerHTML=`
+<div class="app">
+<header class="top"><div class="brand"><div class="logo">M</div><div><h1>Administration numérique MOSTAKBAL</h1><p>${type==="visa"?"Service visa":"Service interne"}</p></div></div></header>
+<section class="section">
+<div class="card" style="max-width:650px;margin:60px auto">
+<div class="icon">🔐</div>
+<h3>Connexion</h3>
+<p style="margin:12px 0 25px">Accédez à votre espace sécurisé.</p>
+<input id="login" placeholder="Identifiant">
+<input id="pass" type="password" placeholder="Mot de passe">
+<button class="primary" onclick="connect('${type}')">Se connecter</button>
+<button class="secondary" onclick="register('${type}')">Créer un compte</button>
+</div>
+</section></div>`;
+document.body.insertAdjacentHTML("beforeend",`<style>
+.section{max-width:1450px;margin:auto}.card input{display:block;width:100%;padding:15px;margin:10px 0;border-radius:14px;border:1px solid #ffffff2b;background:#0005;color:#fff;outline:none}.primary,.secondary{width:100%;padding:14px;margin-top:10px;border:0;border-radius:14px;background:linear-gradient(90deg,#0757c9,#e30613);font-weight:700}.secondary{background:#ffffff12;border:1px solid #ffffff25}
+</style>`);
+}
+function connect(type){
+const id=document.getElementById("login").value.trim();
+const pw=document.getElementById("pass").value;
+if(!id||!pw)return alert("Veuillez remplir les deux champs.");
+if(type==="visa")dashboardVisa();
+else dashboardInterne(id,pw);
+}
+function register(type){
+if(type==="visa")createVisaAccount();
+else createSpaceAccount();
+}
+ </script>
+ <script>
+function dashboardInterne(id,pw){
+if(id===ADMIN_TEMP_ID&&pw===ADMIN_TEMP_PASSWORD){
+createAdminAccount();
+return;
+}
+const role=accounts[id]?.role||"citoyen";
+if(!accounts[id]||accounts[id].password!==pw)return alert("Identifiant ou mot de passe incorrect.");
+if(role==="administratif")dashboardAdmin();
+else if(role==="etranger")dashboardEtranger();
+else dashboardCitoyen();
+}
+
+function baseDashboard(title,buttons){
+document.body.innerHTML=`<div class="app">
+<header class="top"><div class="brand"><div class="logo">M</div><div><h1>Administration numérique MOSTAKBAL</h1><p>${title}</p></div></div><button class="menu" onclick="menu()">☰</button></header>
+<div class="label">Espace sécurisé</div><section class="services">${buttons.map(b=>`<div class="card" onclick="${b.fn}"><div class="icon">${b.i}</div><h3>${b.t}</h3><p>${b.d}</p></div>`).join("")}</section></div>`;
+}
+
+function dashboardCitoyen(){
+baseDashboard("Espace Citoyen",[
+{i:"📋",t:"Mes demandes",d:"Suivre mes demandes.",fn:"mesDemandes()"},
+{i:"➕",t:"Faire une demande",d:"Déposer une nouvelle démarche.",fn:"citizenServices()"},
+{i:"🔔",t:"Notifications",d:"Consulter mes notifications.",fn:"notifications()"},
+{i:"💬",t:"Messagerie",d:"Échanger avec le service.",fn:"messagerie()"},
+{i:"👤",t:"Mon compte",d:"Consulter mon compte.",fn:"monCompte()"}
+]);
+}
+function dashboardEtranger(){
+baseDashboard("Espace Étranger",[
+{i:"📋",t:"Mes demandes",d:"Suivre mes demandes.",fn:"mesDemandes()"},
+{i:"➕",t:"Faire une demande",d:"Déposer une démarche étrangère.",fn:"foreignServices()"},
+{i:"🔔",t:"Notifications",d:"Consulter mes notifications.",fn:"notifications()"},
+{i:"💬",t:"Messagerie",d:"Échanger avec le service.",fn:"messagerie()"},
+{i:"👤",t:"Mon compte",d:"Consulter mon compte.",fn:"monCompte()"}
+]);
+}
+function dashboardAdmin(){
+baseDashboard("Espace Administratif",[
+{i:"📥",t:"Demandes à instruire",d:"Citoyen, étranger et visa.",fn:"instructionMenu()"},
+{i:"➕",t:"Faire ma demande",d:"Les mêmes demandes qu’un citoyen normal.",fn:"citizenServices()"},
+{i:"🔔",t:"Notifications",d:"Consulter les notifications.",fn:"notifications()"},
+{i:"💬",t:"Messagerie",d:"Messagerie interne.",fn:"messagerie()"},
+{i:"👤",t:"Mon compte",d:"Consulter mon compte.",fn:"monCompte()"}
+]);
+}
+  </script>
+  <script>
+function citizenServices(){
+baseDashboard("Faire une demande",[
+{i:"🪪",t:"Carte nationale d’identité",d:"Première demande ou renouvellement.",fn:"cni()"},
+{i:"🛂",t:"Passeport",d:"Première demande ou renouvellement.",fn:"passport()"},
+{i:"📜",t:"Certificat national de naissance",d:"Demande avec génération du certificat après traitement.",fn:"birthCertificate()"},
+{i:"🏅",t:"Carte d’allégeance du sportif",d:"Première demande ou renouvellement.",fn:"sportCard()"},
+{i:"❤️",t:"Pass Santé M",d:"Demande disponible sans photo d’identité.",fn:"healthPass()"}
+]);
+}
+function foreignServices(){
+baseDashboard("Faire une demande",[
+{i:"🪪",t:"Carte de statut étranger",d:"Première demande ou renouvellement.",fn:"statusCard()"},
+{i:"🇫🇷",t:"Naturalisation",d:"Déposer une demande de naturalisation.",fn:"naturalisation()"},
+{i:"🆔",t:"TIME",d:"Titre d’identité pour mineur étranger.",fn:"timeRequest()"},
+{i:"💼",t:"Autorisation de travail",d:"Déposer une demande d’autorisation.",fn:"workAuthorization()"},
+{i:"❤️",t:"Pass Santé M",d:"Demande accessible dans l’espace étranger.",fn:"healthPass()"}
+]);
+}
+function visaDashboard(){
+baseDashboard("Service Visa",[
+{i:"💼",t:"Visa travail",d:"Déposer une demande de visa travail.",fn:"visaForm('travail')"},
+{i:"🎓",t:"Visa stage",d:"Déposer une demande de visa stage.",fn:"visaForm('stage')"},
+{i:"👨‍👩‍👧",t:"Visa mineur accompagné",d:"Demande pour mineur accompagné.",fn:"visaForm('mineur')"},
+{i:"📋",t:"Mes demandes",d:"Suivre mes demandes de visa.",fn:"mesDemandes()"},
+{i:"💬",t:"Messagerie",d:"Consulter la messagerie visa.",fn:"messagerie()"},
+{i:"🔔",t:"Notifications",d:"Consulter les notifications.",fn:"notifications()"},
+{i:"👤",t:"Mon compte",d:"Gérer le compte visa.",fn:"monCompte()"}
+]);
+}
+function dashboardVisa(){visaDashboard()}
+  </script>
+  <script>
+function choice(title,items,next){
+document.body.innerHTML=`<div class="app"><header class="top"><div class="brand"><div class="logo">M</div><div><h1>Administration numérique MOSTAKBAL</h1><p>${title}</p></div></div></header><section class="services">${items.map(x=>`<div class="card" onclick="${next}('${x}')"><div class="icon">📄</div><h3>${x}</h3><p>Sélectionner cette option pour continuer.</p></div>`).join("")}</section></div>`;
+}
+function cni(){choice("Carte nationale d’identité",["Première demande","Renouvellement"],"cniForm")}
+function passport(){choice("Passeport",["Première demande","Renouvellement"],"passportForm")}
+function sportCard(){choice("Carte d’allégeance du sportif",["Première demande","Renouvellement"],"sportForm")}
+function statusCard(){choice("Carte de statut étranger",["Première demande","Renouvellement"],"statusForm")}
+function cniForm(type){
+formPage("Carte nationale d’identité — "+type,
+type==="Première demande"?["Nom","Prénom","Date de naissance","Lieu de naissance","Numéro d’identification nationale","Acquisition de nationalité","Photo d’identité"]:["Nom","Prénom","Date de naissance","Numéro d’identification nationale","Ancienne CNI","Nouvelle photo d’identité"]);
+}
+function passportForm(type){
+formPage("Passeport — "+type,type==="Première demande"?["Nom","Prénom","Numéro d’identification nationale","CNI","Photo d’identité"]:["Nom","Prénom","Numéro d’identification nationale","CNI valide","Ancien passeport","Nouvelle photo d’identité"]);
+}
+function sportForm(type){
+formPage("Carte d’allégeance du sportif — "+type,type==="Première demande"?["Nom","Prénom","Pièce d’identité interne","Pass Santé M","Justificatif sportif","Photo d’identité"]:["Nom","Prénom","Pièce d’identité interne","Ancienne carte sportive","Nouvelle photo d’identité"]);
+}
+function statusForm(type){
+formPage("Carte de statut étranger — "+type,type==="Première demande"?["Nom","Prénom","Numéro étranger","Passeport","Photo d’identité","Acte de naissance étranger","Visa","Documents justifiant le séjour légal","Motif"]:["Nom","Prénom","Numéro étranger","Ancienne carte de statut","Passeport","Photo d’identité","Autorisation de travail","Nouveau contrat de travail ou nouvelle convention de stage","Motif"]);
+}
+  </script>
+  <script>
+function formPage(title,fields){
+document.body.innerHTML=`<div class="app"><header class="top"><div class="brand"><div class="logo">M</div><div><h1>Administration numérique MOSTAKBAL</h1><p>${title}</p></div></div></header><section class="section"><div class="card" style="max-width:850px;margin:35px auto"><h3>${title}</h3><div id="formFields">${fields.map((f,i)=>`<label style="display:block;margin-top:14px;color:#ffffffb8;font-size:12px">${f}<input id="f${i}" placeholder="${f}" type="${f.toLowerCase().includes("photo")||f.toLowerCase().includes("cni")||f.toLowerCase().includes("passeport")||f.toLowerCase().includes("document")||f.toLowerCase().includes("visa")||f.toLowerCase().includes("contrat")||f.toLowerCase().includes("convention")||f.toLowerCase().includes("acte")||f.toLowerCase().includes("carte")||f.toLowerCase().includes("justificatif")||f.toLowerCase().includes("autorisation")?"file":"text"}></label>`).join("")}</div><button class="primary" onclick="submitForm('${title}')">Déposer la demande</button></div></section></div>`;
+document.body.insertAdjacentHTML("beforeend",`<style>.section{max-width:1450px;margin:auto}input{display:block;width:100%;padding:13px;margin-top:7px;border-radius:13px;border:1px solid #ffffff25;background:#0005;color:#fff}.primary{width:100%;padding:15px;margin-top:25px;border:0;border-radius:14px;background:linear-gradient(90deg,#0757c9,#e30613,#ffd400);font-weight:800}</style>`);
+}
+function birthCertificate(){
+formPage("Certificat national de naissance",["Nom","Prénom","Lieu de naissance","Pays de naissance","Situation familiale","Numéro d’identification nationale"]);
+}
+function healthPass(){formPage("Pass Santé M",["Nom","Prénom","Date de naissance","Pièce d’identité délivrée par les autorités internes"])}
+function naturalisation(){formPage("Naturalisation",["Nom","Prénom","Numéro étranger","Carte de statut étranger valide","Passeport","Acte de naissance étranger","Justificatif de statut de dix ans","Dernière carte de statut étranger"])}
+function timeRequest(){formPage("TIME — Titre d’identité pour mineur étranger",["Nom","Prénom","Numéro étranger","Document d’identité du mineur","Visa du mineur accompagné","Photo","Acte de naissance étranger","Document justifiant le séjour légal du représentant légal","Justificatif d’autorité parentale"])}
+function workAuthorization(){formPage("Autorisation de travail",["Nom","Prénom","Numéro étranger","Passeport","Visa","Contrat de travail","Documents justifiant le séjour légal"])}
+function visaForm(motif){
+let f=motif==="travail"?["Nom","Prénom","Numéro étranger","Passeport","Document de travail","Contrat de travail","Justificatif d’assurance","Relevé de compte bancaire du dernier mois"]:motif==="stage"?["Nom","Prénom","Numéro étranger","Passeport","Convention de stage","Justificatif d’assurance","Relevé de compte bancaire du dernier mois"]:["Nom","Prénom","Numéro étranger","Document d’identité du mineur","Acte de naissance","Document justifiant le séjour légal du représentant légal","Justificatif d’autorité parentale","Justificatif d’assurance"];
+formPage("Visa "+motif,f);
+}
+  </script>
+  <script>
+function submitForm(title){
+let ref="MOST-"+Date.now().toString(36).toUpperCase();
+let data={id:ref,title,date:new Date().toLocaleString("fr-FR"),status:"Déposée"};
+requests.push(data);
+save();
+confirmation(data);
+}
+function confirmation(data){
+document.body.innerHTML=`<div class="app"><header class="top"><div class="brand"><div class="logo">M</div><div><h1>Administration numérique MOSTAKBAL</h1><p>Confirmation de dépôt</p></div></div></header><section class="section"><div class="card" style="max-width:750px;margin:40px auto;text-align:center"><div class="icon">✓</div><h3>Demande déposée</h3><p style="margin:15px 0">Votre demande a été enregistrée.</p><p>Référence : <strong>${data.id}</strong></p><p>Date : ${data.date}</p><p>Statut : ${data.status}</p><div style="margin:25px auto;padding:20px;background:#fff;color:#111;border-radius:18px;width:170px;font-size:45px">▦</div><button class="primary" onclick="downloadDocument('Confirmation de dépôt',data)">Télécharger</button><button class="secondary" onclick="goHome()">Retour</button></div></section></div>`;
+}
+function downloadDocument(title,data){
+let text=`MOSTAKBAL\n${title}\n\nRéférence : ${data.id}\nDate : ${data.date}\nStatut : ${data.status}\n\nDocument officiel généré par le portail MOSTAKBAL.`;
+let blob=new Blob([text],{type:"text/plain"});
+let a=document.createElement("a");a.href=URL.createObjectURL(blob);a.download=data.id+".txt";a.click();
+}
+function goHome(){location.reload()}
+function mesDemandes(){
+let html=requests.length?requests.map(r=>`<div class="card" style="margin:10px 0"><h3>${r.title}</h3><p>${r.id}<br>${r.status}</p></div>`).join(""):"<div class='card'><h3>Aucune demande</h3></div>";
+document.body.innerHTML=`<div class="app"><header class="top"><div class="brand"><div class="logo">M</div><div><h1>MOSTAKBAL</h1><p>Mes demandes</p></div></div></header><section class="section">${html}<button class="primary" onclick="goHome()">Retour</button></section></div>`;
+}
+  </script>
+  <script>
+function instructionMenu(){
+baseDashboard("Demandes à instruire",[
+{i:"👤",t:"Demandes citoyennes",d:"Demandes déposées par les citoyens.",fn:"instructionList('citoyen')"},
+{i:"🌐",t:"Demandes étrangères",d:"Demandes déposées par les étrangers.",fn:"instructionList('etranger')"},
+{i:"✈️",t:"Demandes visa",d:"Demandes de visa à instruire.",fn:"instructionList('visa')"}
+]);
+}
+function instructionList(type){
+let list=requests.filter(r=>r.type===type||type==="citoyen"||type==="etranger"||type==="visa");
+document.body.innerHTML=`<div class="app"><header class="top"><div class="brand"><div class="logo">M</div><div><h1>MOSTAKBAL</h1><p>Demandes ${type}</p></div></div></header><section class="section">${list.length?list.map(r=>`<div class="card" style="margin:12px 0"><h3>${r.title}</h3><p>${r.id} — ${r.status}</p><button class="primary" onclick="instruire('${r.id}')">Instruire la demande</button></div>`).join(""):"<div class='card'><h3>Aucune demande</h3></div>"}</section></div>`;
+}
+function instruire(id){
+let r=requests.find(x=>x.id===id);
+document.body.innerHTML=`<div class="app"><header class="top"><div class="brand"><div class="logo">M</div><div><h1>MOSTAKBAL</h1><p>Instruction de la demande</p></div></div></header><section class="services"><div class="card" onclick="alert('Informations de la demande')"><div class="icon">📋</div><h3>Voir les informations</h3><p>Consulter toutes les informations du formulaire.</p></div><div class="card" onclick="alert('Justificatifs accessibles')"><div class="icon">📎</div><h3>Voir les justificatifs</h3><p>Ouvrir les fichiers déposés.</p></div><div class="card" onclick="messagerie()"><div class="icon">💬</div><h3>Contacter le demandeur</h3><p>Envoyer un message.</p></div></section><section class="section"><button class="primary" onclick="decision('${id}','accept')">Accepter la demande</button><button class="secondary" onclick="decision('${id}','refuse')">Refuser la demande</button></section></div>`;
+}
+function decision(id,result){
+let r=requests.find(x=>x.id===id);
+r.status=result==="accept"?"Acceptée":"Refusée";save();
+if(result==="accept"&&r.title.toLowerCase().includes("visa"))sendVisa(r);
+else if(result==="accept"&&r.title.toLowerCase().includes("certificat"))sendBirth(r);
+else alert("Demande acceptée. Le document sera envoyé par mail.");
+instructionMenu();
+}
+function sendVisa(r){r.document="Visa généré";alert("Votre visa a été accepté. Il sera envoyé automatiquement dans la messagerie.")}
+function sendBirth(r){r.document="Certificat national de naissance généré";alert("Le certificat national de naissance a été généré automatiquement.")}
+  </script>
+  <script>
+function messagerie(){
+document.body.innerHTML=`<div class="app"><header class="top"><div class="brand"><div class="logo">M</div><div><h1>MOSTAKBAL</h1><p>Messagerie interne</p></div></div></header><section class="section"><div class="card" style="max-width:800px;margin:35px auto"><h3>💬 Messagerie</h3><div id="messages" style="margin:20px 0"><p style="color:#ffffff99">Aucun nouveau message.</p></div><textarea id="msg" placeholder="Écrire un message..." style="width:100%;min-height:120px;padding:15px;border-radius:15px;background:#0005;color:#fff;border:1px solid #ffffff25"></textarea><button class="primary" onclick="sendMessage()">Envoyer</button></div></section></div>`;
+}
+function sendMessage(){
+let m=document.getElementById("msg").value.trim();
+if(!m)return alert("Écrivez un message.");
+messages.push({text:m,date:new Date().toLocaleString("fr-FR")});save();
+alert("Message envoyé.");
+messagerie();
+}
+function notifications(){
+let html=notificationsData.length?notificationsData.map(n=>`<div class="card" style="margin:10px 0"><h3>🔔 ${n.title}</h3><p>${n.text}</p></div>`).join(""):"<div class='card'><h3>Aucune notification</h3></div>";
+document.body.innerHTML=`<div class="app"><header class="top"><div class="brand"><div class="logo">M</div><div><h1>MOSTAKBAL</h1><p>Notifications</p></div></div></header><section class="section">${html}</section></div>`;
+}
+function monCompte(){
+document.body.innerHTML=`<div class="app"><header class="top"><div class="brand"><div class="logo">M</div><div><h1>MOSTAKBAL</h1><p>Mon compte</p></div></div></header><section class="section"><div class="card" style="max-width:700px;margin:40px auto"><div class="icon">👤</div><h3>Mon compte</h3><p>Informations du compte et paramètres.</p><button class="secondary" onclick="goHome()">Retour</button></div></section></div>`;
+}
+function createSpaceAccount(){
+let role=prompt("Espace : citoyen ou etranger ?");
+if(role!=="citoyen"&&role!=="etranger")return;
+let id=prompt("Créez votre identifiant");
+let pw=prompt("Créez votre mot de passe");
+if(!id||!pw)return;
+accounts[id]={password:pw,role};save();
+alert("Compte créé.");
+showLogin("interne");
+}
+function createVisaAccount(){
+let email=prompt("Votre email");
+let pw=prompt("Créez votre mot de passe");
+if(!email||!pw)return;
+visaAccounts[email]={password:pw};save();
+alert("Compte visa créé.");
+showLogin("visa");
+}
+function createAdminAccount(){
+document.body.innerHTML=`<div class="app"><section class="section"><div class="card" style="max-width:800px;margin:40px auto"><h3>Créer votre compte administratif</h3><input id="an" placeholder="Nom"><input id="ap" placeholder="Prénom"><input id="ad" placeholder="Date de naissance"><input id="ai" placeholder="Créez votre identifiant"><input id="aic" placeholder="Confirmez votre identifiant"><input id="am" type="password" placeholder="Créez votre mot de passe"><input id="amc" type="password" placeholder="Confirmez votre mot de passe"><button class="primary" onclick="saveAdmin()">Créer mon compte</button></div></section></div>`;
+}
+function saveAdmin(){
+let id=ai.value,pw=am.value;
+if(!id||id!==aic.value||!pw||pw!==amc.value)return alert("Vérifiez les informations.");
+accounts[id]={password:pw,role:"administratif"};save();alert("Compte administratif créé. Les identifiants provisoires sont désormais invalides.");dashboardAdmin();
+}
+  </script>
+  <script>
+const ADMIN_TEMP_ID="MOSTAKBAL-ADMIN-INITIAL";
+const ADMIN_TEMP_PASSWORD="MSTK-Admin-2026-Initial";
+
+let accounts=JSON.parse(localStorage.getItem("mostakbal_accounts")||"{}");
+let visaAccounts=JSON.parse(localStorage.getItem("mostakbal_visa_accounts")||"{}");
+let requests=JSON.parse(localStorage.getItem("mostakbal_requests")||"[]");
+let messages=JSON.parse(localStorage.getItem("mostakbal_messages")||"[]");
+let notificationsData=JSON.parse(localStorage.getItem("mostakbal_notifications")||"[]");
+
+function save(){
+localStorage.setItem("mostakbal_accounts",JSON.stringify(accounts));
+localStorage.setItem("mostakbal_visa_accounts",JSON.stringify(visaAccounts));
+localStorage.setItem("mostakbal_requests",JSON.stringify(requests));
+localStorage.setItem("mostakbal_messages",JSON.stringify(messages));
+localStorage.setItem("mostakbal_notifications",JSON.stringify(notificationsData));
+}
+
+function addNotification(title,text){
+notificationsData.push({title,text});
+save();
+}
+
+function searchRequest(){
+let id=prompt("Référence de la demande");
+let r=requests.find(x=>x.id===id);
+alert(r?r.title+" — "+r.status:"Demande introuvable.");
+}
+
+window.addEventListener("beforeunload",save);
+  </script>
